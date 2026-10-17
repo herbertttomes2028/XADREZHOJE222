@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Teste de câmera · Xadrez físico</title>
+<style>
+:root{--bg:#f2f4f5;--card:#fff;--ink:#18252c;--sub:#5f6e76;--line:#dbe2e5;--ok:#1d7a52;--aviso:#b1751a;--erro:#b3392f;--acc:#176454}
+@media(prefers-color-scheme:dark){:root{--bg:#111b21;--card:#1c2930;--ink:#f2f5f1;--sub:#a0afb2;--line:#35454b;--acc:#7fc4a7}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.45}
+header{padding:18px 20px;border-bottom:1px solid var(--line);background:var(--card)}
+header h1{margin:0;font-size:20px}
+header p{margin:4px 0 0;color:var(--sub);font-size:13px}
+main{max-width:1180px;margin:0 auto;padding:16px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+@media(max-width:860px){main{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.card h2{margin:0 0 10px;font-size:16px}
+.card h3{margin:12px 0 6px;font-size:13px;color:var(--sub);text-transform:uppercase;letter-spacing:.6px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+label{font-size:13px;color:var(--sub);display:flex;gap:6px;align-items:center}
+select,button{font:inherit;font-size:14px;border-radius:9px;border:1px solid var(--line);padding:9px 12px;background:var(--bg);color:var(--ink)}
+button{cursor:pointer;background:var(--acc);color:#fff;border-color:transparent;font-weight:600}
+button.sec{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:500}
+button:disabled{opacity:.45;cursor:not-allowed}
+.palco{position:relative;width:100%;background:#000;border-radius:10px;overflow:hidden}
+.palco video,.palco canvas.quadro{display:block;width:100%;height:auto}
+.palco canvas.overlay{position:absolute;left:0;top:0;width:100%;height:auto;pointer-events:none}
+.palco canvas.overlay.captura{pointer-events:auto;cursor:crosshair}
+.hidden{display:none!important}
+.msg{padding:10px 12px;border-radius:10px;font-size:14px;margin:8px 0;background:var(--bg);border:1px solid var(--line)}
+.msg.ok{border-color:var(--ok);color:var(--ok)}
+.msg.aviso{border-color:var(--aviso);color:var(--aviso)}
+.msg.erro{border-color:var(--erro);color:var(--erro)}
+.grade{display:grid;grid-template-columns:repeat(8,1fr);width:100%;max-width:340px;aspect-ratio:1;border:2px solid var(--ink);border-radius:6px;overflow:hidden;margin:6px 0}
+.casa{display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;user-select:none}
+.casa.c0{background:#ecdcc0;color:#2d2a25}.casa.c1{background:#a97c5b;color:#fff}
+.casa.duvida{box-shadow:inset 0 0 0 3px var(--erro)}
+.casa.recente{box-shadow:inset 0 0 0 3px var(--ok)}
+.legenda{font-size:12px;color:var(--sub)}
+.stat{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px}
+.stat b{color:var(--ink)}
+.escolha{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+ol.lances{margin:6px 0;padding-left:22px;font-variant-numeric:tabular-nums;max-height:200px;overflow:auto;font-size:14px}
+code{font-size:12px;word-break:break-all;background:var(--bg);padding:4px 6px;border-radius:6px;display:block}
+#retificada{width:100%;max-width:360px;height:auto;border-radius:10px;border:1px solid var(--line);background:#000}
+</style>
+</head>
+<body>
+<header>
+  <h1>Teste de câmera · Xadrez físico</h1>
+  <p>Ligue a câmera, marque os 4 cantos, aprenda a posição inicial e jogue. Nada é enviado para servidores: tudo roda no seu aparelho.</p>
+</header>
+
+<div id="msg" class="msg">Ligue a câmera para começar.</div>
+
+<main>
+  <section class="card">
+    <h2>1. Câmera</h2>
+    <div class="row">
+      <label>Câmera
+        <select id="selCamera">
+          <option value="environment">Traseira</option>
+          <option value="user">Frontal</option>
+        </select>
+      </label>
+      <label>Qualidade
+        <select id="selQualidade">
+          <option value="640x480">640×480</option>
+          <option value="1280x720" selected>1280×720</option>
+          <option value="1920x1080">1920×1080</option>
+        </select>
+      </label>
+      <button id="btnLigar">Ligar câmera</button>
+      <button id="btnParar" class="sec">Desligar</button>
+    </div>
+    <div class="palco" id="palco">
+      <video id="video" playsinline muted autoplay></video>
+      <canvas id="quadro" class="quadro hidden"></canvas>
+      <canvas id="overlay" class="overlay"></canvas>
+    </div>
+    <div class="row">
+      <button id="btnCapturar" class="sec" disabled>Capturar quadro para marcar cantos</button>
+      <button id="btnVivo" class="sec hidden">Voltar ao vivo</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>2. Cantos do tabuleiro</h2>
+    <p class="legenda" id="instrucaoCantos">Capture um quadro e clique nos 4 cantos internos do tabuleiro, nesta ordem: a8 (superior esquerdo), h8 (superior direito), h1 (inferior direito), a1 (inferior esquerdo). Esta orientação vale com as brancas embaixo.</p>
+    <div class="row">
+      <button id="btnRefazerCantos" class="sec" disabled>Refazer cantos</button>
+      <button id="btnSalvarCalib" class="sec" disabled>Lembrar calibração</button>
+      <button id="btnCarregarCalib" class="sec">Usar calibração salva</button>
+    </div>
+    <h3>Prévia retificada (vista de cima)</h3>
+    <canvas id="retificada" width="480" height="480"></canvas>
+  </section>
+
+  <section class="card">
+    <h2>3. Aprender a posição inicial</h2>
+    <p class="legenda">Monte as peças na posição inicial, com as brancas embaixo. Mantenha as peças paradas durante a captura (cerca de 3 segundos).</p>
+    <div class="row">
+      <button id="btnAprender" disabled>Aprender posição inicial</button>
+    </div>
+    <h3>Leitura do tabuleiro</h3>
+    <div class="grade" id="gradeLeitura"></div>
+    <p class="legenda">○ branca · ● preta · vazia sem marca · <span style="color:var(--erro)">borda vermelha</span> = casa ambígua · <span style="color:var(--ok)">borda verde</span> = último lance</p>
+  </section>
+
+  <section class="card">
+    <h2>4. Partida</h2>
+    <div class="row">
+      <button id="btnIniciarPartida" disabled>Iniciar partida</button>
+      <button id="btnDesfazer" class="sec" disabled>Desfazer último lance</button>
+      <button id="btnNovaPartida" class="sec">Nova partida</button>
+    </div>
+    <div id="escolha" class="escolha"></div>
+    <h3>Lances registrados</h3>
+    <ol id="lances" class="lances"></ol>
+    <h3>Posição (FEN)</h3>
+    <code id="fen">—</code>
+    <div class="row">
+      <button id="btnPgn" class="sec" disabled>Baixar PGN</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Diagnóstico</h2>
+    <div class="stat" id="diag"></div>
+  </section>
+</main>
+
+<canvas id="trabalho" class="hidden"></canvas>
+
+<script src="regras.js"></script>
+<script src="leitura.js"></script>
+<script src="visao.js"></script>
+<script>
+(function () {
+  'use strict';
+  const V = window.XadrezVisao, XL = window.XadrezLeitura, XR = window.XadrezRegras;
+  const $ = id => document.getElementById(id);
+  const TABULEIRO = [[0, 0], [8, 0], [8, 8], [0, 8]];           // a8, h8, h1, a1
+  const NOMES_CANTOS = ['a8', 'h8', 'h1', 'a1'];
+  const INICIAL = XL.ocupacaoDoJogo(new XR.ChessGame().board);
+  const CHAVE_CALIB = 'xadrez_calibracao_v1';
+
+  const S = {
+    stream: null, w: 0, h: 0,
+    modo: 'vivo',               // 'vivo' | 'captura'
+    cantos: [], H: null,
+    classif: null, diagClassif: null,
+    aprendizado: null,          // { amostras: [] } enquanto aprende
+    ultimasFeats: null,
+    leitura: null, detalhes: null,
+    partidaAtiva: false, det: null, ultimoStatus: null,
+    marcadas: [], recentes: [],
+    timer: null, frames: 0, fps: 0, ultimoFps: 0
+  };
+
+  function msg(texto, tipo) {
+    const el = $('msg');
+    el.textContent = texto;
+    el.className = 'msg' + (tipo ? ' ' + tipo : '');
+  }
+
+  // ---------- câmera ----------
+  async function ligarCamera() {
+    pararCamera();
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      msg('Este navegador não permite acesso à câmera. Abra a página em HTTPS (por exemplo, pelo GitHub Pages).', 'erro');
+      return;
+    }
+    const [w, h] = $('selQualidade').value.split('x').map(Number);
+    try {
+      S.stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { ideal: $('selCamera').value }, width: { ideal: w }, height: { ideal: h } },
+        audio: false
+      });
+    } catch (e) {
+      msg('Câmera não disponível (' + (e.name || 'erro') + '). Confira a permissão do navegador.', 'erro');
+      return;
+    }
+    const v = $('video');
+    v.srcObject = S.stream;
+    await v.play().catch(() => {});
+    await new Promise(res => { if (v.videoWidth) res(); else v.onloadedmetadata = () => res(); });
+    S.w = v.videoWidth; S.h = v.videoHeight;
+    $('overlay').width = S.w; $('overlay').height = S.h;
+    $('quadro').width = S.w; $('quadro').height = S.h;
+    $('trabalho').width = S.w; $('trabalho').height = S.h;
+    $('btnCapturar').disabled = false;
+    $('btnParar').disabled = false;
+    mostrarVivo();
+    if (!S.timer) S.timer = setInterval(tick, 250);
+    msg('Câmera ligada: ' + S.w + '×' + S.h + '. Capture um quadro para marcar os cantos.', 'ok');
+  }
+
+  function pararCamera() {
+    if (S.stream) S.stream.getTracks().forEach(t => t.stop());
+    S.stream = null;
+    $('video').srcObject = null;
+    $('btnCapturar').disabled = true;
+    $('btnParar').disabled = true;
+  }
+
+  function mostrarVivo() {
+    S.modo = 'vivo';
+    $('video').classList.remove('hidden');
+    $('quadro').classList.add('hidden');
+    $('overlay').classList.remove('captura');
+    $('btnVivo').classList.add('hidden');
+    $('btnRefazerCantos').disabled = true;
+    $('btnCapturar').classList.remove('hidden');
+    desenharSobreposicao();
+  }
+
+  function mostrarCaptura() {
+    const q = $('quadro'), v = $('video');
+    q.getContext('2d').drawImage(v, 0, 0, S.w, S.h);
+    S.modo = 'captura';
+    v.classList.add('hidden');
+    q.classList.remove('hidden');
+    $('overlay').classList.add('captura');
+    $('btnVivo').classList.remove('hidden');
+    $('btnRefazerCantos').disabled = false;
+    $('instrucaoCantos').textContent = S.cantos.length < 4
+      ? 'Clique em ' + NOMES_CANTOS[S.cantos.length] + '. Ordem: a8, h8, h1, a1.'
+      : 'Cantos marcados. Confira a grade. Se algo estiver errado, use "Refazer cantos".';
+    desenharSobreposicao();
+  }
+
+  // ---------- cantos ----------
+  $('overlay').addEventListener('click', e => {
+    if (S.modo !== 'captura') return;
+    if (S.cantos.length >= 4) { msg('Já há 4 cantos. Use "Refazer cantos" se precisar marcar de novo.', 'aviso'); return; }
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - r.left) * (S.w / r.width);
+    const y = (e.clientY - r.top) * (S.h / r.height);
+    S.cantos.push([x, y]);
+    if (S.cantos.length < 4) {
+      $('instrucaoCantos').textContent = 'Clique em ' + NOMES_CANTOS[S.cantos.length] + '. Ordem: a8, h8, h1, a1.';
+    } else {
+      try {
+        S.H = V.homografia(TABULEIRO, S.cantos);
+        $('instrucaoCantos').textContent = 'Cantos marcados. Confira a grade. Se algo estiver errado, use "Refazer cantos".';
+        msg('Tabuleiro calibrado. Agora aprenda a posição inicial.', 'ok');
+        $('btnAprender').disabled = false;
+        $('btnSalvarCalib').disabled = false;
+      } catch (err) {
+        S.cantos = [];
+        msg('Cantos inválidos: ' + err.message + ' Marque de novo.', 'erro');
+      }
+    }
+    desenharSobreposicao();
+  });
+
+  $('btnCapturar').onclick = mostrarCaptura;
+  $('btnVivo').onclick = mostrarVivo;
+  $('btnLigar').onclick = ligarCamera;
+  $('btnParar').onclick = () => { pararCamera(); msg('Câmera desligada.', 'aviso'); };
+
+  $('btnRefazerCantos').onclick = () => {
+    S.cantos = []; S.H = null; S.classif = null; S.diagClassif = null;
+    $('btnAprender').disabled = true;
+    $('btnSalvarCalib').disabled = true;
+    $('btnIniciarPartida').disabled = true;
+    $('instrucaoCantos').textContent = 'Clique em a8 (superior esquerdo).';
+    msg('Cantos apagados. Marque de novo.', 'aviso');
+    desenharSobreposicao();
+  };
+
+  function desenharSobreposicao() {
+    const ov = $('overlay'), g = ov.getContext('2d');
+    g.clearRect(0, 0, ov.width, ov.height);
+    if (!S.w) return;
+    const esp = Math.max(2, S.w / 400);
+    if (S.H) {
+      g.strokeStyle = 'rgba(0,255,170,0.9)';
+      g.lineWidth = esp;
+      for (let i = 0; i <= 8; i++) {
+        const a = V.aplicar(S.H, i, 0), b = V.aplicar(S.H, i, 8);
+        g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.stroke();
+        const c = V.aplicar(S.H, 0, i), d = V.aplicar(S.H, 8, i);
+        g.beginPath(); g.moveTo(c[0], c[1]); g.lineTo(d[0], d[1]); g.stroke();
+      }
+      for (const m of S.marcadas) {
+        const pts = [[m.col, m.lin], [m.col + 1, m.lin], [m.col + 1, m.lin + 1], [m.col, m.lin + 1]].map(p => V.aplicar(S.H, p[0], p[1]));
+        g.fillStyle = m.cor;
+        g.beginPath(); pts.forEach((p, i) => i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])); g.closePath(); g.fill();
+      }
+    }
+    if (S.cantos.length) {
+      g.fillStyle = '#ff3b30';
+      S.cantos.forEach(([x, y], i) => {
+        g.beginPath(); g.arc(x, y, esp * 4, 0, Math.PI * 2); g.fill();
+        g.font = 'bold ' + Math.round(esp * 9) + 'px sans-serif';
+        g.fillStyle = '#fff'; g.strokeStyle = '#000'; g.lineWidth = esp * 1.5;
+        g.strokeText(NOMES_CANTOS[i], x + esp * 6, y - esp * 4);
+        g.fillText(NOMES_CANTOS[i], x + esp * 6, y - esp * 4);
+        g.fillStyle = '#ff3b30';
+      });
+      if (S.cantos.length === 4) {
+        g.strokeStyle = '#ff3b30'; g.lineWidth = esp;
+        g.beginPath(); S.cantos.forEach((p, i) => i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])); g.closePath(); g.stroke();
+      }
+    }
+  }
+
+  // ---------- calibração salva ----------
+  $('btnSalvarCalib').onclick = () => {
+    try {
+      localStorage.setItem(CHAVE_CALIB, JSON.stringify({ w: S.w, h: S.h, cantos: S.cantos }));
+      msg('Calibração guardada neste navegador. Use "Usar calibração salva" na próxima vez.', 'ok');
+    } catch (e) { msg('Não foi possível guardar a calibração neste navegador.', 'erro'); }
+  };
+
+  $('btnCarregarCalib').onclick = () => {
+    let dados = null;
+    try { dados = JSON.parse(localStorage.getItem(CHAVE_CALIB)); } catch (e) { dados = null; }
+    if (!dados) { msg('Nenhuma calibração salva neste navegador.', 'aviso'); return; }
+    if (!S.w) { msg('Ligue a câmera antes de usar a calibração salva.', 'aviso'); return; }
+    if (dados.w !== S.w || dados.h !== S.h) {
+      msg('A calibração salva é de outra resolução (' + dados.w + '×' + dados.h + '). Marque os cantos de novo.', 'erro');
+      return;
+    }
+    S.cantos = dados.cantos;
+    S.H = V.homografia(TABULEIRO, S.cantos);
+    $('btnAprender').disabled = false;
+    $('btnSalvarCalib').disabled = false;
+    msg('Calibração carregada. Confira a grade sobre a imagem.', 'ok');
+    desenharSobreposicao();
+  };
+
+  // ---------- aprender posição inicial ----------
+  $('btnAprender').onclick = () => {
+    if (!S.H) { msg('Marque os 4 cantos antes.', 'erro'); return; }
+    S.aprendizado = { amostras: [] };
+    S.classif = null;
+    $('btnIniciarPartida').disabled = true;
+    msg('Aprendendo… mantenha as peças paradas na posição inicial.', 'info');
+  };
+
+  function concluirAprendizado() {
+    const amostras = S.aprendizado.amostras;
+    S.aprendizado = null;
+    const cl = new V.Classificador();
+    try {
+      const diag = cl.aprender(amostras.map(a => ({ feats: a.feats, rotulos: INICIAL })));
+      S.classif = cl;
+      S.diagClassif = diag;
+      $('btnIniciarPartida').disabled = false;
+      if (diag.ok) msg('Posição inicial aprendida. Confira a grade: deve estar igual ao tabuleiro.', 'ok');
+      else msg('Atenção: ' + diag.motivos.join(' '), 'erro');
+    } catch (e) {
+      msg('Não foi possível aprender: ' + e.message, 'erro');
+    }
+  }
+
+  // ---------- partida ----------
+  $('btnIniciarPartida').onclick = () => {
+    if (!S.classif) { msg('Aprenda a posição inicial primeiro.', 'erro'); return; }
+    if (!S.H) { msg('Calibre o tabuleiro primeiro.', 'erro'); return; }
+    // Quadro novo, no momento do clique: o último quadro do laço pode ter até 250 ms de atraso.
+    const feats = V.caracteristicasTabuleiro(capturarQuadro(), S.H);
+    const { leitura } = S.classif.ler(feats);
+    const det = new XL.Detector(new XL.Partida());
+    const conf = det.verificarInicio(leitura);
+    if (!conf.ok) {
+      msg('O tabuleiro não está na posição inicial. Casas diferentes: ' + conf.casasErradas.join(', ') + '.', 'erro');
+      return;
+    }
+    S.det = det;
+    S.partidaAtiva = true;
+    S.ultimoStatus = null;
+    $('btnDesfazer').disabled = false;
+    $('btnPgn').disabled = false;
+    msg('Partida iniciada. Pode jogar.', 'ok');
+    atualizarPartida();
+  };
+
+  $('btnDesfazer').onclick = () => {
+    if (!S.det) return;
+    if (S.det.desfazer()) msg('Último lance desfeito. Devolva as peças à posição anterior antes de continuar.', 'aviso');
+    else msg('Não há lance para desfazer.', 'aviso');
+    atualizarPartida();
+  };
+
+  $('btnNovaPartida').onclick = () => {
+    S.det = null; S.partidaAtiva = false; S.ultimoStatus = null;
+    $('btnDesfazer').disabled = true;
+    $('btnPgn').disabled = true;
+    $('escolha').innerHTML = '';
+    msg('Partida encerrada. Para começar outra, reconfira a posição inicial e clique em Iniciar partida.', 'aviso');
+    atualizarPartida();
+  };
+
+  $('btnPgn').onclick = () => {
+    if (!S.det) return;
+    const hoje = new Date();
+    const data = hoje.getFullYear() + '.' + String(hoje.getMonth() + 1).padStart(2, '0') + '.' + String(hoje.getDate()).padStart(2, '0');
+    const texto = S.det.partida.pgn({ brancas: 'Brancas', pretas: 'Pretas', data });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([texto], { type: 'application/x-chess-pgn' }));
+    a.download = 'partida-' + data + '.pgn';
+    a.click();
+  };
+
+  function tratarResultado(r) {
+    switch (r.status) {
+      case 'lance':
+        msg('Lance registrado: ' + r.lance.san, 'ok');
+        $('escolha').innerHTML = '';
+        break;
+      case 'escolher':
+      case 'ambiguo':
+        msg(r.motivo || S.det.pendencia.motivo, 'aviso');
+        mostrarEscolha(S.det.pendencia);
+        break;
+      case 'erro':
+      case 'anomalia':
+        msg(r.motivo + (r.casas ? ' Casas: ' + r.casas.join(', ') + '.' : ''), 'erro');
+        break;
+      case 'aguardando':
+        if (S.ultimoStatus !== 'aguardando') msg(r.motivo, 'info');
+        break;
+      case 'sem-mudanca':
+      case 'repouso':
+        if (S.ultimoStatus === 'aguardando' || S.ultimoStatus === null) {
+          if (!S.det.pendencia) msg('Aguardando o próximo lance.', 'info');
+        }
+        break;
+    }
+    S.ultimoStatus = r.status;
+    atualizarPartida();
+  }
+
+  function mostrarEscolha(p) {
+    const box = $('escolha');
+    box.innerHTML = '';
+    for (const op of p.opcoes) {
+      const b = document.createElement('button');
+      b.textContent = op.san;
+      b.onclick = () => {
+        try {
+          const r = S.det.escolher(op.san);
+          box.innerHTML = '';
+          tratarResultado(r);
+        } catch (e) { msg(e.message, 'erro'); }
+      };
+      box.appendChild(b);
+    }
+  }
+
+  function atualizarPartida() {
+    const ol = $('lances');
+    ol.innerHTML = '';
+    if (S.det) {
+      const h = S.det.partida.historico();
+      for (let i = 0; i < h.length; i += 2) {
+        const li = document.createElement('li');
+        li.textContent = h[i] + (h[i + 1] ? '   ' + h[i + 1] : '');
+        ol.appendChild(li);
+      }
+      $('fen').textContent = S.det.partida.fen();
+    } else {
+      $('fen').textContent = '—';
+    }
+  }
+
+  // ---------- grade ----------
+  function desenharGrade(el, leitura, destaques) {
+    el.innerHTML = '';
+    for (let lin = 0; lin < 8; lin++) for (let col = 0; col < 8; col++) {
+      const d = document.createElement('div');
+      d.className = 'casa c' + ((lin + col) % 2);
+      const v = leitura[lin][col];
+      d.textContent = v === 'w' ? '○' : v === 'b' ? '●' : v === '?' ? '?' : '';
+      if (v === '?') d.classList.add('duvida');
+      if (destaques && destaques.some(p => p[0] === lin && p[1] === col)) d.classList.add('recente');
+      d.title = XL.nomeCasa(lin, col);
+      el.appendChild(d);
+    }
+  }
+
+  // ---------- laço principal ----------
+  function capturarQuadro() {
+    const t = $('trabalho'), g = t.getContext('2d');
+    g.drawImage($('video'), 0, 0, S.w, S.h);
+    return g.getImageData(0, 0, S.w, S.h);
+  }
+
+  function tick() {
+    if (!S.stream || !S.w || $('video').readyState < 2) return;
+    S.frames++;
+    const agora = performance.now();
+    if (agora - S.ultimoFps >= 1000) { S.fps = S.frames; S.frames = 0; S.ultimoFps = agora; }
+
+    const img = capturarQuadro();
+    if (!S.H) { atualizarDiagnostico(); return; }
+
+    const feats = V.caracteristicasTabuleiro(img, S.H);
+    S.ultimasFeats = feats;
+
+    // prévia retificada
+    const ret = V.retificar(img, S.H, 480);
+    const rc = $('retificada').getContext('2d');
+    rc.putImageData(new ImageData(ret.data, ret.width, ret.height), 0, 0);
+
+    if (S.aprendizado) {
+      S.aprendizado.amostras.push({ feats });
+      msg('Aprendendo… ' + S.aprendizado.amostras.length + '/8 quadros. Mantenha as peças paradas.', 'info');
+      if (S.aprendizado.amostras.length >= 8) concluirAprendizado();
+    }
+
+    if (S.classif) {
+      const { leitura, detalhes } = S.classif.ler(feats);
+      S.leitura = leitura; S.detalhes = detalhes;
+      S.marcadas = [];
+      for (let lin = 0; lin < 8; lin++) for (let col = 0; col < 8; col++) {
+        const d = detalhes[lin][col];
+        if (leitura[lin][col] === '?') S.marcadas.push({ lin, col, cor: 'rgba(255,59,48,0.35)' });
+      }
+      desenharGrade($('gradeLeitura'), leitura, S.recentes);
+
+      if (S.partidaAtiva && S.det) {
+        const r = S.det.processar(leitura, agora);
+        if (r.status === 'lance') {
+          const { lance } = r;
+          S.recentes = [[8 - Number(lance.from[1]), lance.from.charCodeAt(0) - 97], [8 - Number(lance.to[1]), lance.to.charCodeAt(0) - 97]];
+        }
+        tratarResultado(r);
+      }
+    }
+
+    desenharSobreposicao();
+    atualizarDiagnostico();
+  }
+
+  function atualizarDiagnostico() {
+    const linhas = [];
+    const add = (k, v) => linhas.push('<span>' + k + '</span><b>' + v + '</b>');
+    add('Câmera', S.stream ? S.w + '×' + S.h : 'desligada');
+    add('Quadros por segundo', S.stream ? S.fps : '—');
+    add('Cantos', S.cantos.length + ' / 4');
+    add('Calibração', S.H ? 'ok' : 'pendente');
+    if (S.diagClassif) add('Brilho brancas / pretas', S.diagClassif.brilhoBrancas + ' / ' + S.diagClassif.brilhoPretas);
+    add('Posição inicial', S.classif ? 'aprendida' : 'não aprendida');
+    if (S.leitura) {
+      let duvidas = 0;
+      for (const l of S.leitura) for (const v of l) if (v === '?') duvidas++;
+      add('Casas ambíguas', duvidas);
+    }
+    add('Partida', S.partidaAtiva ? 'em andamento (' + (S.det ? S.det.partida.historico().length : 0) + ' lances)' : 'parada');
+    $('diag').innerHTML = linhas.join('');
+  }
+
+  atualizarDiagnostico();
+  desenharGrade($('gradeLeitura'), INICIAL.map(l => l.map(() => 'v')), []);
+  msg('Ligue a câmera para começar.', '');
+})();
+</script>
+</body>
+</html>
