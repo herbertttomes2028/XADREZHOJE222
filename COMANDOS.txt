@@ -1,0 +1,14 @@
+PASSO A PASSO (copie e cole no Terminal, dentro da pasta site-github)
+
+Troque SEU_USUARIO pelo seu nome de usuário do GitHub
+Troque NOME_REPO pelo nome do repositório (ex.: seuusuario.github.io)
+
+git init
+git add .
+git commit -m "Publica site"
+git branch -M main
+git remote add origin https://github.com/SEU_USUARIO/NOME_REPO.git
+git push -u origin main
+
+Depois, no GitHub: Settings > Pages > Source: Deploy from a branch > Branch: main / (root) > Save.
+O site ficará em: https://SEU_USUARIO.github.io/NOME_REPO/  (ou https://SEU_USUARIO.github.io/ se o repo for seuusuario.github.io)

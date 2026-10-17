@@ -2,380 +2,313 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#151f2a">
-<title>Xadrez ao Vivo · Duelo entre amigos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<title>R&R Beauty · Hair Studio feminino</title>
+<meta name="description" content="R&R Beauty Hair Studio: salão feminino com atendimento a domicílio. Alisamento, escovas, hidratação, coloração, mechas, cortes e penteados.">
+<meta property="og:title" content="R&R Beauty · Hair Studio feminino">
+<meta property="og:description" content="Beleza que chega até você. Atendimento a domicílio, com hora marcada.">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<script>document.documentElement.className+=' js'</script>
 <style>
-:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;--bg:#f2f4f5;--panel:#ffffff;--ink:#18252c;--sub:#697780;--line:#dfe5e8;--forest:#236958;--forest2:#0d5045;--lime:#d3ed9b;--light:#ecf0df;--dark:#779383;--accent:#176958;--pill:#e8f2eb;--danger:#bc4b42;--shadow:0 16px 40px #152c2e13;--sq-size:clamp(34px, 9.6vw, 74px)}
-@media(prefers-color-scheme:dark){:root{--bg:#111b21;--panel:#1c2930;--ink:#f2f5f1;--sub:#a0afb2;--line:#35454b;--forest:#9bcab3;--forest2:#68ab94;--pill:#273d38;--accent:#a9d0ac;--shadow:0 18px 40px #0004;--light:#dce5d0;--dark:#638376}}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%}body{background:var(--bg);color:var(--ink)}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.48;cursor:not-allowed}button:focus-visible,input:focus-visible,select:focus-visible,.square:focus-visible{outline:3px solid #dfac49;outline-offset:2px}button{touch-action:manipulation}.hidden{display:none!important}
-.app{max-width:1310px;padding:0 22px 34px;margin:auto}.topbar{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:23px 0 21px}.logo{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:-.7px;font-size:23px}.logo-mark{height:41px;width:41px;border-radius:12px;display:grid;place-items:center;background:#153f3a;color:#fff;font-family:Georgia,serif;font-size:32px}.topnote{font-size:12px;text-transform:uppercase;letter-spacing:1.6px;color:var(--sub);font-weight:800}.header-actions{display:flex;gap:10px;align-items:center}.icon-btn{width:39px;height:39px;display:inline-grid;place-items:center;border:1px solid var(--line);background:var(--panel);border-radius:12px;color:var(--ink);font-size:21px}.btn{border:0;border-radius:11px;padding:12px 16px;font-size:14px;font-weight:750;display:inline-flex;gap:8px;align-items:center;justify-content:center;transition:background .15s,transform .15s}.btn:hover:not(:disabled){transform:translateY(-1px)}.btn.primary{background:#176454;color:white}.btn.primary:hover{background:#0b5243}.btn.soft{background:var(--pill);color:var(--ink)}.btn.outline{background:transparent;border:1px solid var(--line);color:var(--ink)}.btn.danger{background:#fbe6e3;color:#a43e38}.btn.full{width:100%}.btn.sm{padding:8px 12px;font-size:12px;border-radius:9px}.label{color:var(--sub);font-size:12px;font-weight:750;letter-spacing:1.2px;text-transform:uppercase}.muted{color:var(--sub)}
-.start-shell{padding:62px 0 40px}.eyebrow{color:var(--forest2);text-transform:uppercase;letter-spacing:2px;font-weight:800;font-size:12px;margin-bottom:14px}.intro-title{font-weight:850;font-size:clamp(34px,5.8vw,68px);letter-spacing:-3px;line-height:1.08;margin:0 0 16px}.intro-title i{font-family:Georgia,serif;color:var(--forest2);font-style:italic;font-weight:500}.lead{max-width:570px;line-height:1.65;font-size:16px;color:var(--sub);margin-bottom:33px}.start-grid{display:grid;grid-template-columns:1fr 1fr .8fr;gap:18px}.start-card{background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:23px;display:flex;flex-direction:column;gap:14px}.start-card h2{font-size:19px;margin:0;letter-spacing:-.5px}.start-card p{font-size:13px;line-height:1.6;margin:0;color:var(--sub);min-height:42px}.start-icon{background:var(--pill);height:44px;width:44px;display:grid;place-items:center;border-radius:13px;font-size:25px}.field{display:flex;flex-direction:column;gap:7px}.field>span{font-size:12px;font-weight:800;color:var(--sub)}.field input,.field select,.room-code-input{border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);padding:11px 12px;min-height:43px;width:100%;outline:none}.field select{appearance:auto}.twofields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.code-field{text-align:center;letter-spacing:4px;font-size:20px;font-weight:850;text-transform:uppercase}.info-strip{margin-top:20px;border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:14px 17px;line-height:1.5;font-size:12px;color:var(--sub)}
-.game-grid{display:grid;grid-template-columns:minmax(0,720px) minmax(315px,1fr);gap:27px;align-items:start}.stage{min-width:0}.statusbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px 15px;margin-bottom:16px}.status-pill{display:inline-flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);padding:8px 12px;border-radius:30px;font-size:12px;font-weight:700}.dot{width:9px;height:9px;border-radius:100%;background:#d5a94b;box-shadow:0 0 0 3px #cda94b1a}.dot.ok{background:#47a47c}.dot.off{background:#df6b62}.room-chip{font-size:12px;color:var(--sub)}.room-chip strong{color:var(--ink);font-size:15px;letter-spacing:2px}.players{display:flex;align-items:center;justify-content:space-between;background:var(--panel);border-radius:13px;border:1px solid var(--line);padding:12px 14px;margin:9px 0;min-height:74px;gap:8px}.player-identity{display:flex;align-items:center;gap:11px;min-width:0}.player-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:10px;font-size:29px;font-family:Georgia,serif;flex-shrink:0}.player-icon.white{background:#e9ece5;color:#283331}.player-icon.black{background:#2f4146;color:#fff}.player-name{font-size:14px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.player-meta{font-size:11px;color:var(--sub);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.capture{font-family:Georgia,serif;font-size:18px;letter-spacing:-3px;color:var(--sub)}.material{font-size:11px;font-weight:800;color:var(--forest2);margin-left:4px}.clock{font-weight:800;min-width:96px;text-align:center;font-variant-numeric:tabular-nums;font-size:22px;letter-spacing:.4px;padding:8px 12px;border-radius:10px;background:var(--bg);color:var(--ink)}.clock.live{background:#1f6659;color:#fff}.clock.low{background:#b5453d!important;color:#fff;animation:pulse 1s infinite}@keyframes pulse{50%{opacity:.72}}
-.board-frame{position:relative;background:var(--panel);border-radius:13px;box-shadow:var(--shadow);padding:7px;user-select:none;-webkit-user-select:none;touch-action:none}.board{aspect-ratio:1;display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);width:100%;overflow:hidden;border-radius:7px;position:relative}.square{padding:0;margin:0;border:0;position:relative;display:grid;place-items:center;min-width:0;aspect-ratio:1;touch-action:none;background:var(--light);color:#4a6855;cursor:pointer}.square.dark{background:var(--dark);color:#eff6de}.square.last{background:#ecd67b}.square.dark.last{background:#c4af59}.square.selected{background:#badbb9!important}.square.dark.selected{background:#7cac8c!important}.square.check{background:#d9564f!important}.square:before{pointer-events:none}.square.target:before{content:"";position:absolute;width:24%;height:24%;background:#173d3349;border-radius:50%;z-index:1}.square.occupied.target:before{width:88%;height:88%;background:transparent;border:5px solid #173d3370;box-sizing:border-box}.square .piece{z-index:2;font-family:"DejaVu Sans","Segoe UI Symbol","Noto Sans Symbols 2",Georgia,serif;font-size:clamp(27px,5vw,58px);line-height:1;position:relative;pointer-events:none;filter:drop-shadow(0 3px 1px #142f2b3b);transition:transform .12s ease}.square:hover .piece{transform:scale(1.04)}.piece.white{color:#fffef7;-webkit-text-stroke:1.2px #354440;text-shadow:0 2px #566b64}.piece.black{color:#142f31;-webkit-text-stroke:.6px #e4ebd6;text-shadow:0 1px #0004}.coord{position:absolute;font-size:clamp(8px,1.2vw,11px);font-weight:800;z-index:3;pointer-events:none}.coord.rank{top:3px;left:4px}.coord.file{right:4px;bottom:3px}.float-piece{position:absolute;z-index:12;pointer-events:none;display:grid;place-items:center;font-family:"DejaVu Sans","Segoe UI Symbol",Georgia,serif;font-size:clamp(27px,5vw,58px);line-height:1;filter:drop-shadow(0 3px 2px #0006)}.float-piece.white{color:#fffef7;-webkit-text-stroke:1px #354440}.float-piece.black{color:#142f31;-webkit-text-stroke:.5px #f6f6ef}.arriving{visibility:hidden}.drag-ghost{position:fixed;z-index:9999;pointer-events:none;opacity:.94;transform:translate(-50%,-50%);font-size:58px!important;filter:drop-shadow(0 10px 8px #0006)}.board-footer{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;margin-top:15px}.board-footer .group{display:flex;flex-wrap:wrap;gap:8px}.turn-banner{margin:12px 0 4px;font-size:13px;font-weight:750;color:var(--forest2);min-height:20px;text-align:center}
-.side{display:flex;flex-direction:column;gap:16px}.side-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px #00000007}.side-head{padding:17px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px}.side-head h2{font-size:15px;letter-spacing:-.3px;margin:0}.side-head small{font-size:11px;color:var(--sub)}.moves{height:235px;overflow-y:auto;display:grid;grid-template-columns:45px 1fr 1fr;align-content:start;padding:11px 14px;gap:3px}.move-number{text-align:right;padding:10px 9px;color:var(--sub);font-size:12px}.move-san{font-size:13px;font-weight:700;padding:9px 12px;border-radius:6px;align-self:start}.move-san.recent{background:var(--pill);color:var(--forest2)}.empty-moves{grid-column:1/-1;display:grid;place-items:center;text-align:center;min-height:175px;color:var(--sub);font-size:13px}.empty-moves span{display:block;font-size:30px;margin-bottom:10px}.chat-log{height:174px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}.chat-bubble{max-width:92%;background:var(--bg);padding:9px 11px;border-radius:11px;align-self:flex-start;font-size:12px;line-height:1.45;word-break:break-word}.chat-bubble.mine{background:var(--pill);align-self:flex-end}.chat-who{font-size:10px;font-weight:850;margin-bottom:4px;color:var(--forest2)}.chat-input{padding:12px;border-top:1px solid var(--line);display:flex;gap:8px}.chat-input input{width:100%;min-width:0;border:1px solid var(--line);background:var(--bg);border-radius:9px;color:var(--ink);padding:10px;font-size:13px}.chat-input button{border:0;background:#176454;color:#fff;border-radius:9px;padding:0 14px;font-size:17px}.chat-input button:disabled{opacity:.4}.request-card{padding:13px 15px;background:var(--pill);border:1px solid var(--forest2);border-radius:13px;display:flex;flex-direction:column;gap:11px;font-size:13px}.request-card .request-actions{display:flex;gap:8px}.help{font-size:12px;line-height:1.6;color:var(--sub);padding:0 3px}.invite-content{padding:17px 18px}.invite-code{font-size:32px;letter-spacing:7px;font-weight:850;text-align:center;margin:3px 0 13px}.invite-actions{display:flex;gap:8px}.invite-actions>*{flex:1}.invite-tip{margin-top:12px;font-size:11px;color:var(--sub);line-height:1.5}
-.toast-wrap{position:fixed;left:50%;bottom:23px;transform:translateX(-50%);z-index:1000;width:min(92vw,470px);pointer-events:none}.toast{background:#172e2c;color:#fff;padding:12px 16px;border-radius:12px;box-shadow:0 15px 36px #0003;font-size:13px;margin-top:8px;animation:pop .2s ease}@keyframes pop{from{opacity:0;transform:translateY(8px)}}.overlay{position:fixed;inset:0;background:#071517aa;z-index:100;display:grid;place-items:center;padding:20px}.modal{background:var(--panel);color:var(--ink);border-radius:20px;padding:27px;width:min(100%,420px);box-shadow:0 30px 70px #0006}.modal h2{margin:0 0 12px;font-size:23px;letter-spacing:-.7px}.modal p{font-size:14px;line-height:1.65;color:var(--sub)}.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}.promo-options{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:21px}.promo-piece{height:79px;border-radius:10px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;font-family:Georgia,serif;font-size:47px;color:var(--ink)}.promo-piece:hover{border-color:var(--forest2);background:var(--pill)}.code-area{width:100%;min-height:92px;font:12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);padding:10px;resize:vertical;word-break:break-all;margin:4px 0}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
-@media(max-width:950px){.game-grid{grid-template-columns:minmax(0,1fr) 330px;gap:15px}.app{padding:0 13px 27px}.start-grid{grid-template-columns:1fr 1fr}.start-grid .start-card:last-child{grid-column:1/-1}.intro-title{letter-spacing:-2px}}@media(max-width:730px){.app{max-width:610px}.game-grid{grid-template-columns:1fr}.start-shell{padding:22px 0}.start-grid{grid-template-columns:1fr}.start-grid .start-card:last-child{grid-column:auto}.lead{font-size:14px}.intro-title{font-size:42px}.topbar{padding:15px 0}.logo{font-size:19px}.topnote{display:none}.stage{width:100%}.side{display:grid;grid-template-columns:1fr}.board-frame{padding:4px}.players{padding:8px 10px;min-height:62px}.player-icon{width:36px;height:36px;font-size:26px}.clock{font-size:19px;min-width:82px;padding:7px}.square .piece,.float-piece{font-size:clamp(26px,8vw,58px)}.moves{height:200px}.btn.sm{padding:8px 9px;font-size:11px}.board-footer .group{gap:5px}}
-@media(max-width:380px){.player-name{font-size:12px}.board-footer{flex-direction:column;align-items:center}.board-footer .group{width:100%;justify-content:center}.clock{font-size:17px;min-width:72px}.intro-title{font-size:36px}}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#FBF7F2;--bg2:#F4EBDF;--bg3:#E9D8C6;--rose:#DDBFB0;--ink:#3B2A22;--soft:#5A3E32;--mute:#7A5646;--acc:#A67C5B;--line:#E3D3C2;--btn:#3B2A22;--btnt:#FBF7F2;--dk:#2E211B;--dkt:#F6EEE4;--sh:0 14px 40px rgba(59,42,34,.10)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#241A15;--bg2:#2E211B;--bg3:#4A362C;--rose:#7A5646;--ink:#F6EEE4;--soft:#E9D8C6;--mute:#C9A58A;--acc:#C9A58A;--line:#4A362C;--btn:#F6EEE4;--btnt:#241A15;--dk:#17100C;--sh:0 14px 40px rgba(0,0,0,.35)}}
+:root[data-theme="dark"]{--bg:#241A15;--bg2:#2E211B;--bg3:#4A362C;--rose:#7A5646;--ink:#F6EEE4;--soft:#E9D8C6;--mute:#C9A58A;--acc:#C9A58A;--line:#4A362C;--btn:#F6EEE4;--btnt:#241A15;--dk:#17100C;--sh:0 14px 40px rgba(0,0,0,.35)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 84px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:300 17px/1.7 Jost,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.serif{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;line-height:1.05;margin:0}
+h1{font-size:clamp(46px,7.4vw,96px)}h2{font-size:clamp(36px,5vw,60px)}h3{font-size:28px}
+p{margin:0}a{color:inherit}img{max-width:100%;display:block}
+.w{max-width:1160px;margin:0 auto;padding:0 24px}
+section{padding:96px 0}.alt{background:var(--bg2)}
+.eb{font-size:12px;font-weight:400;letter-spacing:6px;text-transform:uppercase;color:var(--mute);margin-bottom:16px}
+.lead{font-size:19px;color:var(--soft);max-width:560px;margin-top:18px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .3s,box-shadow .3s}
+header.scr{border-color:var(--line);box-shadow:0 6px 24px rgba(59,42,34,.06)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:18px;height:72px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font:500 27px 'Cormorant Garamond',Georgia,serif;letter-spacing:2px}
+.brand svg{width:48px;height:34px}
+nav ul{display:flex;gap:20px;list-style:none;margin:0;padding:0;font:400 12px Jost,sans-serif;letter-spacing:2px;text-transform:uppercase}
+nav a{text-decoration:none;color:var(--soft);padding:6px 0;border-bottom:1px solid transparent;transition:.25s}nav a:hover{color:var(--acc);border-color:var(--acc)}
+#mb{display:none;background:none;border:1px solid var(--line);color:var(--ink);border-radius:30px;min-height:44px;padding:0 20px;font:400 13px Jost,sans-serif;letter-spacing:2px;cursor:pointer}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;background:var(--btn);color:var(--btnt);padding:0 30px;border-radius:40px;text-decoration:none;font:500 13px Jost,sans-serif;letter-spacing:2px;text-transform:uppercase;border:1px solid var(--btn);cursor:pointer;transition:transform .25s,box-shadow .25s,background .25s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--sh)}.btn:active{transform:none}
+.btn.o{background:transparent;color:var(--ink);border-color:var(--acc)}.btn.sm{min-height:42px;padding:0 22px;font-size:12px}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.hero{padding:56px 0 40px}.hg{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.hero .lead{font-size:21px}
+.arch{border-radius:260px 260px 16px 16px;aspect-ratio:4/5;overflow:hidden;position:relative;box-shadow:var(--sh)}
+.float{position:absolute;left:-22px;bottom:34px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px 20px;box-shadow:var(--sh);font-size:14px;max-width:230px}
+.float b{display:block;font:500 22px 'Cormorant Garamond',serif}
+.stats{display:flex;gap:56px;margin-top:56px;padding-top:30px;border-top:1px solid var(--line);flex-wrap:wrap}
+.stats b{font:500 52px 'Cormorant Garamond',serif;color:var(--acc);display:block;line-height:1}.stats span{font-size:14px;color:var(--mute)}
+.art,.ph{position:relative;overflow:hidden;background:linear-gradient(165deg,var(--bg3),var(--rose));color:var(--acc);width:100%;height:100%;min-height:100%}
+.art svg,.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tag{position:absolute;left:12px;bottom:10px;font:400 11px Jost,sans-serif;letter-spacing:1px;color:var(--soft);background:color-mix(in srgb,var(--bg) 80%,transparent);padding:3px 10px;border-radius:20px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:34px 0 30px}
+.chip{min-height:44px;padding:0 22px;border-radius:30px;border:1px solid var(--line);background:transparent;color:var(--ink);font:400 14px Jost,sans-serif;cursor:pointer;transition:.25s}
+.chip:hover{border-color:var(--acc)}.chip[aria-pressed=true]{background:var(--btn);color:var(--btnt);border-color:var(--btn)}
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px}
+.sc{background:var(--bg);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;text-align:left;padding:0;color:inherit;font:inherit;transition:transform .35s,box-shadow .35s}
+.sc:hover{transform:translateY(-6px);box-shadow:var(--sh)}
+.sc .im{aspect-ratio:4/3}.sc .tx{padding:20px 22px 24px}.sc h3{font-size:27px;margin-bottom:6px}.sc p{font-size:15px;color:var(--soft)}
+.sc .m{display:flex;justify-content:space-between;margin-top:14px;font-size:13px;color:var(--mute);letter-spacing:1px}
+.tf{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center}
+.cmp{position:relative;aspect-ratio:4/5;max-width:520px;border-radius:16px;overflow:hidden;box-shadow:var(--sh);--p:50%;touch-action:pan-y;user-select:none}
+.cmp .a,.cmp .b{position:absolute;inset:0}.cmp .b{clip-path:inset(0 calc(100% - var(--p)) 0 0)}
+.cmp .ln{position:absolute;top:0;bottom:0;left:var(--p);width:2px;background:var(--bg);box-shadow:0 0 12px rgba(0,0,0,.3);pointer-events:none}
+.cmp .ln::after{content:'↔';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:var(--bg);display:grid;place-items:center;color:var(--ink);box-shadow:var(--sh)}
+.cmp input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.cmp:focus-within .ln::after{outline:2px solid var(--acc)}
+.lb{position:absolute;top:14px;font:500 11px Jost,sans-serif;letter-spacing:3px;text-transform:uppercase;background:var(--bg);padding:5px 14px;border-radius:20px;pointer-events:none}
+.pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+.pc{border:1px solid var(--line);border-radius:16px;padding:34px;background:var(--bg)}
+.pc .ph2{width:96px;height:96px;border-radius:50%;margin-bottom:18px;overflow:hidden}
+.gg{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:190px;gap:14px}
+.gt{border:0;padding:0;border-radius:12px;overflow:hidden;cursor:zoom-in;position:relative;background:none}
+.gt .art,.gt .ph{transition:transform .6s}.gt:hover .art,.gt:hover .ph{transform:scale(1.07)}
+.gt.t{grid-row:span 2}.gt.wd{grid-column:span 2}.gt[hidden]{display:none}
+.cap{position:absolute;left:0;right:0;bottom:0;padding:30px 14px 12px;font-size:13px;letter-spacing:1px;color:#fff;background:linear-gradient(transparent,rgba(30,20,15,.6));opacity:0;transition:.3s;text-align:left}
+.gt:hover .cap,.gt:focus-visible .cap{opacity:1}
+.dk{background:var(--dk);color:var(--dkt);position:relative;overflow:hidden}
+.dk .eb{color:#C9A58A}.dk .lead,.dk p{color:#E9D8C6}
+.sb{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.vals{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:44px;border-top:1px solid #5A3E32;padding-top:30px}
+.vals h3{font-size:25px;color:#E9D8C6;margin-bottom:6px}.vals p{font-size:15px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:44px;counter-reset:s}
+.steps div{padding:6px 26px 6px 0;border-top:1px solid var(--acc);padding-top:22px}.steps div::before{counter-increment:s;content:'0' counter(s);font:500 38px 'Cormorant Garamond',serif;color:var(--acc);display:block}
+.lc{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.cb{border:1px solid var(--line);border-radius:16px;padding:32px;background:var(--bg)}
+.bch{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.bch span{border:1px solid var(--acc);border-radius:30px;padding:6px 18px;font-size:15px}
+.rv-e{border:1px dashed var(--acc);border-radius:16px;padding:44px;text-align:center;max-width:680px;margin:34px auto 0}
+.rvs{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 18px;margin-top:30px}
+.rvs figure{flex:0 0 min(360px,86%);scroll-snap-align:start;margin:0;border:1px solid var(--line);border-radius:16px;padding:28px;background:var(--bg)}
+.wz{background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:36px;box-shadow:var(--sh);margin-top:36px}
+.pb{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:30px}
+.pb div{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mute);border-top:3px solid var(--line);padding-top:8px;transition:.4s}
+.pb div.on{border-color:var(--acc);color:var(--ink)}.pb div.cur{border-color:var(--btn);font-weight:500}
+.wz h3{font-size:34px;margin-bottom:6px}.wz .hint{font-size:15px;color:var(--mute);margin-bottom:22px}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.opt{display:block;position:relative}.opt input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
+.opt span{display:block;border:1px solid var(--line);border-radius:12px;padding:14px 18px;min-height:52px;transition:.2s;font-weight:400}
+.opt input:checked+span{border-color:var(--btn);background:var(--bg2);box-shadow:inset 0 0 0 1px var(--btn)}
+.opt input:focus-visible+span{outline:2px solid var(--acc);outline-offset:2px}
+.fld{display:grid;gap:6px;margin-bottom:16px}.fld label{font-size:13px;letter-spacing:1px;color:var(--mute);font-weight:400}
+.fld input,.fld textarea,input[type=date]{font:400 16px Jost,sans-serif;padding:13px 16px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:100%;min-height:48px}
+.fld input:focus,.fld textarea:focus{border-color:var(--acc)}
+.err{color:#B3402F;font-size:14px;min-height:20px;margin-top:10px}
+.wn{display:flex;justify-content:space-between;gap:12px;margin-top:26px;flex-wrap:wrap}
+.smry{background:var(--bg2);border-radius:14px;padding:22px 26px}.smry dt{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--mute);margin-top:12px}.smry dt:first-child{margin-top:0}.smry dd{margin:2px 0 0;font-weight:400}
+.note{font-size:14px;color:var(--mute);margin-top:16px}
+details{border-bottom:1px solid var(--line);padding:20px 0}summary{cursor:pointer;font:400 19px Jost,sans-serif;min-height:32px}details p{margin-top:10px;color:var(--soft)}
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:34px}
+.cg>div{border:1px solid var(--line);border-radius:14px;padding:24px}.cg b{display:block;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--mute);font-weight:400;margin-bottom:6px}
+footer{background:var(--dk);color:#E9D8C6;padding:72px 0 36px;font-size:15px}
+.fg{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
+footer h4{font:400 12px Jost,sans-serif;letter-spacing:4px;text-transform:uppercase;color:#C9A58A;margin:0 0 14px}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}footer a{text-decoration:none}footer a:hover{color:#fff}
+.cp{border-top:1px solid #4A362C;margin-top:44px;padding-top:22px;font-size:13px;color:#C9A58A}
+dialog{border:0;border-radius:20px;padding:0;max-width:min(940px,94vw);width:100%;background:var(--bg);color:var(--ink);box-shadow:0 30px 80px rgba(0,0,0,.4)}
+dialog::backdrop{background:rgba(30,20,15,.6);backdrop-filter:blur(3px)}
+dialog[open]{animation:dp .35s ease}@keyframes dp{from{opacity:0;transform:translateY(16px) scale(.98)}}
+.dg{display:grid;grid-template-columns:.9fr 1.1fr}.dg .im{min-height:340px}.dg .tx{padding:38px}
+.dg ol{padding-left:20px;margin:6px 0 0}.dg li{margin-bottom:8px}.dg .k{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--mute);margin:20px 0 6px}
+.x{position:absolute;top:14px;right:14px;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:20px;cursor:pointer;z-index:2}
+.wf{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:30;width:56px;height:56px;border-radius:50%;background:#3B6B4E;color:#fff;display:grid;place-items:center;box-shadow:var(--sh);text-decoration:none;font:500 13px Jost,sans-serif}
+.fb{display:none}
+.js .rv{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s ease}.js .rv.in{opacity:1;transform:none}
+@media(max-width:1060px){#mb{display:block}nav{display:none;position:absolute;left:0;right:0;top:72px;background:var(--bg);border-bottom:1px solid var(--line);padding:18px 24px 24px}nav.on{display:block}nav ul{flex-direction:column;gap:6px}nav a{display:block;padding:12px 0;font-size:14px}.hb{display:none}}
+@media(max-width:860px){section{padding:64px 0}.hg,.tf,.sb,.lc,.dg,.fg{grid-template-columns:1fr}.hg{gap:34px}.arch{max-width:420px}.float{left:12px}.steps{grid-template-columns:1fr 1fr;gap:26px 0}.vals{grid-template-columns:1fr}.gg{grid-template-columns:1fr 1fr;grid-auto-rows:160px}.gt.wd{grid-column:span 2}.wz{padding:22px}.pb div{font-size:0;padding-top:0}.dg .im{min-height:220px}.fb{display:flex;position:fixed;left:16px;right:84px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:29;justify-content:center}.stats{gap:30px}}
+@media(max-width:520px){.steps{grid-template-columns:1fr}.btn{width:100%}.btns .btn{flex:1}.wn .btn{flex:1}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}.js .rv{opacity:1;transform:none}}
 </style>
 </head>
 <body>
-<div class="app">
-<header class="topbar"><div class="logo"><div class="logo-mark" aria-hidden="true">♞</div><div>Xadrez <span style="color:var(--forest2)">ao Vivo</span></div></div><div class="header-actions"><span class="topnote">DUAS MENTES · UM TABULEIRO</span><button id="soundToggle" class="icon-btn" title="Silenciar / ativar sons" aria-label="Alternar som">♫</button></div></header>
-<section id="startScreen" class="start-shell">
-  <div class="eyebrow">O clássico, em qualquer lugar</div>
-  <h1 class="intro-title">Seu próximo lance<br>é com <i>um amigo.</i></h1>
-  <p class="lead">Crie uma sala e compartilhe o código. Xadrez completo, relógio, chat e lances sincronizados em tempo real, diretamente no navegador.</p>
-  <div class="start-grid">
-    <article class="start-card"><div class="start-icon">♔</div><h2>Criar uma sala</h2><p>Você escolhe a cor, configura o tempo e convida o adversário.</p><div class="twofields"><label class="field"><span>Sua cor</span><select id="colorSelect"><option value="random">Sortear</option><option value="w">Brancas</option><option value="b">Pretas</option></select></label><label class="field"><span>Relógio</span><select id="timeSelect"><option value="180,2">3 + 2</option><option value="300,0" selected>5 + 0</option><option value="600,0">10 + 0</option><option value="0,0">Sem relógio</option></select></label></div><button id="createBtn" class="btn primary full">Criar sala ↗</button><button id="resumeBtn" class="btn soft full hidden">Retomar sala anterior</button></article>
-    <article class="start-card"><div class="start-icon">♚</div><h2>Entrar na sala</h2><p>Digite o código recebido do seu amigo para jogar do outro lado.</p><label class="field"><span>Código de 6 caracteres</span><input id="joinInput" class="code-field" maxlength="6" placeholder="A7K2MT" autocomplete="off" spellcheck="false" aria-label="Código da sala"></label><button id="joinBtn" class="btn primary full">Entrar na sala →</button></article>
-    <article class="start-card"><div class="start-icon">♙</div><h2>Mesmo dispositivo</h2><p>Sem internet: duas pessoas, um tabuleiro. Todas as regras e funções essenciais.</p><div style="flex:1"></div><button id="localBtn" class="btn outline full">Jogar localmente</button></article>
-  </div>
-  <div style="margin-top:14px"><button id="manualBtn" class="btn outline full">Jogar sem servidor (trocar códigos manualmente)</button></div>
-  <div class="info-strip"><b>Como funciona o online:</b> conexão WebRTC entre navegadores, com sinalização pública do PeerServer. É necessária internet nos dois dispositivos. Para enviar um link clicável, hospede este arquivo HTML em um endereço HTTPS; se o abrir como arquivo local, envie uma cópia do arquivo e o código ao amigo.</div>
-</section>
-<main id="gameScreen" class="game-grid hidden">
-  <section class="stage" aria-label="Partida de xadrez">
-    <div class="statusbar"><div class="status-pill"><span id="netDot" class="dot"></span><span id="netLabel">Preparando…</span></div><div class="room-chip" id="roomLabel"></div></div>
-    <div id="playerTop" class="players"></div>
-    <div id="boardFrame" class="board-frame"><div id="board" class="board" role="grid" aria-label="Tabuleiro"></div></div>
-    <div id="playerBottom" class="players"></div>
-    <div id="turnBanner" class="turn-banner" aria-live="polite"></div>
-    <div class="board-footer"><div class="group"><button id="flipBtn" class="btn outline sm">⇅ Inverter</button><button id="copyFenBtn" class="btn outline sm">Copiar FEN</button><button id="newBtn" class="btn outline sm">↩ Nova partida</button></div><div class="group"><button id="undoBtn" class="btn soft sm">↶ Desfazer</button><button id="drawBtn" class="btn soft sm">½ Empate</button><button id="resignBtn" class="btn danger sm">Desistir</button></div></div>
-  </section>
-  <aside class="side">
-    <div id="requestCard" class="request-card hidden"></div>
-    <section id="inviteCard" class="side-card hidden"><div class="side-head"><h2>Convide seu amigo</h2><small>Partida particular por código</small></div><div class="invite-content"><div class="label" style="text-align:center">Código da sala</div><div id="inviteCode" class="invite-code"></div><div class="invite-actions"><button id="copyCodeBtn" class="btn soft sm">Copiar código</button><button id="copyLinkBtn" class="btn primary sm">Copiar link</button></div><div id="inviteTip" class="invite-tip"></div></div></section>
-    <section id="manualCard" class="side-card hidden"><div class="invite-content"><div class="invite-tip" style="margin-top:0">Modo sem servidor: o convite é um código longo, enviado por chat.</div><button id="manualOpenBtn" class="btn primary full sm" style="margin-top:10px">Mostrar código de convite</button></div></section>
-    <section class="side-card"><div class="side-head"><h2>Registro de lances</h2><small id="moveCount">0 lances</small></div><div id="movesList" class="moves" aria-live="polite"></div></section>
-    <section class="side-card"><div class="side-head"><h2>Chat da partida</h2><small id="chatIndicator">Mensagens</small></div><div id="chatLog" class="chat-log" aria-live="polite"></div><form id="chatForm" class="chat-input"><input id="chatText" maxlength="500" placeholder="Escreva uma mensagem…" autocomplete="off" aria-label="Mensagem"><button id="chatSend" type="submit" aria-label="Enviar mensagem">➤</button></form></section>
-    <div class="help">Dica: clique numa peça para ver os destinos legais ou arraste-a até a casa desejada. Roque, en passant, promoção e empates seguem as regras oficiais.</div>
-  </aside>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="rr" viewBox="-6 10 212 130" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M100 20V80M100 20H134A30 30 0 0 1 134 80H100M100 20H66A30 30 0 0 0 66 80H100"/><path d="M112 80C124 108 142 134 178 134C188 134 196 130 200 124M88 80C76 108 58 134 22 134C12 134 4 130 0 124"/></symbol></svg>
+<header id="hd"><div class="w bar">
+<a class="brand" href="#inicio" aria-label="R&R Beauty, início"><svg aria-hidden="true"><use href="#rr"/></svg>R&amp;R</a>
+<nav id="nav" aria-label="Principal"><ul>
+<li><a href="#inicio">Início</a></li><li><a href="#servicos">Serviços</a></li><li><a href="#transformacoes">Transformações</a></li><li><a href="#profissionais">Profissionais</a></li><li><a href="#galeria">Galeria</a></li><li><a href="#sobre">Sobre</a></li><li><a href="#avaliacoes">Avaliações</a></li><li><a href="#contato">Contato</a></li></ul></nav>
+<div style="display:flex;gap:10px;align-items:center"><a class="btn sm hb" href="#agendar">Agendar horário</a><button id="mb" aria-expanded="false" aria-controls="nav">Menu</button></div>
+</div></header>
+<main>
+<section id="inicio" class="hero"><div class="w">
+<div class="hg"><div class="rv">
+<div class="eb">Hair studio feminino</div>
+<h1>Beleza que chega até você.</h1>
+<p class="lead">Duas amigas, um sonho e o seu cabelo no centro de tudo. Atendimento a domicílio, com hora marcada e muito carinho.</p>
+<div class="btns"><a class="btn" href="#agendar">Agendar horário</a><a class="btn o" href="#servicos">Conhecer serviços</a><a class="btn o" href="#transformacoes">Ver transformações</a></div></div>
+<div class="rv" style="position:relative"><div class="arch" id="s-hero"></div><div class="float"><b>Hora marcada</b>Atendimento a domicílio, no conforto da sua casa.</div></div></div>
+<div class="stats rv"><div><b data-n="3">0</b><span>anos de experiência no mercado</span></div><div><b data-n="2">0</b><span>profissionais, uma só equipe</span></div><div><b>100%</b><span>atendimento a domicílio</span></div></div>
+</div></section>
+
+<section id="servicos" class="alt"><div class="w">
+<div class="rv"><div class="eb">Serviços</div><h2>Cada cabelo tem a sua história.</h2><p class="lead">Escolha uma categoria, conheça o serviço e agende em poucos passos. Duração e valor são combinados conforme o seu cabelo.</p></div>
+<div class="chips" id="sf" role="group" aria-label="Filtrar serviços"></div>
+<div class="sg" id="sg"></div>
+</div></section>
+
+<section id="transformacoes"><div class="w tf">
+<div class="cmp rv" id="cmp"><div class="a"></div><div class="b"></div><span class="lb" style="left:14px">Antes</span><span class="lb" style="right:14px">Depois</span><div class="ln"></div><input type="range" min="0" max="100" value="50" aria-label="Comparar antes e depois"></div>
+<div class="rv"><div class="eb">Transformações</div><h2>Resultados que você vê no espelho.</h2>
+<p class="lead">Arraste a divisão para comparar o antes e o depois. Aqui entram as transformações reais das nossas clientes, com autorização delas.</p>
+<p class="note">Imagem ilustrativa de demonstração do comparador.</p>
+<div class="btns"><a class="btn" href="#agendar">Quero a minha transformação</a></div></div>
+</div></section>
+
+<section id="profissionais" class="alt"><div class="w">
+<div class="rv"><div class="eb">Profissionais</div><h2>Quem cuida de você.</h2></div>
+<div class="pg" id="pg" style="margin-top:36px"></div>
+</div></section>
+
+<section id="galeria"><div class="w">
+<div class="rv"><div class="eb">Galeria</div><h2>Detalhes que fazem diferença.</h2></div>
+<div class="chips" id="gf" role="group" aria-label="Filtrar galeria"></div>
+<div class="gg" id="gg"></div>
+</div></section>
+
+<section id="sobre" class="dk"><div class="w"><div class="sb">
+<div class="rv"><div class="eb">Sobre o salão</div><h2>Nascemos de uma amizade.</h2>
+<p class="lead">A R&amp;R Beauty nasceu da parceria de duas amigas que vivem de cabelo há mais de 3 anos. Entre cortes, escovas e muitas histórias, surgiu o sonho de ter o nosso próprio salão.</p>
+<p class="lead">Somos jovens, apaixonadas por beleza e acreditamos que um cabelo bem cuidado melhora o dia de qualquer mulher. Por enquanto, o salão vai até você. O espaço próprio é o próximo capítulo.</p></div>
+<div class="rv"><div class="arch" id="s-sobre" style="max-width:440px;margin-left:auto"></div></div></div>
+<div class="vals rv"><div><h3>Escuta de verdade</h3><p>Antes de qualquer técnica, conversamos sobre o seu cabelo, a sua rotina e o resultado que você deseja.</p></div><div><h3>Cuidado com o fio</h3><p>Indicamos o que é bom para o seu cabelo, e não só o que está na moda.</p></div><div><h3>Alegria no atendimento</h3><p>Jovens, leves e dedicadas: queremos que você se olhe no espelho e sorria.</p></div></div>
+</div></section>
+
+<section id="como"><div class="w">
+<div class="rv"><div class="eb">Como funciona</div><h2>O salão vai até você.</h2></div>
+<div class="steps rv"><div>Você chama a gente no WhatsApp ou no Instagram e conta o que deseja.</div><div>Combinamos o serviço, o dia e o horário.</div><div>Chegamos na sua casa com o que for necessário para o atendimento.</div><div>Você relaxa e, no final, se olha no espelho de novo.</div></div>
+<p class="note" style="margin-top:28px">Para o atendimento, basta um cantinho com boa iluminação, uma tomada e uma cadeira. Se tiver dúvida, é só perguntar.</p>
+</div></section>
+
+<section id="atendimento" class="alt"><div class="w lc">
+<div class="rv"><div class="eb">Localidade</div><h2>Onde atendemos.</h2><p class="lead">Atendimento a domicílio, com hora marcada. Confira se a sua região está na lista ou pergunte para a gente.</p>
+<div class="btns"><a class="btn wa" data-msg="Olá! Vocês atendem no meu bairro?" href="#contato">Atendem no meu bairro?</a></div></div>
+<div class="cb rv"><div class="eb" style="margin-bottom:6px">Cidade</div><h3 id="cidade"></h3><div class="eb" style="margin:22px 0 0">Bairros atendidos</div><div class="bch" id="bairros"></div></div>
+</div></section>
+
+<section id="avaliacoes"><div class="w">
+<div class="rv"><div class="eb">Avaliações</div><h2>O que nossas clientes dizem.</h2></div>
+<div id="rvw"></div>
+</div></section>
+
+<section id="agendar" class="alt"><div class="w">
+<div class="rv"><div class="eb">Agendamento</div><h2>Agende em poucos passos.</h2><p class="lead">Monte o seu pedido e envie para a nossa equipe. O horário só fica confirmado depois da nossa resposta.</p></div>
+<div class="wz rv" id="wz" aria-live="polite"></div>
+</div></section>
+
+<section><div class="w" style="max-width:820px"><div class="eb">Dúvidas</div><h2>Perguntas frequentes</h2>
+<div style="margin-top:28px">
+<details><summary>Como faço para agendar?</summary><p>Monte o pedido aqui no site ou chame a equipe pelo WhatsApp ou Instagram. Combinamos o serviço, o dia e o horário que ficarem melhores para você.</p></details>
+<details><summary>Quanto custa e quanto tempo demora?</summary><p>Depende do serviço, do comprimento e das condições do seu cabelo. Depois de conversarmos, passamos o valor e o tempo estimado.</p></details>
+<details><summary>Vocês atendem em salão?</summary><p>No momento atendemos a domicílio. O nosso espaço próprio está nos planos e vamos avisar nas redes quando chegar.</p></details>
+<details><summary>Posso marcar para mais de uma pessoa?</summary><p>Pode sim. Conte para nós e organizamos o melhor horário para todas.</p></details>
+</div></div></section>
+
+<section id="contato" class="alt"><div class="w">
+<div class="rv"><div class="eb">Contato</div><h2>Vamos cuidar do seu cabelo?</h2><p class="lead">Chame a gente para agendar ou tirar dúvidas.</p></div>
+<div class="cg rv" id="cg"></div>
+<div class="btns"><a class="btn wa" data-msg="Olá! Gostaria de agendar um horário." href="#agendar">Agendar horário</a></div>
+</div></section>
 </main>
-</div>
-<div id="toastWrap" class="toast-wrap" aria-live="polite"></div>
-<div id="modalOverlay" class="overlay hidden"><div id="modalBody" class="modal" role="dialog" aria-modal="true"></div></div>
+<footer><div class="w"><div class="fg">
+<div><div class="brand" style="color:#F6EEE4;margin-bottom:14px"><svg aria-hidden="true"><use href="#rr"/></svg>R&amp;R Beauty</div><p>Hair studio feminino com atendimento a domicílio. Beleza que alegra.</p></div>
+<div><h4>Navegação</h4><ul><li><a href="#servicos">Serviços</a></li><li><a href="#transformacoes">Transformações</a></li><li><a href="#galeria">Galeria</a></li><li><a href="#sobre">Sobre</a></li><li><a href="#agendar">Agendar</a></li></ul></div>
+<div><h4>Serviços</h4><ul id="fs"></ul></div>
+<div><h4>Contato</h4><ul id="fc"></ul></div>
+</div><div class="cp">© <span id="y"></span> R&amp;R Beauty · Hair Studio. Todos os direitos reservados.</div></div></footer>
+<a class="btn fb" href="#agendar">Agendar horário</a>
+<dialog id="dlg" aria-label="Detalhes"><button class="x" aria-label="Fechar" id="dx">×</button><div id="dc"></div></dialog>
 <script>
-'use strict';
-/* Xadrez ao Vivo — arquivo único. As regras, UI e cliente WebRTC são implementados
-   em JavaScript nativo. Só a sinalização do WebRTC usa a rede PeerServer Cloud.
-   O anfitrião valida todos os lances e mantém o estado autoritativo. */
-const $ = id => document.getElementById(id);
-/* SERVIDOR DE SINALIZAÇÃO (PeerJS). Troque pelo seu servidor. Ele precisa ser HTTPS/WSS (com certificado válido).
-   host: domínio sem https://   port: 443   path: '/peerjs' (endpoint do servidor incluído na pasta servidor-sinalizacao)   key: a mesma chave do servidor */
-const SIGNAL={host:'site-xadrez.onrender.com',port:443,path:'/peerjs',key:'peerjs'};
-// Armazenamento pode estar bloqueado em visualizadores incorporados.
-const storage=(()=>{try{window.localStorage.getItem('xadrez_test');return window.localStorage}catch{return{getItem:()=>null,setItem:()=>{},removeItem:()=>{}}}})();
-const FILES='abcdefgh', INITIAL='rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
-const SYMBOLS={K:'♔',Q:'♕',R:'♖',B:'♗',N:'♘',P:'♙',k:'♚',q:'♛',r:'♜',b:'♝',n:'♞',p:'♟'};
-const VAL={p:1,n:3,b:3,r:5,q:9,k:0};
-const copy=o=>JSON.parse(JSON.stringify(o));
-const color=p=>p===p.toUpperCase()?'w':'b';
-const opposite=c=>c==='w'?'b':'w';
-const pos=(r,c)=>FILES[c]+(8-r);
-const sq=s=>({r:8-Number(s[1]),c:FILES.indexOf(s[0])});
-const validSquare=s=>typeof s==='string'&&/^[a-h][1-8]$/.test(s);
-const inside=(r,c)=>r>=0&&r<8&&c>=0&&c<8;
-const pieceName={k:'Rei',q:'Dama',r:'Torre',b:'Bispo',n:'Cavalo',p:'Peão'};
-
-/* Motor de xadrez: gera pseudo-lances, elimina os que expõem o próprio rei,
-   calcula xeque, SAN, roques, en passant, promoções e empates. */
-class ChessGame{
- constructor(){this.reset()}
- reset(){this.board=INITIAL.split('/').map(row=>{let a=[];for(const ch of row){if(/\d/.test(ch))for(let i=0;i<+ch;i++)a.push(null);else a.push(ch)}return a});this.turn='w';this.castling={K:true,Q:true,k:true,q:true};this.ep=null;this.halfmove=0;this.fullmove=1;this.moves=[];this.history=[];this.positionKeys=[this.key()];this.status=null;}
- snapshot(){return{board:copy(this.board),turn:this.turn,castling:copy(this.castling),ep:this.ep,halfmove:this.halfmove,fullmove:this.fullmove,status:copy(this.status)}}
- load(s){this.board=copy(s.board);this.turn=s.turn;this.castling=copy(s.castling);this.ep=s.ep;this.halfmove=s.halfmove;this.fullmove=s.fullmove;this.status=copy(s.status)}
- export(includeHistory=false){const out={...this.snapshot(),moves:copy(this.moves),positionKeys:[...this.positionKeys]};if(includeHistory)out.history=copy(this.history);return out}
- import(data){if(!data||!Array.isArray(data.board)||data.board.length!==8||!['w','b'].includes(data.turn))throw Error('Estado remoto inválido');this.load(data);this.moves=Array.isArray(data.moves)?copy(data.moves):[];this.positionKeys=Array.isArray(data.positionKeys)?[...data.positionKeys]:[this.key()];this.history=Array.isArray(data.history)?copy(data.history):[]}
- fen(){const board=this.board.map(row=>{let str='',run=0;for(const p of row){if(p){if(run)str+=run;run=0;str+=p}else run++}if(run)str+=run;return str}).join('/');const cas=Object.keys(this.castling).filter(k=>this.castling[k]).join('')||'-';return `${board} ${this.turn} ${cas} ${this.ep||'-'} ${this.halfmove} ${this.fullmove}`}
- key(){// Na repetição, a casa en passant só altera a posição se a captura for legal.
-  let ep='-';if(this.ep){const {r,c}=sq(this.ep),pawn=this.turn==='w'?'P':'p',pr=r+(this.turn==='w'?1:-1);for(const dc of [-1,1])if(inside(pr,c+dc)&&this.board[pr][c+dc]===pawn){const m={from:pos(pr,c+dc),to:this.ep,ep:true};let b=copy(this.board);this.applyBoardOnly(b,m);if(!this.attackedKingOn(b,this.turn)){ep=this.ep;break}}}
-  const br=this.board.map(row=>row.map(p=>p||'.').join('')).join('');return br+'|'+this.turn+'|'+Object.keys(this.castling).filter(k=>this.castling[k]).join('')+'|'+ep;
- }
- kingOn(b,side){const target=side==='w'?'K':'k';for(let r=0;r<8;r++)for(let c=0;c<8;c++)if(b[r][c]===target)return{r,c};return null}
- attackedKingOn(b,side){const k=this.kingOn(b,side);return !k||this.isAttacked(b,k.r,k.c,opposite(side))}
- isAttacked(b,r,c,by){
-  const pawn=by==='w'?'P':'p',pawnRow=r+(by==='w'?1:-1);for(const dc of [-1,1])if(inside(pawnRow,c+dc)&&b[pawnRow][c+dc]===pawn)return true;
-  for(const[dr,dc]of [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]])if(inside(r+dr,c+dc)&&b[r+dr][c+dc]===(by==='w'?'N':'n'))return true;
-  for(const[dr,dc]of [[-1,-1],[-1,1],[1,-1],[1,1],[-1,0],[1,0],[0,-1],[0,1]]){let rr=r+dr,cc=c+dc,steps=1;while(inside(rr,cc)){const p=b[rr][cc];if(p){if(color(p)===by){const t=p.toLowerCase();if((steps===1&&t==='k')||((dr===0||dc===0)&&(t==='r'||t==='q'))||((dr!==0&&dc!==0)&&(t==='b'||t==='q')))return true}break}rr+=dr;cc+=dc;steps++}}
-  return false;
- }
- inCheck(side=this.turn){return this.attackedKingOn(this.board,side)}
- pseudo(r,c){const p=this.board[r][c],side=color(p),enemy=opposite(side),t=p.toLowerCase(),moves=[];
-  const put=(rr,cc,extra={})=>{if(!inside(rr,cc))return;const q=this.board[rr][cc];if(q&&(color(q)===side||q.toLowerCase()==='k'))return;const base={from:pos(r,c),to:pos(rr,cc),piece:t,captured:q?q.toLowerCase():null,...extra};if(t==='p'&&(rr===0||rr===7))for(const promotion of ['q','r','b','n'])moves.push({...base,promotion});else moves.push(base)};
-  if(t==='p'){const step=side==='w'?-1:1,home=side==='w'?6:1;
-   if(inside(r+step,c)&&!this.board[r+step][c]){put(r+step,c);if(r===home&&!this.board[r+2*step][c])put(r+2*step,c,{double:true})}
-   for(const dc of [-1,1]){const rr=r+step,cc=c+dc;if(!inside(rr,cc))continue;const q=this.board[rr][cc];if(q&&color(q)===enemy&&q.toLowerCase()!=='k')put(rr,cc);if(this.ep===pos(rr,cc)&&this.board[r][cc]===(side==='w'?'p':'P'))put(rr,cc,{ep:true,captured:'p'})}
-  }else if(t==='n'){for(const[dr,dc]of [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]])put(r+dr,c+dc)}
-  else if(t==='k'){
-   for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++)if(dr||dc)put(r+dr,c+dc);
-   const home=side==='w'?7:0,king=side==='w'?'K':'k';if(r===home&&c===4&&p===king&&!this.inCheck(side)){
-    const rook=side==='w'?'R':'r';const chk=step=>this.isAttacked(this.board,home,step,enemy);
-    if(this.castling[side==='w'?'K':'k']&&this.board[home][7]===rook&&!this.board[home][5]&&!this.board[home][6]&&!chk(5)&&!chk(6))put(home,6,{castle:'k'});
-    if(this.castling[side==='w'?'Q':'q']&&this.board[home][0]===rook&&!this.board[home][1]&&!this.board[home][2]&&!this.board[home][3]&&!chk(3)&&!chk(2))put(home,2,{castle:'q'});
-   }
-  }else{const dirs=[];if(t==='b'||t==='q')dirs.push([-1,-1],[-1,1],[1,-1],[1,1]);if(t==='r'||t==='q')dirs.push([-1,0],[1,0],[0,-1],[0,1]);for(const[dr,dc]of dirs){let rr=r+dr,cc=c+dc;while(inside(rr,cc)){const q=this.board[rr][cc];if(q&&color(q)===side)break;put(rr,cc);if(q)break;rr+=dr;cc+=dc}}}
-  return moves;
- }
- applyBoardOnly(b,m){const f=sq(m.from),t=sq(m.to),p=b[f.r][f.c];b[f.r][f.c]=null;if(m.ep)b[f.r][t.c]=null;if(m.castle){const col=m.castle==='k'?7:0,dest=m.castle==='k'?5:3;b[f.r][dest]=b[f.r][col];b[f.r][col]=null}b[t.r][t.c]=m.promotion?(color(p)==='w'?m.promotion.toUpperCase():m.promotion):p}
- legal(from,side=this.turn){if(!validSquare(from))return[];const f=sq(from),p=this.board[f.r][f.c];if(!p||color(p)!==side)return[];return this.pseudo(f.r,f.c).filter(m=>{const b=copy(this.board);this.applyBoardOnly(b,m);return !this.attackedKingOn(b,side)})}
- allLegal(side=this.turn){const all=[];for(let r=0;r<8;r++)for(let c=0;c<8;c++)if(this.board[r][c]&&color(this.board[r][c])===side)all.push(...this.legal(pos(r,c),side));return all}
- insufficient(){const units=[];for(let r=0;r<8;r++)for(let c=0;c<8;c++){const p=this.board[r][c];if(p&&p.toLowerCase()!=='k')units.push({p:p.toLowerCase(),squareColor:(r+c)%2})}if(!units.length)return true;if(units.length===1&&['n','b'].includes(units[0].p))return true;return units.every(x=>x.p==='b')&&units.every(x=>x.squareColor===units[0].squareColor)}
- sanOf(m,possible){if(m.castle)return m.castle==='k'?'O-O':'O-O-O';let label=m.piece==='p'?'':m.piece.toUpperCase();if(m.piece!=='p'){
-   const same=possible.filter(x=>x!==m&&x.to===m.to&&x.piece===m.piece&&x.from!==m.from);
-   if(same.length){const file=m.from[0],rank=m.from[1];if(!same.some(x=>x.from[0]===file))label+=file;else if(!same.some(x=>x.from[1]===rank))label+=rank;else label+=file+rank}
-  }else if(m.captured)label=m.from[0];return label+(m.captured?'x':'')+m.to+(m.promotion?'='+m.promotion.toUpperCase():'')}
- play(from,to,promotion='q'){
-  if(this.status)return{error:'A partida já terminou.'};if(!validSquare(from)||!validSquare(to))return{error:'Casa inválida.'};
-  const all=this.allLegal(),found=all.find(x=>x.from===from&&x.to===to&&(!x.promotion||x.promotion===promotion));if(!found)return{error:'Lance ilegal: não é possível mover essa peça para lá.'};
-  const san=this.sanOf(found,all),before=this.snapshot();this.history.push(before);
-  const f=sq(from),t=sq(to),piece=this.board[f.r][f.c];this.applyBoardOnly(this.board,found);
-  if(piece==='K'){this.castling.K=false;this.castling.Q=false}if(piece==='k'){this.castling.k=false;this.castling.q=false}
-  if(from==='a1'||to==='a1')this.castling.Q=false;if(from==='h1'||to==='h1')this.castling.K=false;
-  if(from==='a8'||to==='a8')this.castling.q=false;if(from==='h8'||to==='h8')this.castling.k=false;
-  this.ep=found.double?pos((f.r+t.r)/2,f.c):null;this.halfmove=found.piece==='p'||found.captured?0:this.halfmove+1;if(this.turn==='b')this.fullmove++;
-  this.turn=opposite(this.turn);this.positionKeys.push(this.key());
-  const checked=this.inCheck(this.turn),next=this.allLegal(),mate=checked&&next.length===0;
-  const doneSan=san+(mate?'#':checked?'+':'');const entry={from,to,piece:found.piece,captured:found.captured,promotion:found.promotion||null,castle:found.castle||null,ep:!!found.ep,san:doneSan,by:opposite(this.turn)};
-  this.moves.push(entry);
-  if(mate)this.status={kind:'mate',winner:opposite(this.turn),reason:'Xeque-mate'};
-  else if(!next.length)this.status={kind:'draw',reason:'Afogamento (rei sem lances legais)'};
-  else if(this.insufficient())this.status={kind:'draw',reason:'Material insuficiente'};
-  else if(this.positionKeys.filter(x=>x===this.positionKeys[this.positionKeys.length-1]).length>=3)this.status={kind:'draw',reason:'Repetição tripla de posição'};
-  else if(this.halfmove>=100)this.status={kind:'draw',reason:'Regra dos 50 lances'};
-  return{move:entry,check:checked,mate:mate,end:!!this.status};
- }
- undo(){if(!this.history.length)return false;this.load(this.history.pop());this.moves.pop();this.positionKeys.pop();this.status=null;return true}
-}
-
-/* Estado da aplicação e persistência local (a sessão online pertence ao anfitrião). */
-let game=new ChessGame(), mode='menu', room='', hostColor='w', myColor='w', orientation='w', flipped=false, selected=null, lastKnownMove=0;
-let activeConn=null, signal=null, guestToken='', assignedToken='', peerConnected=false, lastHeartbeat=0, retryAt=0, retryCount=0;
-let timeConfig={base:300000,inc:0},clock={w:300000,b:300000,running:false,lastAt:0},pending=null,chats=[],lastClockSave=0;
-let muted=storage.getItem('xadrez_muted')==='true', audioCtx=null,modalActive=false,drag=null,suppressClick=false;
-let manual=false;
-const isHost=()=>mode==='host'||mode==='local';
-const canMove=()=>!modalActive&&!pending&&!game.status&&(mode==='local'||(mode==='host'?peerConnected:mode==='guest'&&peerConnected))&&(mode==='local'||game.turn===myColor);
-const remember=()=>{if(mode==='host'&&room&&!manual){try{storage.setItem('xadrez_lastRoom',room);storage.setItem('xadrez_room_'+room,JSON.stringify({game:game.export(true),hostColor,timeConfig,clock,pending,chats,assignedToken,version:1}))}catch(e){}}};
-const fromStorage=code=>{try{const obj=JSON.parse(storage.getItem('xadrez_room_'+code));if(obj?.version===1&&obj.game){game.import(obj.game);hostColor=obj.hostColor;timeConfig=obj.timeConfig;clock=obj.clock;pending=obj.pending;chats=obj.chats||[];assignedToken=obj.assignedToken||'';return true}}catch(e){}return false};
-function randomCode(n=6){const a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',bits=new Uint32Array(n);crypto.getRandomValues(bits);return [...bits].map(x=>a[x%a.length]).join('')}
-function toast(s){const d=document.createElement('div');d.className='toast';d.textContent=s;$('toastWrap').append(d);setTimeout(()=>d.remove(),4200)}
-function playSound(which){if(muted)return;try{audioCtx ||= new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();const now=audioCtx.currentTime,osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.type=which==='end'?'triangle':'sine';osc.frequency.setValueAtTime(which==='capture'?280:which==='check'?550:which==='end'?330:450,now);osc.frequency.exponentialRampToValueAtTime(which==='capture'?160:which==='check'?730:which==='end'?200:360,now+.11);gain.gain.setValueAtTime(.042,now);gain.gain.exponentialRampToValueAtTime(.001,now+.14);osc.connect(gain).connect(audioCtx.destination);osc.start(now);osc.stop(now+.15)}catch(e){}}
-function modal(title,message,actions){modalActive=true;const body=$('modalBody');body.replaceChildren();const h=document.createElement('h2');h.textContent=title;body.append(h);if(message){const p=document.createElement('p');p.textContent=message;body.append(p)}const line=document.createElement('div');line.className='modal-actions';actions.forEach(x=>{const b=document.createElement('button');b.textContent=x.text;b.className='btn '+(x.css||'soft');b.addEventListener('click',()=>{closeModal();x.fn?.()});line.append(b)});body.append(line);$('modalOverlay').classList.remove('hidden')}
-function closeModal(){modalActive=false;$('modalOverlay').classList.add('hidden')}
-function promoDialog(from,to,choices){modalActive=true;$('modalBody').replaceChildren();const h=document.createElement('h2');h.textContent='Promover peão';const p=document.createElement('p');p.textContent='Escolha a peça que substituirá o peão.';const grid=document.createElement('div');grid.className='promo-options';choices.forEach(promo=>{const b=document.createElement('button');b.className='promo-piece';b.textContent=SYMBOLS[game.turn==='w'?promo.toUpperCase():promo];b.title=pieceName[promo];b.setAttribute('aria-label',pieceName[promo]);b.onclick=()=>{closeModal();submitMove(from,to,promo)};grid.append(b)});const cancel=document.createElement('button');cancel.className='btn outline full';cancel.style.marginTop='14px';cancel.textContent='Cancelar';cancel.onclick=closeModal;$('modalBody').append(h,p,grid,cancel);$('modalOverlay').classList.remove('hidden')}
-const clockEnabled=()=>timeConfig.base>0;
-function clockCommit(){if(clockEnabled()&&clock.running&&!game.status){const dt=Math.max(0,Date.now()-clock.lastAt);clock[game.turn]=Math.max(0,clock[game.turn]-dt);clock.lastAt=Date.now();if(clock[game.turn]<=0){clock.running=false;game.status={kind:'flag',winner:opposite(game.turn),reason:'Tempo esgotado'};playSound('end');remember();broadcast()}}}
-function liveTime(side){let v=clock[side]||0;if(clockEnabled()&&clock.running&&!game.status&&game.turn===side)v-=Math.max(0,Date.now()-clock.lastAt);return Math.max(0,v)}
-function formatTime(ms){const seconds=Math.ceil(ms/1000);if(seconds<60)return '0:'+String(Math.floor(seconds)).padStart(2,'0')+'.'+Math.floor((ms%1000)/100);return Math.floor(seconds/60)+':'+String(seconds%60).padStart(2,'0')}
-function startClock(){if(clockEnabled()&&!clock.running&&!game.status){clock.running=true;clock.lastAt=Date.now();remember()}}
-function initializeClock(){clock={w:timeConfig.base,b:timeConfig.base,running:false,lastAt:Date.now()}}
-
-/* Sinalização PeerServer usando WebSocket e WebRTC nativos; sem bibliotecas/CDN.
-   A nuvem PeerServer envia apenas ofertas/respostas ICE, não os lances. */
-class SignalClient{
- constructor(id,onReady,onOffer,onMessage,onFailure){this.id=id;this.onReady=onReady;this.onOffer=onOffer;this.onMessage=onMessage;this.onFailure=onFailure;this.ws=null;this.ready=false;this.heartbeat=null;this.closed=false;this.connect()}
- connect(){if(this.closed)return;try{const token=randomCode(13),url='wss://'+SIGNAL.host+':'+SIGNAL.port+SIGNAL.path+'?key='+encodeURIComponent(SIGNAL.key)+'&id='+encodeURIComponent(this.id)+'&token='+token+'&version=1.5.5';this.ws=new WebSocket(url);clearTimeout(this.guard);this.guard=setTimeout(()=>{if(!this.ready&&!this.closed){try{this.ws.close()}catch(e){}}},60000);this.ws.onmessage=e=>{let data;try{data=JSON.parse(e.data)}catch{return}if(data.type==='OPEN'){this.ready=true;clearTimeout(this.guard);this.onReady();return}if(data.type==='ID-TAKEN'){this.taken=true;this.onFailure('taken');return}if(data.type==='ERROR'||data.type==='INVALID-KEY'){const msg=data.payload?.msg||'Servidor de sinalização indisponível';this.onFailure(/could not connect|not found|unavailable/i.test(msg)?'unavailable':msg);return}if(data.type==='EXPIRE'){this.onFailure('unavailable');return}this.onMessage(data)};this.ws.onopen=()=>{this.heartbeat=setInterval(()=>this.send({type:'HEARTBEAT'}),5000)};this.ws.onclose=()=>{this.ready=false;clearInterval(this.heartbeat);clearTimeout(this.guard);if(!this.closed&&!this.taken)this.onFailure('closed')};this.ws.onerror=()=>{}}catch(e){this.onFailure('closed')}}
- send(msg){if(this.ws?.readyState===WebSocket.OPEN)try{this.ws.send(JSON.stringify(msg))}catch(e){}}
- close(){this.closed=true;this.ready=false;clearInterval(this.heartbeat);clearTimeout(this.guard);this.ws?.close()}
-}
-class RtcConnection{
- constructor(remote,initiator){this.remote=remote;this.pc=new RTCPeerConnection({iceServers:[{urls:'stun:stun.l.google.com:19302'},{urls:'stun:stun1.l.google.com:19302'},{urls:'stun:stun.cloudflare.com:3478'}]});this.dc=null;this.closed=false;this.candidates=[];this.ready=false;this.pc.onicecandidate=e=>{if(e.candidate&&signal?.ready)signal.send({type:'CANDIDATE',dst:remote,payload:{candidate:e.candidate.toJSON(),type:'data',connectionId:'chess'}})};this.pc.onconnectionstatechange=()=>{if(['failed','closed'].includes(this.pc.connectionState))this.terminate()};this.pc.ondatachannel=e=>this.attach(e.channel);if(initiator){this.attach(this.pc.createDataChannel('xadrez',{ordered:true}));this.offer()}}
- async offer(){try{const offer=await this.pc.createOffer();await this.pc.setLocalDescription(offer);signal?.send({type:'OFFER',dst:this.remote,payload:{type:'data',connectionId:'chess',sdp:this.pc.localDescription,serialization:'json'}})}catch(e){this.terminate()}}
- attach(dc){this.dc=dc;dc.onopen=()=>{this.ready=true;this.lastSeen=Date.now();onRtcOpen(this)};dc.onmessage=e=>{this.lastSeen=Date.now();try{onPacket(this,JSON.parse(e.data))}catch(err){}};dc.onclose=()=>this.terminate();dc.onerror=()=>this.terminate()}
- async answer(offer){try{await this.pc.setRemoteDescription(new RTCSessionDescription(offer));await this.flushCandidates();const ans=await this.pc.createAnswer();await this.pc.setLocalDescription(ans);signal?.send({type:'ANSWER',dst:this.remote,payload:{type:'data',connectionId:'chess',sdp:this.pc.localDescription}})}catch(e){this.terminate()}}
- async applyAnswer(desc){try{await this.pc.setRemoteDescription(new RTCSessionDescription(desc));await this.flushCandidates()}catch(e){this.terminate()}}
- async addCandidate(c){if(!this.pc.remoteDescription){this.candidates.push(c);return}try{await this.pc.addIceCandidate(new RTCIceCandidate(c))}catch(e){}}
- async flushCandidates(){for(const c of this.candidates)await this.addCandidate(c);this.candidates=[]}
- send(packet){if(this.dc?.readyState==='open'){try{this.dc.send(JSON.stringify(packet));return true}catch(e){}}return false}
- terminate(){if(this.closed)return;this.closed=true;this.ready=false;try{this.dc?.close();this.pc.close()}catch(e){}onRtcClose(this)}
-}
-let connections=new Map(),earlyIce=new Map();
-let retryTimer=null;
-function scheduleSignalRetry(){clearTimeout(retryTimer);if(mode==='menu'||mode==='local')return;retryTimer=setTimeout(()=>{retryTimer=null;if(signal&&!signal.ready&&mode!=='local'){signal.close();signal=null;openSignal()}},Math.min(20000,2800*Math.max(1,retryCount)))}
-function openSignal(){if(signal)signal.close();const id=mode==='host'?'xadrez-'+room:'xadrez-cliente-'+randomCode(12);signal=new SignalClient(id,()=>{retryCount=0;if(mode==='guest'){updateConnection(false,'Procurando sala…');attemptRtc()}else updateConnection(peerConnected,'Sala aberta • esperando adversário')},()=>{},data=>{
-  if(data.type==='OFFER'&&mode==='host'&&data.src&&data.payload?.sdp){if(connections.has(data.src))connections.get(data.src).terminate();const rtc=new RtcConnection(data.src,false);connections.set(data.src,rtc);for(const candidate of earlyIce.get(data.src)||[])rtc.addCandidate(candidate);earlyIce.delete(data.src);rtc.answer(data.payload.sdp)}
-  else if(data.type==='ANSWER'&&mode==='guest'&&connections.has(data.src))connections.get(data.src).applyAnswer(data.payload?.sdp);
-  else if(data.type==='CANDIDATE'){if(connections.has(data.src))connections.get(data.src).addCandidate(data.payload?.candidate);else{const a=earlyIce.get(data.src)||[];if(a.length<12)a.push(data.payload?.candidate);earlyIce.set(data.src,a)}}
-  else if(data.type==='ERROR'&&mode==='guest')updateConnection(false,'Sala não encontrada ou indisponível');
- },err=>{
-  if(err==='taken'){if(mode==='host'&&retryCount===0)toast('Este código já está em uso. Se a sala estiver aberta em outra aba, feche-a. Tentando novamente…');retryCount++;updateConnection(false,'Código em uso • tentando novamente…');scheduleSignalRetry();return}
-  if(err==='unavailable'){updateConnection(false,'Sala não encontrada • tentando novamente');return}
-  updateConnection(!!activeConn?.ready,activeConn?.ready?'Conectado (sinalização reconectando…)':'Servidor indisponível • reconectando…');retryCount++;scheduleSignalRetry();
- })}
-function attemptRtc(){if(mode!=='guest'||!signal?.ready||peerConnected||Date.now()<retryAt)return;const remote='xadrez-'+room;const old=connections.get(remote);if(old&&!old.closed){if(Date.now()-(old.startedAt||0)<11000)return;old.terminate()}retryAt=Date.now()+5500;const rtc=new RtcConnection(remote,true);rtc.startedAt=Date.now();connections.set(remote,rtc)}
-function onRtcOpen(rtc){if(mode==='guest'){activeConn=rtc;guestToken ||=storage.getItem('xadrez_guest_'+room)||randomCode(18);storage.setItem('xadrez_guest_'+room,guestToken);rtc.send({type:'hello',token:guestToken})}/* Anfitrião aguarda o token de quem entrou. */}
-function onRtcClose(rtc){if(connections.get(rtc.remote)===rtc)connections.delete(rtc.remote);if(activeConn===rtc){activeConn=null;updateConnection(false,mode==='guest'?(manual?'Conexão encerrada • peça um novo convite':'Adversário desconectado • reconectando…'):'Adversário desconectado');retryAt=Date.now()+1600;if(mode==='host'){remember()}render()}}
-function onPacket(rtc,data){if(!data||typeof data.type!=='string')return;
- if(mode==='host'){
-  if(data.type==='hello'){
-   if(typeof data.token!=='string'||data.token.length>40)return rtc.terminate();
-   if(assignedToken&&data.token!==assignedToken){rtc.send({type:'reject',reason:'Sala cheia: já existe um segundo jogador.'});setTimeout(()=>rtc.terminate(),180);return}
-   if(activeConn&&activeConn!==rtc)activeConn.terminate();assignedToken=data.token;activeConn=rtc;updateConnection(true,'Adversário conectado');if(!game.moves.length)startClock();remember();broadcast();render();toast('Seu amigo entrou na sala.');return
-  }
-  if(activeConn!==rtc)return;
-  if(data.type==='ping'){rtc.send({type:'pong'});return}if(data.type==='pong')return;
-  if(data.type==='move'){applyOnlineMove(data,opposite(hostColor));return}
-  if(data.type==='action'){applyOnlineAction(data,opposite(hostColor));return}
-  if(data.type==='reply'){handleReply(data,opposite(hostColor));return}
-  if(data.type==='chat'){handleChat(data,opposite(hostColor));return}
- }else if(mode==='guest'){
-  if(rtc!==activeConn)return;
-  if(data.type==='state'){try{const previousCount=game.moves.length,wasConnected=peerConnected,oldColor=myColor,oldFen=game.fen(),oldStatus=JSON.stringify(game.status),oldPending=JSON.stringify(pending);game.import(data.game);hostColor=data.hostColor;myColor=opposite(hostColor);if(oldColor!==myColor){flipped=false;orientation=myColor}if(previousCount>0&&game.moves.length===0){flipped=false;orientation=myColor}if(!flipped)orientation=myColor;timeConfig=data.timeConfig;clock=data.clock;clock.lastAt=Date.now();pending=data.pending;chats=data.chats||[];updateConnection(true,'Conectado ao amigo');const freshMove=wasConnected&&game.moves.length===previousCount+1;if(freshMove)playSound(game.status?'end':game.inCheck()?'check':data.lastMove?.captured?'capture':'move');else if(wasConnected&&oldStatus==='null'&&game.status)playSound('end');const samePosition=wasConnected&&oldFen===game.fen()&&oldStatus===JSON.stringify(game.status)&&oldPending===JSON.stringify(pending)&&oldColor===myColor;if(samePosition){renderClock();renderChat()}else render(freshMove?data.lastMove:null);lastKnownMove=game.moves.length}catch(e){toast('Não foi possível carregar a posição recebida.')}return}
-  if(data.type==='reject'){toast(data.reason||'Sala cheia.');rtc.terminate();updateConnection(false,'Sala cheia');retryAt=Date.now()+30000;return}
-  if(data.type==='notice'){toast(data.text||'Não foi possível concluir a ação.');return}
-  if(data.type==='ping'){rtc.send({type:'pong'});return}
- }
-}
-function updateConnection(connected,description){peerConnected=connected;const label=description||(connected?'Conectado':'Aguardando adversário');$('netLabel').textContent=label;$('netDot').className='dot '+(connected?'ok':label.includes('desconectado')||label.includes('indisponível')||label.includes('ocupado')?'off':'');renderButtons()}
-function broadcast(){if(mode!=='host')return;remember();if(activeConn?.ready)activeConn.send({type:'state',game:game.export(),hostColor,timeConfig,clock:{...clock,w:liveTime('w'),b:liveTime('b')},pending,chats,lastMove:game.moves.at(-1)||null})}
-function noticeGuest(s){activeConn?.send({type:'notice',text:s})}
-
-/* Modo sem servidor: anfitrião e convidado trocam, por chat ou e-mail, um código de convite e uma resposta (SDP).
-   Não usa PeerServer; a conexão WebRTC continua usando STUN. */
-let manualOffer=null;
-const encodeCode=d=>{let bin='';for(const b of new TextEncoder().encode(JSON.stringify(d)))bin+=String.fromCharCode(b);return btoa(bin)};
-const decodeCode=s=>{try{const bin=atob(String(s).replace(/\s+/g,''));const d=JSON.parse(new TextDecoder().decode(Uint8Array.from(bin,ch=>ch.charCodeAt(0))));return d&&typeof d.type==='string'&&typeof d.sdp==='string'?d:null}catch(e){return null}};
-function waitIce(pc,ms=10000){return new Promise(resolve=>{if(pc.iceGatheringState==='complete'){resolve();return}const finish=()=>{clearTimeout(timer);pc.removeEventListener('icegatheringstatechange',onState);resolve()};const onState=()=>{if(pc.iceGatheringState==='complete')finish()};const timer=setTimeout(finish,ms);pc.addEventListener('icegatheringstatechange',onState)})}
-function dialog(title,nodes){modalActive=true;const body=$('modalBody');body.replaceChildren();const h=document.createElement('h2');h.textContent=title;body.append(h,...nodes);$('modalOverlay').classList.remove('hidden')}
-function para(text){const p=document.createElement('p');p.textContent=text;p.style.margin='0 0 10px';return p}
-function codeArea(readOnly,value,placeholder){const ta=document.createElement('textarea');ta.className='code-area';ta.readOnly=readOnly;ta.spellcheck=false;ta.placeholder=placeholder||'';ta.value=value||'';return ta}
-function fullBtn(text,css,fn){const b=document.createElement('button');b.className='btn full '+css;b.style.marginTop='8px';b.textContent=text;b.onclick=fn;return b}
-function manualMenu(){dialog('Jogar sem servidor',[para('Sem servidor de sinalização: vocês trocam dois códigos longos por chat ou e-mail. Antes de criar a sala, escolha cor e relógio na tela inicial.'),fullBtn('Sou o anfitrião (criar sala)','primary',()=>{closeModal();openRoom(true)}),fullBtn('Sou o convidado (entrar com convite)','soft',()=>{closeModal();guestDialog()}),fullBtn('Cancelar','outline',closeModal)])}
-async function startManualHost(){
- closeNet();manualOffer=null;
- const rtc=new RtcConnection('manual',true);rtc.startedAt=Date.now();connections.set('manual',rtc);
- await waitIce(rtc.pc);
- const d=rtc.pc.localDescription;
- if(!d){rtc.terminate();toast('Não foi possível gerar o convite. Tente de novo.');return}
- manualOffer=encodeCode({type:d.type,sdp:d.sdp});updateConnection(false,'Sem servidor • envie o convite ao amigo');showHostDialog();
-}
-function showHostDialog(){
- if(!manualOffer){toast('Gerando o convite…');return}
- const answer=codeArea(false,'','Cole aqui a resposta do seu amigo');
- dialog('Convide seu amigo',[para('1. Envie este código de convite ao seu amigo.'),codeArea(true,manualOffer),fullBtn('Copiar código de convite','soft',()=>copyText(manualOffer)),para('2. Quando ele responder, cole a resposta abaixo.'),answer,fullBtn('Conectar','primary',()=>connectManualAnswer(answer.value)),fullBtn('Fechar','outline',closeModal)]);
-}
-async function connectManualAnswer(text){const desc=decodeCode(text);if(!desc||desc.type!=='answer'){toast('Resposta inválida. Confira se colou o código inteiro.');return}const rtc=connections.get('manual');if(!rtc){toast('Esta sala sem servidor foi encerrada. Crie uma nova.');return}await rtc.applyAnswer(desc);closeModal();toast('Resposta recebida. Conectando…')}
-function guestDialog(){
- const offer=codeArea(false,'','Cole aqui o código de convite');
- dialog('Entrar com convite',[para('Cole o código de convite que seu amigo enviou.'),offer,fullBtn('Gerar resposta','primary',async()=>{const answer=await joinManual(offer.value);if(answer)dialog('Envie a resposta ao anfitrião',[para('Envie este código ao anfitrião. A partida começa quando ele colar a resposta.'),codeArea(true,answer),fullBtn('Copiar resposta','soft',()=>copyText(answer)),fullBtn('Fechar','outline',closeModal)])}),fullBtn('Cancelar','outline',closeModal)]);
-}
-async function joinManual(text){
- const offer=decodeCode(text);if(!offer||offer.type!=='offer'){toast('Convite inválido. Confira se copiou o código inteiro.');return null}
- closeNet();
- const rtc=new RtcConnection('manual',false);rtc.startedAt=Date.now();connections.set('manual',rtc);
- try{
-  await rtc.pc.setRemoteDescription(new RTCSessionDescription({type:'offer',sdp:offer.sdp}));
-  const ans=await rtc.pc.createAnswer();await rtc.pc.setLocalDescription(ans);await waitIce(rtc.pc);
-  const d=rtc.pc.localDescription;
-  manual=true;mode='guest';room='MANUAL';hostColor='w';myColor='b';orientation='b';flipped=false;selected=null;chats=[];pending=null;guestToken=randomCode(18);game.reset();
-  showGame();updateConnection(false,'Sem servidor • aguardando o anfitrião colar sua resposta');
-  return encodeCode({type:d.type,sdp:d.sdp});
- }catch(e){rtc.terminate();toast('Não foi possível gerar a resposta. Peça um novo convite.');return null}
-}
-/* Movimentos: o anfitrião é a fonte oficial; visitantes enviam solicitações. */
-function submitMove(from,to,promotion='q'){
- selected=null;if(!canMove()){toast('Aguarde sua vez ou a conexão do adversário.');render();return}
- if(mode==='guest'){if(!activeConn?.send({type:'move',from,to,promotion}))toast('Conexão interrompida.');render();return}
- performMove(from,to,promotion)
-}
-function performMove(from,to,promotion){const side=game.turn;
- if(mode==='host'||mode==='local')clockCommit();if(game.status){render();return}
- const beforeClock=copy(clock);const res=game.play(from,to,promotion);if(res.error){toast(res.error);render();return}
- if(clockEnabled()&&clock.running){clock[side]+=timeConfig.inc;clock.lastAt=Date.now();if(game.status)clock.running=false}
- if(mode==='host'&&game.history.length)game.history[game.history.length-1].clockBefore=beforeClock;
- if(res.end)playSound('end');else playSound(res.check?'check':res.move.captured?'capture':'move');
- if(mode==='host')broadcast();render(res.move);if(res.end&&mode==='host')broadcast();
-}
-function applyOnlineMove(data,side){if(game.status||pending){noticeGuest('A partida está pausada ou encerrada.');return}if(game.turn!==side){noticeGuest('Não é a sua vez.');broadcast();return}if(!validSquare(data.from)||!validSquare(data.to)||!['q','r','b','n'].includes(data.promotion)){noticeGuest('Lance inválido.');return}performMove(data.from,data.to,data.promotion)}
-function requestAction(kind){if(mode==='local'){
-  if(kind==='undo'){if(game.undo()){playSound('move');render();toast('Último lance desfeito.')}else toast('Nenhum lance para desfazer.');return}
-  if(kind==='draw'){modal('Encerrar em empate?','A partida local será encerrada como empate por acordo.',[{text:'Cancelar'},{text:'Confirmar',css:'primary',fn:()=>{game.status={kind:'draw',reason:'Empate por acordo'};clock.running=false;render();playSound('end')}}]);return}
-  if(kind==='rematch'){resetGame();return}
- }
- if(kind==='resign'){modal('Desistir da partida?','Ao desistir, a vitória será atribuída ao seu adversário.',[{text:'Cancelar'},{text:'Desistir',css:'danger',fn:()=>issueAction('resign')}]);return}
- if(kind==='undo'&&!game.moves.length){toast('Não há lances para desfazer.');return}
- if(pending){toast('Existe uma proposta aguardando resposta.');return}
- issueAction(kind)
-}
-function issueAction(kind){if(mode==='guest'){if(!activeConn?.send({type:'action',kind}))toast('Você não está conectado.');return}applyOnlineAction({kind},mode==='local'?game.turn:hostColor)}
-function applyOnlineAction(data,side){const kind=data.kind;if(!['resign','draw','undo','rematch'].includes(kind))return;
- if(kind==='resign'){if(game.status)return;clockCommit();game.status={kind:'resign',winner:opposite(side),reason:'Desistência'};clock.running=false;pending=null;playSound('end');broadcast();render();return}
- if(kind==='rematch'&&!game.status)return;if(kind!=='rematch'&&game.status)return;
- if(kind==='undo'&&!game.moves.length){noticeGuest('Não há lances para desfazer.');return}
- if(pending)return;pending={kind,from:side};broadcast();render();
-}
-function handleReply(data,side){if(!pending||side===pending.from)return;resolvePending(!!data.accept)}
-function replyPending(accept){if(!pending||pending.from===myColor&&mode!=='local')return;if(mode==='guest')activeConn?.send({type:'reply',accept});else resolvePending(accept)}
-function resolvePending(accept){const kind=pending?.kind;if(!kind)return;pending=null;if(accept){if(kind==='draw'){clockCommit();game.status={kind:'draw',reason:'Empate por acordo'};clock.running=false;playSound('end')}
- else if(kind==='undo'){const old=game.history.at(-1);if(game.undo()){if(old?.clockBefore)clock=old.clockBefore;clock.lastAt=Date.now();playSound('move')}}
- else if(kind==='rematch'){hostColor=opposite(hostColor);myColor=hostColor;flipped=false;orientation=myColor;game.reset();initializeClock();if(mode==='host'&&peerConnected)startClock();playSound('move')}}
- else toast('A proposta foi recusada.');broadcast();render();}
-function resetGame(){game.reset();initializeClock();selected=null;pending=null;chats=[];render()}
-function handleChat(data,from){let s=typeof data.text==='string'?data.text.trim():'';if(!s)return;if(s.length>500)s=s.slice(0,500);chats.push({from,text:s,at:Date.now()});chats=chats.slice(-120);if(mode==='host')broadcast();renderChat()}
-
-/* Renderização e controle da interface. */
-function showGame(){ $('startScreen').classList.add('hidden');$('gameScreen').classList.remove('hidden');window.scrollTo({top:0,behavior:'instant'});$('roomLabel').replaceChildren();const strong=document.createElement('strong');strong.textContent=room||'LOCAL';$('roomLabel').append('SALA  ',strong);$('inviteCard').classList.toggle('hidden',mode==='local'||mode==='guest'||manual);$('manualCard').classList.toggle('hidden',!(mode==='host'&&manual));$('chatText').disabled=mode==='local';$('chatSend').disabled=mode==='local';$('chatText').placeholder=mode==='local'?'Chat disponível no modo online':'Escreva uma mensagem…';$('copyLinkBtn').disabled=location.protocol==='file:';$('inviteTip').textContent=location.protocol==='file:'?'Arquivo local: compartilhe este HTML com seu amigo e informe o código. Para um link utilizável em outro dispositivo, publique o HTML em HTTPS.':'Envie o link ao amigo. Ele abrirá a página com o código preenchido.'; $('inviteCode').textContent=room;render()}
-function openRoom(manualMode=false){manual=manualMode;mode='host';room=randomCode();game.reset();initializeClock();pending=null;chats=[];hostColor=$('colorSelect').value==='random'?(Math.random()<.5?'w':'b'):$('colorSelect').value;myColor=hostColor;orientation=myColor;flipped=false;selected=null;const tc=$('timeSelect').value.split(',').map(Number);timeConfig={base:tc[0]*1000,inc:tc[1]*1000};updateConnection(false,manual?'Sem servidor • gerando convite…':'Criando sala…');showGame();remember();if(manual)startManualHost();else openSignal()}
-function resumeRoom(){manual=false;const code=storage.getItem('xadrez_lastRoom');if(!code||!/^[A-Z0-9]{6}$/.test(code)||!fromStorage(code)){toast('Não foi possível restaurar esta sala.');return}room=code;mode='host';myColor=hostColor;orientation=myColor;flipped=false;selected=null;updateConnection(false,'Restaurando sala…');showGame();openSignal()}
-function joinRoom(){manual=false;const code=$('joinInput').value.toUpperCase().replace(/[^A-Z0-9]/g,'');if(code.length!==6){toast('Digite um código de 6 caracteres.');return}room=code;mode='guest';game.reset();hostColor='w';myColor='b';orientation='b';flipped=false;selected=null;chats=[];pending=null;guestToken=storage.getItem('xadrez_guest_'+room)||randomCode(18);showGame();updateConnection(false,'Buscando sala…');openSignal()}
-function localGame(){manual=false;mode='local';room='';hostColor='w';myColor='w';orientation='w';flipped=false;selected=null;game.reset();const tc=$('timeSelect').value.split(',').map(Number);timeConfig={base:tc[0]*1000,inc:tc[1]*1000};initializeClock();chats=[];pending=null;showGame();updateConnection(true,'Modo local • 2 jogadores');startClock();render()}
-function closeNet(){activeConn?.terminate();activeConn=null;for(const c of [...connections.values()])c.terminate();connections.clear();signal?.close();signal=null;peerConnected=false}
-function playerHtml(side){const bottom=mode==='local'?side===orientation:side===myColor,who=mode==='local'?'Jogador '+(side==='w'?'brancas':'pretas'):bottom?'Você':'Adversário';let oppCaptured=capturedBy(side);const advantage=material(side)-material(opposite(side));const clockHtml=clockEnabled()?`<div class="clock ${clock.running&&game.turn===side&&!game.status?'live':''} ${liveTime(side)<15000?'low':''}" data-clock="${side}">${formatTime(liveTime(side))}</div>`:'<div class="clock">∞</div>';
- return `<div class="player-identity"><div class="player-icon ${side==='w'?'white':'black'}">${side==='w'?'♔':'♚'}</div><div style="min-width:0"><div class="player-name">${who} <span class="muted">· ${side==='w'?'Brancas':'Pretas'}</span></div><div class="player-meta"><span class="capture" aria-label="Peças capturadas">${oppCaptured.map(p=>SYMBOLS[p]).join('')}</span>${advantage>0?`<span class="material">+${advantage}</span>`:!oppCaptured.length?'Nenhuma captura':''}</div></div></div>${clockHtml}`}
-function capturedBy(side){return game.moves.filter(m=>m.by===side&&m.captured).map(m=>side==='w'?m.captured:m.captured.toUpperCase())}
-function material(side){let value=0;for(const row of game.board)for(const p of row)if(p&&color(p)===side)value+=VAL[p.toLowerCase()];return value}
-function renderBoard(animationMove=null){const board=$('board');let fromRect=null,toRect=null,flyPiece=null;
- if(animationMove&&board.children.length){const fromEl=board.querySelector(`[data-square="${animationMove.from}"]`),toEl=board.querySelector(`[data-square="${animationMove.to}"]`);if(fromEl&&toEl){fromRect=fromEl.getBoundingClientRect();toRect=toEl.getBoundingClientRect();flyPiece=animationMove.by==='w'?(animationMove.piece.toUpperCase()):animationMove.piece.toLowerCase()}}
- board.replaceChildren();const selectedMoves=selected?game.legal(selected,game.turn):[],targetSquares=new Set(selectedMoves.map(x=>x.to)),last=game.moves.at(-1),checked=game.inCheck(game.turn);
- for(let rank=0;rank<8;rank++)for(let file=0;file<8;file++){
-  const r=orientation==='w'?rank:7-rank,c=orientation==='w'?file:7-file,ps=pos(r,c),p=game.board[r][c],sqEl=document.createElement('button');sqEl.type='button';sqEl.className='square '+((r+c)%2?'dark':'light')+(p?' occupied':'')+(selected===ps?' selected':'')+(targetSquares.has(ps)?' target':'')+(last&&(last.from===ps||last.to===ps)?' last':'')+(checked&&p&&(p.toLowerCase()==='k'&&color(p)===game.turn)?' check':'');sqEl.dataset.square=ps;sqEl.setAttribute('role','gridcell');sqEl.setAttribute('aria-label',ps+' '+(p?(color(p)==='w'?'branco ':'preto ')+pieceName[p.toLowerCase()]:'vazia'));
-  if(p){const span=document.createElement('span');span.className='piece '+(color(p)==='w'?'white':'black');span.textContent=SYMBOLS[p];sqEl.append(span)}
-  if(file===0){const sp=document.createElement('span');sp.className='coord rank';sp.textContent=8-r;sqEl.append(sp)}if(rank===7){const sp=document.createElement('span');sp.className='coord file';sp.textContent=FILES[c];sqEl.append(sp)}board.append(sqEl)
- }
- // FLIP: peça flutua da casa de origem à casa destino, mesmo em capturas.
- if(fromRect&&toRect&&flyPiece&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){const frame=$('boardFrame'),fr=frame.getBoundingClientRect(),a=document.createElement('div');a.className='float-piece '+(color(flyPiece)==='w'?'white':'black');a.textContent=SYMBOLS[flyPiece];a.style.left=(fromRect.left-fr.left)+'px';a.style.top=(fromRect.top-fr.top)+'px';a.style.width=fromRect.width+'px';a.style.height=fromRect.height+'px';frame.append(a);const el=board.querySelector(`[data-square="${animationMove.to}"] .piece`);el?.classList.add('arriving');const animator=a.animate([{transform:'translate(0,0)'},{transform:`translate(${toRect.left-fromRect.left}px,${toRect.top-fromRect.top}px)`}],{duration:230,easing:'cubic-bezier(.2,.85,.4,1)'});animator.onfinish=()=>{a.remove();el?.classList.remove('arriving')};animator.oncancel=()=>{a.remove();el?.classList.remove('arriving')}}
-}
-function renderPlayers(){const top=opposite(orientation);$('playerTop').innerHTML=playerHtml(top);$('playerBottom').innerHTML=playerHtml(orientation)}
-function renderClock(){if(!clockEnabled())return;for(const e of document.querySelectorAll('[data-clock]')){const side=e.dataset.clock;const remain=liveTime(side);e.textContent=formatTime(remain);e.classList.toggle('low',remain<15000)}}
-function renderMoves(){const el=$('movesList');el.replaceChildren();$('moveCount').textContent=game.moves.length+' '+(game.moves.length===1?'lance':'lances');if(!game.moves.length){el.innerHTML='<div class="empty-moves"><div><span>♙</span>Os lances aparecerão aqui.<br>Brancas começam.</div></div>';return}for(let i=0;i<game.moves.length;i++){if(i%2===0){const n=document.createElement('div');n.className='move-number';n.textContent=(Math.floor(i/2)+1)+'.';el.append(n)}const m=document.createElement('div');m.className='move-san '+(i===game.moves.length-1?'recent':'');m.textContent=game.moves[i].san;el.append(m);if(i===game.moves.length-1&&i%2===0){/* próximo lance preto ocupa terceira coluna apenas quando existir */}}el.scrollTop=el.scrollHeight}
-function renderChat(){const el=$('chatLog');el.replaceChildren();if(!chats.length){const empty=document.createElement('div');empty.className='muted';empty.style.cssText='margin:auto;text-align:center;font-size:12px';empty.textContent=mode==='local'?'Chat desativado no modo local':'Diga olá ao seu adversário.';el.append(empty);return}for(const m of chats){const mine=mode==='local'?false:m.from===myColor,b=document.createElement('div'),author=document.createElement('div');b.className='chat-bubble '+(mine?'mine':'');author.className='chat-who';author.textContent=mine?'Você':'Adversário';b.append(author,document.createTextNode(m.text));el.append(b)}el.scrollTop=el.scrollHeight}
-function renderPending(){const el=$('requestCard');if(!pending){el.classList.add('hidden');return}el.classList.remove('hidden');const names={draw:'empate',undo:'desfazer o último lance',rematch:'revanche (com troca de cores)'};el.replaceChildren();const text=document.createElement('div');const mine=mode==='local'||pending.from===myColor;text.textContent=mine?'Sua proposta de '+names[pending.kind]+' aguarda o adversário.':'O adversário propôs '+names[pending.kind]+'.';el.append(text);if(!mine){const acts=document.createElement('div');acts.className='request-actions';const accept=document.createElement('button');accept.className='btn primary sm';accept.textContent='Aceitar';accept.onclick=()=>replyPending(true);const deny=document.createElement('button');deny.className='btn outline sm';deny.textContent='Recusar';deny.onclick=()=>replyPending(false);acts.append(accept,deny);el.append(acts)}}
-function renderButtons(){$('undoBtn').disabled=!!pending||(!game.moves.length)||!!game.status||(mode!=='local'&&!peerConnected);$('drawBtn').disabled=!!pending||!!game.status||(mode!=='local'&&!peerConnected);$('resignBtn').disabled=!!game.status||(mode!=='local'&&!peerConnected);$('newBtn').textContent=mode==='local'?'↩ Nova partida':game.status?'↻ Pedir revanche':'↩ Sair da sala'}
-function render(animationMove=null){if(mode==='menu')return;renderBoard(animationMove);renderPlayers();renderMoves();renderChat();renderPending();renderButtons();
- let msg;if(game.status){const s=game.status;msg=s.kind==='draw'?`½ Empate — ${s.reason}`:`${s.winner==='w'?'Brancas':'Pretas'} vencem — ${s.reason}`}
- else if(pending)msg='Partida aguardando resposta à proposta.';
- else if(!peerConnected&&mode!=='local')msg='Aguardando conexão: lances temporariamente bloqueados.';
- else if(game.inCheck())msg=`Xeque! Vez das ${game.turn==='w'?'brancas':'pretas'}.`;
- else msg=`Vez das ${game.turn==='w'?'brancas':'pretas'}${mode!=='local'?(game.turn===myColor?' · seu lance':' · aguarde o adversário'):''}.`;
- $('turnBanner').textContent=msg;}
-function attempt(from,to){if(!canMove())return;if(!from||!to)return;const options=game.legal(from,game.turn).filter(m=>m.to===to);if(!options.length){toast('Lance ilegal.');selected=null;renderBoard();return}const promos=[...new Set(options.map(m=>m.promotion).filter(Boolean))];if(promos.length)promoDialog(from,to,promos);else submitMove(from,to)}
-function clickSquare(target){if(suppressClick){suppressClick=false;return}const cell=target.closest('.square');if(!cell||!canMove())return;const p=cell.dataset.square,coord=sq(p),piece=game.board[coord.r][coord.c];if(selected){if(selected===p){selected=null;renderBoard();return}const choices=game.legal(selected,game.turn);if(choices.some(m=>m.to===p)){attempt(selected,p);return}}selected=piece&&color(piece)===game.turn?p:null;renderBoard()}
-/* Pointer Events dão arrastar/soltar com mouse e toque, sem HTML Drag&Drop. */
-function bindDragging(){const board=$('board');board.addEventListener('click',e=>clickSquare(e.target));board.addEventListener('pointerdown',e=>{if(e.button!==0||!canMove())return;const cell=e.target.closest('.square');if(!cell)return;const at=cell.dataset.square,{r,c}=sq(at),piece=game.board[r][c];if(!piece||color(piece)!==game.turn)return;drag={id:e.pointerId,from:at,piece,x:e.clientX,y:e.clientY,ghost:null,started:false}});window.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;if(!drag.started&&Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>8){drag.started=true;selected=drag.from;renderBoard();drag.ghost=document.createElement('span');drag.ghost.className='piece drag-ghost '+(color(drag.piece)==='w'?'white':'black');drag.ghost.textContent=SYMBOLS[drag.piece];document.body.append(drag.ghost)}if(drag.started&&drag.ghost){drag.ghost.style.left=e.clientX+'px';drag.ghost.style.top=e.clientY+'px'}});const finish=e=>{if(!drag||drag.id!==e.pointerId)return;const d=drag;drag=null;d.ghost?.remove();if(d.started){suppressClick=true;const cell=document.elementFromPoint(e.clientX,e.clientY)?.closest('.square');if(cell)attempt(d.from,cell.dataset.square);else{selected=null;renderBoard()}setTimeout(()=>suppressClick=false,70)}};window.addEventListener('pointerup',finish);window.addEventListener('pointercancel',e=>{if(drag){drag.ghost?.remove();drag=null;selected=null;renderBoard()}})}
-async function copyText(text){try{await navigator.clipboard.writeText(text);toast('Copiado para a área de transferência.')}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;left:-9999px';document.body.append(ta);ta.select();const worked=document.execCommand('copy');ta.remove();toast(worked?'Copiado.':'Não foi possível copiar automaticamente.')}}
-function exitRoom(){modal('Sair da partida?','Você retornará à tela inicial. A partida da sala ficará salva neste navegador (anfitrião).', [{text:'Cancelar'},{text:'Sair',css:'primary',fn:()=>{closeNet();manual=false;mode='menu';$('gameScreen').classList.add('hidden');$('startScreen').classList.remove('hidden')}}])}
-/* Atualização do relógio e recuperação da conexão. */
-setInterval(()=>{if(mode==='host'||mode==='local'){if(clock.running&&!game.status&&liveTime(game.turn)<=0){clockCommit();render();if(mode==='host')broadcast()}}
- if(mode==='host'&&peerConnected){if(activeConn?.lastSeen&&Date.now()-activeConn.lastSeen>21000){activeConn.terminate()}else if(Date.now()-lastHeartbeat>5000){lastHeartbeat=Date.now();activeConn?.send({type:'ping'})}}
- if(mode==='guest'){if(signal?.ready&&!peerConnected)attemptRtc();if(peerConnected){if(activeConn?.lastSeen&&Date.now()-activeConn.lastSeen>21000)activeConn.terminate();else if(Date.now()-lastHeartbeat>5000){lastHeartbeat=Date.now();activeConn?.send({type:'ping'})}}}
- if(mode==='host'&&peerConnected&&Date.now()-lastClockSave>1000){lastClockSave=Date.now();broadcast()}
- renderClock();},500);
-
-/* Eventos da interface. */
-$('soundToggle').textContent=muted?'♪̸':'♫';$('soundToggle').onclick=()=>{muted=!muted;storage.setItem('xadrez_muted',String(muted));$('soundToggle').textContent=muted?'♪̸':'♫';toast(muted?'Sons desativados.':'Sons ativados.')};
-$('createBtn').onclick=()=>openRoom(false);$('manualBtn').onclick=manualMenu;$('manualOpenBtn').onclick=showHostDialog;$('resumeBtn').onclick=resumeRoom;$('joinBtn').onclick=joinRoom;$('localBtn').onclick=localGame;
-$('joinInput').addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,''));$('joinInput').addEventListener('keydown',e=>{if(e.key==='Enter')joinRoom()});
-$('flipBtn').onclick=()=>{orientation=opposite(orientation);flipped=true;selected=null;render()};$('copyFenBtn').onclick=()=>copyText(game.fen());
-$('newBtn').onclick=()=>{if(mode==='local'){modal('Nova partida?','O tabuleiro atual será reiniciado.',[{text:'Cancelar'},{text:'Reiniciar',css:'primary',fn:resetGame}]);return}if(game.status){requestAction('rematch');return}exitRoom()};
-$('undoBtn').onclick=()=>requestAction('undo');$('drawBtn').onclick=()=>requestAction('draw');$('resignBtn').onclick=()=>requestAction('resign');
-$('copyCodeBtn').onclick=()=>copyText(room);$('copyLinkBtn').onclick=()=>{if(location.protocol==='file:'){toast('Publique o arquivo em HTTPS para usar links de convite.');return}const u=new URL(location.href);u.searchParams.set('sala',room);copyText(u.toString())};
-$('chatForm').addEventListener('submit',e=>{e.preventDefault();const text=$('chatText').value.trim();if(!text)return;if(mode==='local'){toast('Chat disponível apenas no modo online.');return}if(!peerConnected){toast('Aguarde a conexão para enviar mensagens.');return}if(mode==='guest')activeConn?.send({type:'chat',text});else handleChat({text},hostColor);$('chatText').value=''});
-$('modalOverlay').onclick=e=>{if(e.target===$('modalOverlay'))closeModal()};document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modalActive)closeModal()});
-bindDragging();
-const savedCode=storage.getItem('xadrez_lastRoom');if(savedCode&&/^[A-Z0-9]{6}$/.test(savedCode)&&storage.getItem('xadrez_room_'+savedCode)){$('resumeBtn').classList.remove('hidden');$('resumeBtn').textContent='↺ Retomar sala '+savedCode}
-const invite=new URLSearchParams(location.search).get('sala');if(invite&&/^[A-Z0-9]{6}$/i.test(invite)){$('joinInput').value=invite.toUpperCase();$('joinInput').focus()}
+var CONFIG={whatsapp:'',instagram:'',telefone:'',endereco:'',horario:'',cidade:'',bairros:[]};
+var IMG={};var TEAM=[];var REVIEWS=[];
+var FC=[['cs','Corte e estilo'],['co','Cor'],['tr','Tratamentos'],['al','Alisamento e escova']];
+var SV=[
+['alisamento','Alisamento','al','Fios alinhados, com brilho e movimento, com a técnica certa para o seu cabelo.','Quem quer reduzir volume e frizz e facilitar o dia a dia.',['Avaliação do fio, do histórico de química e do couro cabeludo','Escolha da técnica, combinada com você antes','Aplicação, finalização e orientação de manutenção'],'Siga as orientações de lavagem e use produtos indicados para o seu fio.'],
+['escovas','Escovas','al','Escova lisa, ondulada ou com volume, com acabamento que dura.','Dia a dia, eventos ou aquele dia que pede cabelo arrumado.',['Lavagem e preparo com proteção térmica','Escova no resultado que você quer','Finalização para durar mais'],'Proteja o penteado ao dormir e evite umidade nas primeiras horas.'],
+['finalizacao','Finalização','al','Modelagem e acabamento para valorizar o corte, o cacho ou a ondulação.','Quem quer o cabelo no ponto antes de um compromisso.',['Conversa sobre o resultado desejado','Modelagem conforme o seu tipo de fio','Dicas para manter em casa'],'Liso, ondulado, cacheado ou crespo: cada fio pede um cuidado.'],
+['cortes','Cortes','cs','Corte pensado para o formato do rosto, o tipo de fio e a sua rotina.','Renovar o visual, tirar pontas ou mudar o estilo.',['Conversa sobre o que você quer e o que combina com você','Corte e modelagem','Finalização e dicas de como arrumar em casa'],'Manter o corte em dia ajuda o cabelo a crescer mais saudável.'],
+['penteados','Penteados','cs','Penteados para festas, formaturas, casamentos e ocasiões especiais.','Quem tem um evento e quer chegar linda e confortável.',['Escolha do estilo e da referência, com antecedência','Combinação de horário e local','Penteado e finalização para durar o evento'],'Combine com antecedência: datas especiais lotam rápido.'],
+['coloracao','Coloração','co','Cor com cuidado, do tom natural ao visual novo, respeitando a saúde do fio.','Quem quer mudar o visual ou cobrir brancos.',['Conversa sobre cor, referência e histórico do cabelo','Combinação da técnica e dos cuidados, com teste de sensibilidade quando indicado','Aplicação, finalização e cuidados de manutenção'],'Use produtos próprios para cabelos coloridos para a cor durar mais.'],
+['mechas','Mechas e iluminação','co','Luz e dimensão para o cabelo, com técnica adequada ao seu tom e ao seu fio.','Quem quer iluminar o cabelo sem perder a naturalidade.',['Avaliação do tom de base e do histórico do cabelo','Escolha da técnica e do resultado, combinada com você','Aplicação, tonalização e orientação de manutenção'],'Cabelo iluminado pede hidratação e nutrição com regularidade.'],
+['hidratacao','Hidratação','tr','Devolve maciez, brilho e leveza aos fios ressecados ou opacos.','Cabelos ressecados, com frizz ou sem brilho.',['Avaliação da necessidade do seu cabelo','Escolha do produto e do tempo de pausa','Enxágue e finalização'],'A frequência ideal varia de cabelo para cabelo: combinamos com você.'],
+['tratamentos','Nutrição e reconstrução','tr','Cuidado mais profundo para fios cansados por química, calor ou sol.','Cabelos quebradiços, elásticos demais ou com pontas danificadas.',['Diagnóstico dos danos e da porosidade do fio','Tratamento conforme a necessidade: nutrição ou reconstrução','Orientação para manter o resultado em casa'],'Excesso de tratamento sem equilíbrio também cansa o fio: seguimos um plano.'],
+['cronograma','Cronograma capilar','tr','Um plano de hidratação, nutrição e reconstrução montado para o seu cabelo.','Quem quer cuidar do cabelo com constância e ver evolução.',['Avaliação do cabelo e da rotina','Calendário simples com os cuidados de cada semana','Acompanhamento e ajustes ao longo do tempo'],'Constância vale mais do que intensidade: o plano precisa ser possível de cumprir.']];
+var GL=[['Corte moderno','Cortes','t'],['Mechas iluminadas','Mechas',''],['Coloração','Coloração','wd'],['Cachos definidos','Cacheados','t'],['Hidratação profunda','Tratamentos',''],['Brilho e movimento','Tratamentos',''],['Corte e finalização','Cortes','wd'],['Luzes naturais','Mechas','']];
+var $=function(s,r){return(r||document).querySelector(s)};var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function hs(s){var h=7;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))%997;return h}
+function art(seed,mode){var s='<svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">';for(var i=0;i<10;i++){var y=40+i*46+(seed*37+i*19)%26,a=34+(seed*13+i*7)%36,d;if(mode==='b'){d='M-20 '+y;for(var x=0;x<=420;x+=28){d+='L'+x+' '+(y+((x*7+i*53+seed)%23)-11)}}else{d='M-20 '+y+'C110 '+(y-a)+' 270 '+(y+a)+' 420 '+(y-a/2)}s+='<path d="'+d+'" fill="none" stroke="currentColor" stroke-width="'+(i%3?1.5:3)+'" opacity="'+(.22+.08*(i%4))+'" stroke-linecap="round"/>'}return s+'</svg>'}
+function slot(key,host,alt,mode){host.textContent='';if(IMG[key]){var d=el('div','ph'),i=el('img');i.src=IMG[key];i.alt=alt||'';i.loading='lazy';d.appendChild(i);host.appendChild(d)}else{var a=el('div','art');a.innerHTML=art(hs(key),mode);a.appendChild(el('span','tag','Imagem ilustrativa'));host.appendChild(a)}}
+function wa(m){var n=(CONFIG.whatsapp||'').replace(/\D/g,'');return n?'https://wa.me/'+n+'?text='+encodeURIComponent(m):'#agendar'}
+function wire(){$$('.wa').forEach(function(a){var h=wa(a.dataset.msg||'');a.href=h;if(h.charAt(0)==='h'){a.target='_blank';a.rel='noopener noreferrer'}})}
+var dlg=$('#dlg'),dc=$('#dc');
+function open(n){dc.textContent='';dc.appendChild(n);if(!dlg.open)dlg.showModal()}
+$('#dx').addEventListener('click',function(){dlg.close()});
+dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close()});
+/* hero e sobre */
+slot('hero',$('#s-hero'),'Cabelo feminino');slot('sobre',$('#s-sobre'),'Salão R&R Beauty');
+/* servicos */
+var sf=$('#sf'),sg=$('#sg'),fcur='';
+[['','Todos']].concat(FC).forEach(function(c){var b=el('button','chip',c[1]);b.type='button';b.setAttribute('aria-pressed',c[0]===fcur);b.addEventListener('click',function(){fcur=c[0];$$('.chip',sf).forEach(function(x){x.setAttribute('aria-pressed',x===b)});$$('.sc',sg).forEach(function(x){x.hidden=fcur&&x.dataset.c!==fcur})});sf.appendChild(b)});
+SV.forEach(function(s){var c=el('button','sc');c.type='button';c.dataset.c=s[2];var im=el('div','im');slot('s-'+s[0],im,s[1]);c.appendChild(im);var t=el('div','tx');t.appendChild(el('h3',null,s[1]));t.appendChild(el('p',null,s[3]));var m=el('div','m');m.appendChild(el('span',null,'Valor e duração combinados'));m.appendChild(el('span',null,'Ver mais →'));t.appendChild(m);c.appendChild(t);c.addEventListener('click',function(){detail(s)});sg.appendChild(c)});
+function detail(s){var g=el('div','dg'),im=el('div','im');slot('s-'+s[0],im,s[1]);var t=el('div','tx');t.appendChild(el('h3',null,s[1]));t.appendChild(el('p',null,s[3]));t.appendChild(el('div','k','Indicado para'));t.appendChild(el('p',null,s[4]));t.appendChild(el('div','k','Como é feito'));var o=el('ol');s[5].forEach(function(x){o.appendChild(el('li',null,x))});t.appendChild(o);t.appendChild(el('div','k','Dica de cuidado'));t.appendChild(el('p',null,s[6]));var b=el('button','btn',' Agendar este serviço');b.textContent='Agendar este serviço';b.type='button';b.style.marginTop='24px';b.addEventListener('click',function(){dlg.close();book(s[0])});t.appendChild(b);g.appendChild(im);g.appendChild(t);open(g)}
+/* comparador */
+var cm=$('#cmp');slot('antes',$('.b',cm),'Antes','b');slot('depois',$('.a',cm),'Depois');$('.b .tag',cm)&&($('.b .tag',cm).style.display='none');
+$('input',cm).addEventListener('input',function(e){cm.style.setProperty('--p',e.target.value+'%')});
+/* profissionais */
+var pg=$('#pg');
+if(TEAM.length){TEAM.forEach(function(p,i){var c=el('div','pc'),f=el('div','ph2');slot('prof'+i,f,p.nome);c.appendChild(f);c.appendChild(el('h3',null,p.nome));c.appendChild(el('p',null,p.especialidades||''));c.appendChild(el('p',null,p.bio||''));pg.appendChild(c)})}
+else{var c=el('div','pc');c.style.gridColumn='1/-1';c.appendChild(el('h3',null,'Duas amigas, uma só equipe.'));c.appendChild(el('p',null,'Somos duas profissionais com mais de 3 anos de experiência em cabelo, unidas pelo mesmo sonho. Em breve, aqui você conhece cada uma de nós.'));var b=el('a','btn sm','Agendar com a equipe');b.href='#agendar';b.style.marginTop='20px';c.appendChild(b);pg.appendChild(c)}
+/* galeria */
+var gf=$('#gf'),gg=$('#gg'),cats=[];GL.forEach(function(g){if(cats.indexOf(g[1])<0)cats.push(g[1])});
+['Todos'].concat(cats).forEach(function(c){var b=el('button','chip',c);b.type='button';b.setAttribute('aria-pressed',c==='Todos');b.addEventListener('click',function(){$$('.chip',gf).forEach(function(x){x.setAttribute('aria-pressed',x===b)});$$('.gt',gg).forEach(function(x){x.hidden=c!=='Todos'&&x.dataset.c!==c})});gf.appendChild(b)});
+GL.forEach(function(g,i){var t=el('button','gt '+g[2]);t.type='button';t.dataset.c=g[1];t.setAttribute('aria-label','Ampliar: '+g[0]);slot('g'+i,t,g[0]);t.appendChild(el('span','cap',g[0]));t.addEventListener('click',function(){var w=el('div');w.style.cssText='aspect-ratio:4/3;position:relative';slot('g'+i,w,g[0]);var p=el('div');p.style.padding='18px 26px 24px';p.appendChild(el('h3',null,g[0]));var d=document.createElement('div');d.appendChild(w);d.appendChild(p);open(d)});gg.appendChild(t)});
+/* avaliacoes */
+var rw=$('#rvw');
+if(REVIEWS.length){var r=el('div','rvs');REVIEWS.forEach(function(v){var f=el('figure');f.appendChild(el('p',null,v.texto));f.appendChild(el('figcaption',null,v.nome));r.appendChild(f)});rw.appendChild(r)}
+else{var e=el('div','rv-e');e.appendChild(el('h3',null,'Em breve, os primeiros depoimentos.'));e.appendChild(el('p',null,'Estamos começando e cada avaliação é muito especial para nós. Depois do seu atendimento, conte como foi.'));e.firstChild.style.marginBottom='10px';rw.appendChild(e)}
+/* localidade e contato */
+$('#cidade').textContent=CONFIG.cidade||'Informe o seu bairro no agendamento';
+var bl=CONFIG.bairros;if(bl.length){bl.forEach(function(b){$('#bairros').appendChild(el('span',null,b))})}else{$('#bairros').appendChild(el('p',null,'A lista de bairros será divulgada em breve. Pergunte pelo WhatsApp se atendemos a sua região.'))}
+var ig=(CONFIG.instagram||'').replace(/[^A-Za-z0-9._]/g,''),ct=[];
+if(CONFIG.whatsapp)ct.push(['WhatsApp',CONFIG.whatsapp,wa('Olá!')]);if(ig)ct.push(['Instagram','@'+ig,'https://instagram.com/'+ig]);if(CONFIG.telefone)ct.push(['Telefone',CONFIG.telefone,'tel:'+CONFIG.telefone.replace(/[^\d+]/g,'')]);if(CONFIG.endereco)ct.push(['Endereço',CONFIG.endereco]);if(CONFIG.horario)ct.push(['Horário',CONFIG.horario]);
+var cg=$('#cg'),fc=$('#fc');
+if(ct.length){ct.forEach(function(c){var d=el('div');d.appendChild(el('b',null,c[0]));if(c[2]){var a=el('a',null,c[1]);a.href=c[2];if(c[2].charAt(0)==='h'){a.target='_blank';a.rel='noopener noreferrer'}d.appendChild(a);var l=el('li'),a2=el('a',null,c[0]);a2.href=c[2];l.appendChild(a2);fc.appendChild(l)}else{d.appendChild(el('span',null,c[1]));fc.appendChild(el('li',null,c[1]))}cg.appendChild(d)})}
+else{var d=el('div');d.style.gridColumn='1/-1';d.appendChild(el('b',null,'Canais de atendimento'));d.appendChild(el('span',null,'WhatsApp, Instagram, endereço e horários serão divulgados em breve.'));cg.appendChild(d);fc.appendChild(el('li',null,'Em breve'))}
+SV.slice(0,6).forEach(function(s){var l=el('li'),a=el('a',null,s[1]);a.href='#servicos';l.appendChild(a);$('#fs').appendChild(l)});
+if(CONFIG.whatsapp){var f=el('a','wf','WA');f.href=wa('Olá!');f.target='_blank';f.rel='noopener noreferrer';f.setAttribute('aria-label','Conversar pelo WhatsApp');document.body.appendChild(f)}
+/* agendamento */
+var wz=$('#wz'),ST=['Serviço','Profissional','Data','Período','Seus dados','Confirmar'],stp=0,D={s:'',p:'Sem preferência',d:'',per:'',n:'',t:'',l:'',o:''};
+function bar(){var b=el('div','pb');ST.forEach(function(x,i){var d=el('div',i<=stp?'on'+(i===stp?' cur':''):'',x);b.appendChild(d)});return b}
+function radio(name,list,val,cb){var g=el('div','opts');g.setAttribute('role','radiogroup');list.forEach(function(x){var l=el('label','opt'),i=document.createElement('input');i.type='radio';i.name=name;i.value=x[0];i.checked=x[0]===val;i.addEventListener('change',function(){cb(x[0])});l.appendChild(i);l.appendChild(el('span',null,x[1]));g.appendChild(l)});return g}
+function fld(id,lb,type,val,cb,req){var f=el('div','fld'),l=el('label',null,lb+(req?' *':''));l.htmlFor=id;var i=type==='ta'?document.createElement('textarea'):document.createElement('input');if(type==='ta')i.rows=3;else i.type=type;i.id=id;i.value=val;i.maxLength=type==='ta'?300:80;if(type==='tel')i.setAttribute('inputmode','tel');i.addEventListener('input',function(){cb(i.value)});f.appendChild(l);f.appendChild(i);return f}
+function sName(id){for(var i=0;i<SV.length;i++)if(SV[i][0]===id)return SV[i][1];return ''}
+function fmtD(v){var p=v.split('-');return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:v}
+function msg(){return 'Olá! Gostaria de solicitar um agendamento.\nServiço: '+sName(D.s)+'\nProfissional: '+D.p+'\nData preferida: '+fmtD(D.d)+'\nPeríodo: '+D.per+'\nNome: '+D.n+'\nWhatsApp: '+D.t+(D.l?'\nBairro/endereço: '+D.l:'')+(D.o?'\nObservações: '+D.o:'')}
+function render(){wz.textContent='';wz.appendChild(bar());var er=el('div','err');er.setAttribute('role','alert');var h=el('h3',null,ST[stp]),hint=el('p','hint'),body=el('div');wz.appendChild(h);wz.appendChild(hint);wz.appendChild(body);
+if(stp===0){hint.textContent='Qual serviço você quer?';body.appendChild(radio('s',SV.map(function(s){return[s[0],s[1]]}),D.s,function(v){D.s=v}))}
+if(stp===1){hint.textContent='Escolha com quem prefere ser atendida.';var L=[['Sem preferência','Sem preferência']];TEAM.forEach(function(p){L.push([p.nome,p.nome])});body.appendChild(radio('p',L,D.p,function(v){D.p=v}))}
+if(stp===2){hint.textContent='Qual dia você prefere? A disponibilidade real é confirmada pela equipe.';var f=el('div','fld'),l=el('label',null,'Data preferida *');l.htmlFor='dt';var i=document.createElement('input');i.type='date';i.id='dt';i.value=D.d;var n=new Date();i.min=n.getFullYear()+'-'+('0'+(n.getMonth()+1)).slice(-2)+'-'+('0'+n.getDate()).slice(-2);i.addEventListener('input',function(){D.d=i.value});f.appendChild(l);f.appendChild(i);f.style.maxWidth='320px';body.appendChild(f)}
+if(stp===3){hint.textContent='Em que período do dia é melhor para você?';body.appendChild(radio('per',[['Manhã','Manhã'],['Tarde','Tarde'],['Noite','Noite']],D.per,function(v){D.per=v}))}
+if(stp===4){hint.textContent='Usamos esses dados só para responder ao seu pedido.';var g=el('div');g.style.maxWidth='520px';g.appendChild(fld('fn','Nome','text',D.n,function(v){D.n=v},1));g.appendChild(fld('ft','WhatsApp com DDD','tel',D.t,function(v){D.t=v},1));g.appendChild(fld('fl','Bairro ou endereço do atendimento','text',D.l,function(v){D.l=v}));g.appendChild(fld('fo','Observações','ta',D.o,function(v){D.o=v}));body.appendChild(g)}
+if(stp===5){hint.textContent='Confira o seu pedido.';var dl=el('dl','smry');[['Serviço',sName(D.s)],['Profissional',D.p],['Data preferida',fmtD(D.d)],['Período',D.per],['Nome',D.n],['WhatsApp',D.t],['Local',D.l||'A combinar'],['Observações',D.o||'Nenhuma']].forEach(function(r){dl.appendChild(el('dt',null,r[0]));dl.appendChild(el('dd',null,r[1]))});body.appendChild(dl);body.appendChild(el('p','note','Este é um pedido de agendamento. O horário só fica confirmado depois da resposta da equipe pelo WhatsApp.'))}
+body.appendChild(er);var nv=el('div','wn'),bk=el('button','btn o','Voltar');bk.type='button';bk.disabled=stp===0;bk.style.opacity=stp===0?.4:1;bk.addEventListener('click',function(){stp--;render()});nv.appendChild(bk);
+if(stp<5){var nx=el('button','btn','Continuar');nx.type='button';nx.addEventListener('click',function(){var m='';if(stp===0&&!D.s)m='Escolha um serviço para continuar.';if(stp===2){var v=D.d,t=new Date();t.setHours(0,0,0,0);if(!v)m='Escolha uma data.';else if(new Date(v+'T00:00:00')<t)m='Escolha uma data a partir de hoje.'}if(stp===3&&!D.per)m='Escolha um período.';if(stp===4){if(D.n.trim().length<2)m='Informe o seu nome.';else if(D.t.replace(/\D/g,'').length<10)m='Informe um WhatsApp válido com DDD.'}if(m){er.textContent=m;return}stp++;render();wz.scrollIntoView({block:'nearest',behavior:'smooth'})});nv.appendChild(nx)}
+else{if(CONFIG.whatsapp){var a=el('a','btn','Enviar pelo WhatsApp');a.href=wa(msg());a.target='_blank';a.rel='noopener noreferrer';nv.appendChild(a)}else{var cp=el('button','btn','Copiar pedido');cp.type='button';cp.addEventListener('click',function(){var t=msg(),ok=function(){er.style.color='var(--acc)';er.textContent='Pedido copiado. Envie para a equipe pelo WhatsApp ou Instagram.'};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,function(){er.textContent='Não foi possível copiar. Selecione e copie o resumo acima.'})}else{er.textContent='Selecione e copie o resumo acima.'}});nv.appendChild(cp)}}
+body.appendChild(nv)}
+function book(id){D.s=id;stp=1;render();$('#agendar').scrollIntoView({behavior:'smooth'})}
+render();
+/* interacoes */
+wire();$('#y').textContent=new Date().getFullYear();
+var mb=$('#mb'),nav=$('#nav');mb.addEventListener('click',function(){var o=nav.classList.toggle('on');mb.setAttribute('aria-expanded',o)});nav.addEventListener('click',function(e){if(e.target.tagName==='A'){nav.classList.remove('on');mb.setAttribute('aria-expanded','false')}});
+var hd=$('#hd');addEventListener('scroll',function(){hd.classList.toggle('scr',scrollY>8)},{passive:true});
+var rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function count(e){var n=+e.dataset.n;if(rm){e.textContent='+'+n;return}var s=0,t0=performance.now();(function f(t){var p=Math.min(1,(t-t0)/1200);e.textContent='+'+Math.round(n*p);if(p<1)requestAnimationFrame(f)})(t0)}
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');$$('[data-n]',x.target).forEach(count);io.unobserve(x.target)}})},{threshold:.12});$$('.rv').forEach(function(r){io.observe(r)})}else{$$('.rv').forEach(function(r){r.classList.add('in')});$$('[data-n]').forEach(count)}
 </script>
 </body>
 </html>
