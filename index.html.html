@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#151f2a">
+<title>Xadrez ao Vivo · Duelo entre amigos</title>
+<style>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;--bg:#f2f4f5;--panel:#ffffff;--ink:#18252c;--sub:#697780;--line:#dfe5e8;--forest:#236958;--forest2:#0d5045;--lime:#d3ed9b;--light:#ecf0df;--dark:#779383;--accent:#176958;--pill:#e8f2eb;--danger:#bc4b42;--shadow:0 16px 40px #152c2e13;--sq-size:clamp(34px, 9.6vw, 74px)}
+@media(prefers-color-scheme:dark){:root{--bg:#111b21;--panel:#1c2930;--ink:#f2f5f1;--sub:#a0afb2;--line:#35454b;--forest:#9bcab3;--forest2:#68ab94;--pill:#273d38;--accent:#a9d0ac;--shadow:0 18px 40px #0004;--light:#dce5d0;--dark:#638376}}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%}body{background:var(--bg);color:var(--ink)}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.48;cursor:not-allowed}button:focus-visible,input:focus-visible,select:focus-visible,.square:focus-visible{outline:3px solid #dfac49;outline-offset:2px}button{touch-action:manipulation}.hidden{display:none!important}
+.app{max-width:1310px;padding:0 22px 34px;margin:auto}.topbar{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:23px 0 21px}.logo{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:-.7px;font-size:23px}.logo-mark{height:41px;width:41px;border-radius:12px;display:grid;place-items:center;background:#153f3a;color:#fff;font-family:Georgia,serif;font-size:32px}.topnote{font-size:12px;text-transform:uppercase;letter-spacing:1.6px;color:var(--sub);font-weight:800}.header-actions{display:flex;gap:10px;align-items:center}.icon-btn{width:39px;height:39px;display:inline-grid;place-items:center;border:1px solid var(--line);background:var(--panel);border-radius:12px;color:var(--ink);font-size:21px}.btn{border:0;border-radius:11px;padding:12px 16px;font-size:14px;font-weight:750;display:inline-flex;gap:8px;align-items:center;justify-content:center;transition:background .15s,transform .15s}.btn:hover:not(:disabled){transform:translateY(-1px)}.btn.primary{background:#176454;color:white}.btn.primary:hover{background:#0b5243}.btn.soft{background:var(--pill);color:var(--ink)}.btn.outline{background:transparent;border:1px solid var(--line);color:var(--ink)}.btn.danger{background:#fbe6e3;color:#a43e38}.btn.full{width:100%}.btn.sm{padding:8px 12px;font-size:12px;border-radius:9px}.label{color:var(--sub);font-size:12px;font-weight:750;letter-spacing:1.2px;text-transform:uppercase}.muted{color:var(--sub)}
+.start-shell{padding:62px 0 40px}.eyebrow{color:var(--forest2);text-transform:uppercase;letter-spacing:2px;font-weight:800;font-size:12px;margin-bottom:14px}.intro-title{font-weight:850;font-size:clamp(34px,5.8vw,68px);letter-spacing:-3px;line-height:1.08;margin:0 0 16px}.intro-title i{font-family:Georgia,serif;color:var(--forest2);font-style:italic;font-weight:500}.lead{max-width:570px;line-height:1.65;font-size:16px;color:var(--sub);margin-bottom:33px}.start-grid{display:grid;grid-template-columns:1fr 1fr .8fr;gap:18px}.start-card{background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:23px;display:flex;flex-direction:column;gap:14px}.start-card h2{font-size:19px;margin:0;letter-spacing:-.5px}.start-card p{font-size:13px;line-height:1.6;margin:0;color:var(--sub);min-height:42px}.start-icon{background:var(--pill);height:44px;width:44px;display:grid;place-items:center;border-radius:13px;font-size:25px}.field{display:flex;flex-direction:column;gap:7px}.field>span{font-size:12px;font-weight:800;color:var(--sub)}.field input,.field select,.room-code-input{border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);padding:11px 12px;min-height:43px;width:100%;outline:none}.field select{appearance:auto}.twofields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.code-field{text-align:center;letter-spacing:4px;font-size:20px;font-weight:850;text-transform:uppercase}.info-strip{margin-top:20px;border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:14px 17px;line-height:1.5;font-size:12px;color:var(--sub)}
+.game-grid{display:grid;grid-template-columns:minmax(0,720px) minmax(315px,1fr);gap:27px;align-items:start}.stage{min-width:0}.statusbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px 15px;margin-bottom:16px}.status-pill{display:inline-flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);padding:8px 12px;border-radius:30px;font-size:12px;font-weight:700}.dot{width:9px;height:9px;border-radius:100%;background:#d5a94b;box-shadow:0 0 0 3px #cda94b1a}.dot.ok{background:#47a47c}.dot.off{background:#df6b62}.room-chip{font-size:12px;color:var(--sub)}.room-chip strong{color:var(--ink);font-size:15px;letter-spacing:2px}.players{display:flex;align-items:center;justify-content:space-between;background:var(--panel);border-radius:13px;border:1px solid var(--line);padding:12px 14px;margin:9px 0;min-height:74px;gap:8px}.player-identity{display:flex;align-items:center;gap:11px;min-width:0}.player-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:10px;font-size:29px;font-family:Georgia,serif;flex-shrink:0}.player-icon.white{background:#e9ece5;color:#283331}.player-icon.black{background:#2f4146;color:#fff}.player-name{font-size:14px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.player-meta{font-size:11px;color:var(--sub);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.capture{font-family:Georgia,serif;font-size:18px;letter-spacing:-3px;color:var(--sub)}.material{font-size:11px;font-weight:800;color:var(--forest2);margin-left:4px}.clock{font-weight:800;min-width:96px;text-align:center;font-variant-numeric:tabular-nums;font-size:22px;letter-spacing:.4px;padding:8px 12px;border-radius:10px;background:var(--bg);color:var(--ink)}.clock.live{background:#1f6659;color:#fff}.clock.low{background:#b5453d!important;color:#fff;animation:pulse 1s infinite}@keyframes pulse{50%{opacity:.72}}
+.board-frame{position:relative;background:var(--panel);border-radius:13px;box-shadow:var(--shadow);padding:7px;user-select:none;-webkit-user-select:none;touch-action:none}.board{aspect-ratio:1;display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);width:100%;overflow:hidden;border-radius:7px;position:relative}.square{padding:0;margin:0;border:0;position:relative;display:grid;place-items:center;min-width:0;aspect-ratio:1;touch-action:none;background:var(--light);color:#4a6855;cursor:pointer}.square.dark{background:var(--dark);color:#eff6de}.square.last{background:#ecd67b}.square.dark.last{background:#c4af59}.square.selected{background:#badbb9!important}.square.dark.selected{background:#7cac8c!important}.square.check{background:#d9564f!important}.square:before{pointer-events:none}.square.target:before{content:"";position:absolute;width:24%;height:24%;background:#173d3349;border-radius:50%;z-index:1}.square.occupied.target:before{width:88%;height:88%;background:transparent;border:5px solid #173d3370;box-sizing:border-box}.square .piece{z-index:2;font-family:"DejaVu Sans","Segoe UI Symbol","Noto Sans Symbols 2",Georgia,serif;font-size:clamp(27px,5vw,58px);line-height:1;position:relative;pointer-events:none;filter:drop-shadow(0 3px 1px #142f2b3b);transition:transform .12s ease}.square:hover .piece{transform:scale(1.04)}.piece.white{color:#fffef7;-webkit-text-stroke:1.2px #354440;text-shadow:0 2px #566b64}.piece.black{color:#142f31;-webkit-text-stroke:.6px #e4ebd6;text-shadow:0 1px #0004}.coord{position:absolute;font-size:clamp(8px,1.2vw,11px);font-weight:800;z-index:3;pointer-events:none}.coord.rank{top:3px;left:4px}.coord.file{right:4px;bottom:3px}.float-piece{position:absolute;z-index:12;pointer-events:none;display:grid;place-items:center;font-family:"DejaVu Sans","Segoe UI Symbol",Georgia,serif;font-size:clamp(27px,5vw,58px);line-height:1;filter:drop-shadow(0 3px 2px #0006)}.float-piece.white{color:#fffef7;-webkit-text-stroke:1px #354440}.float-piece.black{color:#142f31;-webkit-text-stroke:.5px #f6f6ef}.arriving{visibility:hidden}.drag-ghost{position:fixed;z-index:9999;pointer-events:none;opacity:.94;transform:translate(-50%,-50%);font-size:58px!important;filter:drop-shadow(0 10px 8px #0006)}.board-footer{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;margin-top:15px}.board-footer .group{display:flex;flex-wrap:wrap;gap:8px}.turn-banner{margin:12px 0 4px;font-size:13px;font-weight:750;color:var(--forest2);min-height:20px;text-align:center}
+.side{display:flex;flex-direction:column;gap:16px}.side-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px #00000007}.side-head{padding:17px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px}.side-head h2{font-size:15px;letter-spacing:-.3px;margin:0}.side-head small{font-size:11px;color:var(--sub)}.moves{height:235px;overflow-y:auto;display:grid;grid-template-columns:45px 1fr 1fr;align-content:start;padding:11px 14px;gap:3px}.move-number{text-align:right;padding:10px 9px;color:var(--sub);font-size:12px}.move-san{font-size:13px;font-weight:700;padding:9px 12px;border-radius:6px;align-self:start}.move-san.recent{background:var(--pill);color:var(--forest2)}.empty-moves{grid-column:1/-1;display:grid;place-items:center;text-align:center;min-height:175px;color:var(--sub);font-size:13px}.empty-moves span{display:block;font-size:30px;margin-bottom:10px}.chat-log{height:174px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}.chat-bubble{max-width:92%;background:var(--bg);padding:9px 11px;border-radius:11px;align-self:flex-start;font-size:12px;line-height:1.45;word-break:break-word}.chat-bubble.mine{background:var(--pill);align-self:flex-end}.chat-who{font-size:10px;font-weight:850;margin-bottom:4px;color:var(--forest2)}.chat-input{padding:12px;border-top:1px solid var(--line);display:flex;gap:8px}.chat-input input{width:100%;min-width:0;border:1px solid var(--line);background:var(--bg);border-radius:9px;color:var(--ink);padding:10px;font-size:13px}.chat-input button{border:0;background:#176454;color:#fff;border-radius:9px;padding:0 14px;font-size:17px}.chat-input button:disabled{opacity:.4}.request-card{padding:13px 15px;background:var(--pill);border:1px solid var(--forest2);border-radius:13px;display:flex;flex-direction:column;gap:11px;font-size:13px}.request-card .request-actions{display:flex;gap:8px}.help{font-size:12px;line-height:1.6;color:var(--sub);padding:0 3px}.invite-content{padding:17px 18px}.invite-code{font-size:32px;letter-spacing:7px;font-weight:850;text-align:center;margin:3px 0 13px}.invite-actions{display:flex;gap:8px}.invite-actions>*{flex:1}.invite-tip{margin-top:12px;font-size:11px;color:var(--sub);line-height:1.5}
+.toast-wrap{position:fixed;left:50%;bottom:23px;transform:translateX(-50%);z-index:1000;width:min(92vw,470px);pointer-events:none}.toast{background:#172e2c;color:#fff;padding:12px 16px;border-radius:12px;box-shadow:0 15px 36px #0003;font-size:13px;margin-top:8px;animation:pop .2s ease}@keyframes pop{from{opacity:0;transform:translateY(8px)}}.overlay{position:fixed;inset:0;background:#071517aa;z-index:100;display:grid;place-items:center;padding:20px}.modal{background:var(--panel);color:var(--ink);border-radius:20px;padding:27px;width:min(100%,420px);box-shadow:0 30px 70px #0006}.modal h2{margin:0 0 12px;font-size:23px;letter-spacing:-.7px}.modal p{font-size:14px;line-height:1.65;color:var(--sub)}.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}.promo-options{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:21px}.promo-piece{height:79px;border-radius:10px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;font-family:Georgia,serif;font-size:47px;color:var(--ink)}.promo-piece:hover{border-color:var(--forest2);background:var(--pill)}.code-area{width:100%;min-height:92px;font:12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);padding:10px;resize:vertical;word-break:break-all;margin:4px 0}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+@media(max-width:950px){.game-grid{grid-template-columns:minmax(0,1fr) 330px;gap:15px}.app{padding:0 13px 27px}.start-grid{grid-template-columns:1fr 1fr}.start-grid .start-card:last-child{grid-column:1/-1}.intro-title{letter-spacing:-2px}}@media(max-width:730px){.app{max-width:610px}.game-grid{grid-template-columns:1fr}.start-shell{padding:22px 0}.start-grid{grid-template-columns:1fr}.start-grid .start-card:last-child{grid-column:auto}.lead{font-size:14px}.intro-title{font-size:42px}.topbar{padding:15px 0}.logo{font-size:19px}.topnote{display:none}.stage{width:100%}.side{display:grid;grid-template-columns:1fr}.board-frame{padding:4px}.players{padding:8px 10px;min-height:62px}.player-icon{width:36px;height:36px;font-size:26px}.clock{font-size:19px;min-width:82px;padding:7px}.square .piece,.float-piece{font-size:clamp(26px,8vw,58px)}.moves{height:200px}.btn.sm{padding:8px 9px;font-size:11px}.board-footer .group{gap:5px}}
+@media(max-width:380px){.player-name{font-size:12px}.board-footer{flex-direction:column;align-items:center}.board-footer .group{width:100%;justify-content:center}.clock{font-size:17px;min-width:72px}.intro-title{font-size:36px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar"><div class="logo"><div class="logo-mark" aria-hidden="true">♞</div><div>Xadrez <span style="color:var(--forest2)">ao Vivo</span></div></div><div class="header-actions"><span class="topnote">DUAS MENTES · UM TABULEIRO</span><button id="soundToggle" class="icon-btn" title="Silenciar / ativar sons" aria-label="Alternar som">♫</button></div></header>
+<section id="startScreen" class="start-shell">
+  <div class="eyebrow">O clássico, em qualquer lugar</div>
+  <h1 class="intro-title">Seu próximo lance<br>é com <i>um amigo.</i></h1>
+  <p class="lead">Crie uma sala e compartilhe o código. Xadrez completo, relógio, chat e lances sincronizados em tempo real, diretamente no navegador.</p>
+  <div class="start-grid">
+    <article class="start-card"><div class="start-icon">♔</div><h2>Criar uma sala</h2><p>Você escolhe a cor, configura o tempo e convida o adversário.</p><div class="twofields"><label class="field"><span>Sua cor</span><select id="colorSelect"><option value="random">Sortear</option><option value="w">Brancas</option><option value="b">Pretas</option></select></label><label class="field"><span>Relógio</span><select id="timeSelect"><option value="180,2">3 + 2</option><option value="300,0" selected>5 + 0</option><option value="600,0">10 + 0</option><option value="0,0">Sem relógio</option></select></label></div><button id="createBtn" class="btn primary full">Criar sala ↗</button><button id="resumeBtn" class="btn soft full hidden">Retomar sala anterior</button></article>
+    <article class="start-card"><div class="start-icon">♚</div><h2>Entrar na sala</h2><p>Digite o código recebido do seu amigo para jogar do outro lado.</p><label class="field"><span>Código de 6 caracteres</span><input id="joinInput" class="code-field" maxlength="6" placeholder="A7K2MT" autocomplete="off" spellcheck="false" aria-label="Código da sala"></label><button id="joinBtn" class="btn primary full">Entrar na sala →</button></article>
+    <article class="start-card"><div class="start-icon">♙</div><h2>Mesmo dispositivo</h2><p>Sem internet: duas pessoas, um tabuleiro. Todas as regras e funções essenciais.</p><div style="flex:1"></div><button id="localBtn" class="btn outline full">Jogar localmente</button></article>
+  </div>
+  <div style="margin-top:14px"><button id="manualBtn" class="btn outline full">Jogar sem servidor (trocar códigos manualmente)</button></div>
+  <div class="info-strip"><b>Como funciona o online:</b> conexão WebRTC entre navegadores, com sinalização pública do PeerServer. É necessária internet nos dois dispositivos. Para enviar um link clicável, hospede este arquivo HTML em um endereço HTTPS; se o abrir como arquivo local, envie uma cópia do arquivo e o código ao amigo.</div>
+</section>
+<main id="gameScreen" class="game-grid hidden">
+  <section class="stage" aria-label="Partida de xadrez">
+    <div class="statusbar"><div class="status-pill"><span id="netDot" class="dot"></span><span id="netLabel">Preparando…</span></div><div class="room-chip" id="roomLabel"></div></div>
+    <div id="playerTop" class="players"></div>
+    <div id="boardFrame" class="board-frame"><div id="board" class="board" role="grid" aria-label="Tabuleiro"></div></div>
+    <div id="playerBottom" class="players"></div>
+    <div id="turnBanner" class="turn-banner" aria-live="polite"></div>
+    <div class="board-footer"><div class="group"><button id="flipBtn" class="btn outline sm">⇅ Inverter</button><button id="copyFenBtn" class="btn outline sm">Copiar FEN</button><button id="newBtn" class="btn outline sm">↩ Nova partida</button></div><div class="group"><button id="undoBtn" class="btn soft sm">↶ Desfazer</button><button id="drawBtn" class="btn soft sm">½ Empate</button><button id="resignBtn" class="btn danger sm">Desistir</button></div></div>
+  </section>
+  <aside class="side">
+    <div id="requestCard" class="request-card hidden"></div>
+    <section id="inviteCard" class="side-card hidden"><div class="side-head"><h2>Convide seu amigo</h2><small>Partida particular por código</small></div><div class="invite-content"><div class="label" style="text-align:center">Código da sala</div><div id="inviteCode" class="invite-code"></div><div class="invite-actions"><button id="copyCodeBtn" class="btn soft sm">Copiar código</button><button id="copyLinkBtn" class="btn primary sm">Copiar link</button></div><div id="inviteTip" class="invite-tip"></div></div></section>
+    <section id="manualCard" class="side-card hidden"><div class="invite-content"><div class="invite-tip" style="margin-top:0">Modo sem servidor: o convite é um código longo, enviado por chat.</div><button id="manualOpenBtn" class="btn primary full sm" style="margin-top:10px">Mostrar código de convite</button></div></section>
+    <section class="side-card"><div class="side-head"><h2>Registro de lances</h2><small id="moveCount">0 lances</small></div><div id="movesList" class="moves" aria-live="polite"></div></section>
+    <section class="side-card"><div class="side-head"><h2>Chat da partida</h2><small id="chatIndicator">Mensagens</small></div><div id="chatLog" class="chat-log" aria-live="polite"></div><form id="chatForm" class="chat-input"><input id="chatText" maxlength="500" placeholder="Escreva uma mensagem…" autocomplete="off" aria-label="Mensagem"><button id="chatSend" type="submit" aria-label="Enviar mensagem">➤</button></form></section>
+    <div class="help">Dica: clique numa peça para ver os destinos legais ou arraste-a até a casa desejada. Roque, en passant, promoção e empates seguem as regras oficiais.</div>
+  </aside>
+</main>
+</div>
+<div id="toastWrap" class="toast-wrap" aria-live="polite"></div>
+<div id="modalOverlay" class="overlay hidden"><div id="modalBody" class="modal" role="dialog" aria-modal="true"></div></div>
+<script>
+'use strict';
+/* Xadrez ao Vivo — arquivo único. As regras, UI e cliente WebRTC são implementados
+   em JavaScript nativo. Só a sinalização do WebRTC usa a rede PeerServer Cloud.
+   O anfitrião valida todos os lances e mantém o estado autoritativo. */
+const $ = id => document.getElementById(id);
+/* SERVIDOR DE SINALIZAÇÃO (PeerJS). Troque pelo seu servidor. Ele precisa ser HTTPS/WSS (com certificado válido).
+   host: domínio sem https://   port: 443   path: '/peerjs' (endpoint do servidor incluído na pasta servidor-sinalizacao)   key: a mesma chave do servidor */
+const SIGNAL={host:'site-xadrez.onrender.com',port:443,path:'/peerjs',key:'peerjs'};
+// Armazenamento pode estar bloqueado em visualizadores incorporados.
+const storage=(()=>{try{window.localStorage.getItem('xadrez_test');return window.localStorage}catch{return{getItem:()=>null,setItem:()=>{},removeItem:()=>{}}}})();
+const FILES='abcdefgh', INITIAL='rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
+const SYMBOLS={K:'♔',Q:'♕',R:'♖',B:'♗',N:'♘',P:'♙',k:'♚',q:'♛',r:'♜',b:'♝',n:'♞',p:'♟'};
+const VAL={p:1,n:3,b:3,r:5,q:9,k:0};
+const copy=o=>JSON.parse(JSON.stringify(o));
+const color=p=>p===p.toUpperCase()?'w':'b';
+const opposite=c=>c==='w'?'b':'w';
+const pos=(r,c)=>FILES[c]+(8-r);
+const sq=s=>({r:8-Number(s[1]),c:FILES.indexOf(s[0])});
+const validSquare=s=>typeof s==='string'&&/^[a-h][1-8]$/.test(s);
+const inside=(r,c)=>r>=0&&r<8&&c>=0&&c<8;
+const pieceName={k:'Rei',q:'Dama',r:'Torre',b:'Bispo',n:'Cavalo',p:'Peão'};
+
+/* Motor de xadrez: gera pseudo-lances, elimina os que expõem o próprio rei,
+   calcula xeque, SAN, roques, en passant, promoções e empates. */
+class ChessGame{
+ constructor(){this.reset()}
+ reset(){this.board=INITIAL.split('/').map(row=>{let a=[];for(const ch of row){if(/\d/.test(ch))for(let i=0;i<+ch;i++)a.push(null);else a.push(ch)}return a});this.turn='w';this.castling={K:true,Q:true,k:true,q:true};this.ep=null;this.halfmove=0;this.fullmove=1;this.moves=[];this.history=[];this.positionKeys=[this.key()];this.status=null;}
+ snapshot(){return{board:copy(this.board),turn:this.turn,castling:copy(this.castling),ep:this.ep,halfmove:this.halfmove,fullmove:this.fullmove,status:copy(this.status)}}
+ load(s){this.board=copy(s.board);this.turn=s.turn;this.castling=copy(s.castling);this.ep=s.ep;this.halfmove=s.halfmove;this.fullmove=s.fullmove;this.status=copy(s.status)}
+ export(includeHistory=false){const out={...this.snapshot(),moves:copy(this.moves),positionKeys:[...this.positionKeys]};if(includeHistory)out.history=copy(this.history);return out}
+ import(data){if(!data||!Array.isArray(data.board)||data.board.length!==8||!['w','b'].includes(data.turn))throw Error('Estado remoto inválido');this.load(data);this.moves=Array.isArray(data.moves)?copy(data.moves):[];this.positionKeys=Array.isArray(data.positionKeys)?[...data.positionKeys]:[this.key()];this.history=Array.isArray(data.history)?copy(data.history):[]}
+ fen(){const board=this.board.map(row=>{let str='',run=0;for(const p of row){if(p){if(run)str+=run;run=0;str+=p}else run++}if(run)str+=run;return str}).join('/');const cas=Object.keys(this.castling).filter(k=>this.castling[k]).join('')||'-';return `${board} ${this.turn} ${cas} ${this.ep||'-'} ${this.halfmove} ${this.fullmove}`}
+ key(){// Na repetição, a casa en passant só altera a posição se a captura for legal.
+  let ep='-';if(this.ep){const {r,c}=sq(this.ep),pawn=this.turn==='w'?'P':'p',pr=r+(this.turn==='w'?1:-1);for(const dc of [-1,1])if(inside(pr,c+dc)&&this.board[pr][c+dc]===pawn){const m={from:pos(pr,c+dc),to:this.ep,ep:true};let b=copy(this.board);this.applyBoardOnly(b,m);if(!this.attackedKingOn(b,this.turn)){ep=this.ep;break}}}
+  const br=this.board.map(row=>row.map(p=>p||'.').join('')).join('');return br+'|'+this.turn+'|'+Object.keys(this.castling).filter(k=>this.castling[k]).join('')+'|'+ep;
+ }
+ kingOn(b,side){const target=side==='w'?'K':'k';for(let r=0;r<8;r++)for(let c=0;c<8;c++)if(b[r][c]===target)return{r,c};return null}
+ attackedKingOn(b,side){const k=this.kingOn(b,side);return !k||this.isAttacked(b,k.r,k.c,opposite(side))}
+ isAttacked(b,r,c,by){
+  const pawn=by==='w'?'P':'p',pawnRow=r+(by==='w'?1:-1);for(const dc of [-1,1])if(inside(pawnRow,c+dc)&&b[pawnRow][c+dc]===pawn)return true;
+  for(const[dr,dc]of [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]])if(inside(r+dr,c+dc)&&b[r+dr][c+dc]===(by==='w'?'N':'n'))return true;
+  for(const[dr,dc]of [[-1,-1],[-1,1],[1,-1],[1,1],[-1,0],[1,0],[0,-1],[0,1]]){let rr=r+dr,cc=c+dc,steps=1;while(inside(rr,cc)){const p=b[rr][cc];if(p){if(color(p)===by){const t=p.toLowerCase();if((steps===1&&t==='k')||((dr===0||dc===0)&&(t==='r'||t==='q'))||((dr!==0&&dc!==0)&&(t==='b'||t==='q')))return true}break}rr+=dr;cc+=dc;steps++}}
+  return false;
+ }
+ inCheck(side=this.turn){return this.attackedKingOn(this.board,side)}
+ pseudo(r,c){const p=this.board[r][c],side=color(p),enemy=opposite(side),t=p.toLowerCase(),moves=[];
+  const put=(rr,cc,extra={})=>{if(!inside(rr,cc))return;const q=this.board[rr][cc];if(q&&(color(q)===side||q.toLowerCase()==='k'))return;const base={from:pos(r,c),to:pos(rr,cc),piece:t,captured:q?q.toLowerCase():null,...extra};if(t==='p'&&(rr===0||rr===7))for(const promotion of ['q','r','b','n'])moves.push({...base,promotion});else moves.push(base)};
+  if(t==='p'){const step=side==='w'?-1:1,home=side==='w'?6:1;
+   if(inside(r+step,c)&&!this.board[r+step][c]){put(r+step,c);if(r===home&&!this.board[r+2*step][c])put(r+2*step,c,{double:true})}
+   for(const dc of [-1,1]){const rr=r+step,cc=c+dc;if(!inside(rr,cc))continue;const q=this.board[rr][cc];if(q&&color(q)===enemy&&q.toLowerCase()!=='k')put(rr,cc);if(this.ep===pos(rr,cc)&&this.board[r][cc]===(side==='w'?'p':'P'))put(rr,cc,{ep:true,captured:'p'})}
+  }else if(t==='n'){for(const[dr,dc]of [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]])put(r+dr,c+dc)}
+  else if(t==='k'){
+   for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++)if(dr||dc)put(r+dr,c+dc);
+   const home=side==='w'?7:0,king=side==='w'?'K':'k';if(r===home&&c===4&&p===king&&!this.inCheck(side)){
+    const rook=side==='w'?'R':'r';const chk=step=>this.isAttacked(this.board,home,step,enemy);
+    if(this.castling[side==='w'?'K':'k']&&this.board[home][7]===rook&&!this.board[home][5]&&!this.board[home][6]&&!chk(5)&&!chk(6))put(home,6,{castle:'k'});
+    if(this.castling[side==='w'?'Q':'q']&&this.board[home][0]===rook&&!this.board[home][1]&&!this.board[home][2]&&!this.board[home][3]&&!chk(3)&&!chk(2))put(home,2,{castle:'q'});
+   }
+  }else{const dirs=[];if(t==='b'||t==='q')dirs.push([-1,-1],[-1,1],[1,-1],[1,1]);if(t==='r'||t==='q')dirs.push([-1,0],[1,0],[0,-1],[0,1]);for(const[dr,dc]of dirs){let rr=r+dr,cc=c+dc;while(inside(rr,cc)){const q=this.board[rr][cc];if(q&&color(q)===side)break;put(rr,cc);if(q)break;rr+=dr;cc+=dc}}}
+  return moves;
+ }
+ applyBoardOnly(b,m){const f=sq(m.from),t=sq(m.to),p=b[f.r][f.c];b[f.r][f.c]=null;if(m.ep)b[f.r][t.c]=null;if(m.castle){const col=m.castle==='k'?7:0,dest=m.castle==='k'?5:3;b[f.r][dest]=b[f.r][col];b[f.r][col]=null}b[t.r][t.c]=m.promotion?(color(p)==='w'?m.promotion.toUpperCase():m.promotion):p}
+ legal(from,side=this.turn){if(!validSquare(from))return[];const f=sq(from),p=this.board[f.r][f.c];if(!p||color(p)!==side)return[];return this.pseudo(f.r,f.c).filter(m=>{const b=copy(this.board);this.applyBoardOnly(b,m);return !this.attackedKingOn(b,side)})}
+ allLegal(side=this.turn){const all=[];for(let r=0;r<8;r++)for(let c=0;c<8;c++)if(this.board[r][c]&&color(this.board[r][c])===side)all.push(...this.legal(pos(r,c),side));return all}
+ insufficient(){const units=[];for(let r=0;r<8;r++)for(let c=0;c<8;c++){const p=this.board[r][c];if(p&&p.toLowerCase()!=='k')units.push({p:p.toLowerCase(),squareColor:(r+c)%2})}if(!units.length)return true;if(units.length===1&&['n','b'].includes(units[0].p))return true;return units.every(x=>x.p==='b')&&units.every(x=>x.squareColor===units[0].squareColor)}
+ sanOf(m,possible){if(m.castle)return m.castle==='k'?'O-O':'O-O-O';let label=m.piece==='p'?'':m.piece.toUpperCase();if(m.piece!=='p'){
+   const same=possible.filter(x=>x!==m&&x.to===m.to&&x.piece===m.piece&&x.from!==m.from);
+   if(same.length){const file=m.from[0],rank=m.from[1];if(!same.some(x=>x.from[0]===file))label+=file;else if(!same.some(x=>x.from[1]===rank))label+=rank;else label+=file+rank}
+  }else if(m.captured)label=m.from[0];return label+(m.captured?'x':'')+m.to+(m.promotion?'='+m.promotion.toUpperCase():'')}
+ play(from,to,promotion='q'){
+  if(this.status)return{error:'A partida já terminou.'};if(!validSquare(from)||!validSquare(to))return{error:'Casa inválida.'};
+  const all=this.allLegal(),found=all.find(x=>x.from===from&&x.to===to&&(!x.promotion||x.promotion===promotion));if(!found)return{error:'Lance ilegal: não é possível mover essa peça para lá.'};
+  const san=this.sanOf(found,all),before=this.snapshot();this.history.push(before);
+  const f=sq(from),t=sq(to),piece=this.board[f.r][f.c];this.applyBoardOnly(this.board,found);
+  if(piece==='K'){this.castling.K=false;this.castling.Q=false}if(piece==='k'){this.castling.k=false;this.castling.q=false}
+  if(from==='a1'||to==='a1')this.castling.Q=false;if(from==='h1'||to==='h1')this.castling.K=false;
+  if(from==='a8'||to==='a8')this.castling.q=false;if(from==='h8'||to==='h8')this.castling.k=false;
+  this.ep=found.double?pos((f.r+t.r)/2,f.c):null;this.halfmove=found.piece==='p'||found.captured?0:this.halfmove+1;if(this.turn==='b')this.fullmove++;
+  this.turn=opposite(this.turn);this.positionKeys.push(this.key());
+  const checked=this.inCheck(this.turn),next=this.allLegal(),mate=checked&&next.length===0;
+  const doneSan=san+(mate?'#':checked?'+':'');const entry={from,to,piece:found.piece,captured:found.captured,promotion:found.promotion||null,castle:found.castle||null,ep:!!found.ep,san:doneSan,by:opposite(this.turn)};
+  this.moves.push(entry);
+  if(mate)this.status={kind:'mate',winner:opposite(this.turn),reason:'Xeque-mate'};
+  else if(!next.length)this.status={kind:'draw',reason:'Afogamento (rei sem lances legais)'};
+  else if(this.insufficient())this.status={kind:'draw',reason:'Material insuficiente'};
+  else if(this.positionKeys.filter(x=>x===this.positionKeys[this.positionKeys.length-1]).length>=3)this.status={kind:'draw',reason:'Repetição tripla de posição'};
+  else if(this.halfmove>=100)this.status={kind:'draw',reason:'Regra dos 50 lances'};
+  return{move:entry,check:checked,mate:mate,end:!!this.status};
+ }
+ undo(){if(!this.history.length)return false;this.load(this.history.pop());this.moves.pop();this.positionKeys.pop();this.status=null;return true}
+}
+
+/* Estado da aplicação e persistência local (a sessão online pertence ao anfitrião). */
+let game=new ChessGame(), mode='menu', room='', hostColor='w', myColor='w', orientation='w', flipped=false, selected=null, lastKnownMove=0;
+let activeConn=null, signal=null, guestToken='', assignedToken='', peerConnected=false, lastHeartbeat=0, retryAt=0, retryCount=0;
+let timeConfig={base:300000,inc:0},clock={w:300000,b:300000,running:false,lastAt:0},pending=null,chats=[],lastClockSave=0;
+let muted=storage.getItem('xadrez_muted')==='true', audioCtx=null,modalActive=false,drag=null,suppressClick=false;
+let manual=false;
+const isHost=()=>mode==='host'||mode==='local';
+const canMove=()=>!modalActive&&!pending&&!game.status&&(mode==='local'||(mode==='host'?peerConnected:mode==='guest'&&peerConnected))&&(mode==='local'||game.turn===myColor);
+const remember=()=>{if(mode==='host'&&room&&!manual){try{storage.setItem('xadrez_lastRoom',room);storage.setItem('xadrez_room_'+room,JSON.stringify({game:game.export(true),hostColor,timeConfig,clock,pending,chats,assignedToken,version:1}))}catch(e){}}};
+const fromStorage=code=>{try{const obj=JSON.parse(storage.getItem('xadrez_room_'+code));if(obj?.version===1&&obj.game){game.import(obj.game);hostColor=obj.hostColor;timeConfig=obj.timeConfig;clock=obj.clock;pending=obj.pending;chats=obj.chats||[];assignedToken=obj.assignedToken||'';return true}}catch(e){}return false};
+function randomCode(n=6){const a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',bits=new Uint32Array(n);crypto.getRandomValues(bits);return [...bits].map(x=>a[x%a.length]).join('')}
+function toast(s){const d=document.createElement('div');d.className='toast';d.textContent=s;$('toastWrap').append(d);setTimeout(()=>d.remove(),4200)}
+function playSound(which){if(muted)return;try{audioCtx ||= new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();const now=audioCtx.currentTime,osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.type=which==='end'?'triangle':'sine';osc.frequency.setValueAtTime(which==='capture'?280:which==='check'?550:which==='end'?330:450,now);osc.frequency.exponentialRampToValueAtTime(which==='capture'?160:which==='check'?730:which==='end'?200:360,now+.11);gain.gain.setValueAtTime(.042,now);gain.gain.exponentialRampToValueAtTime(.001,now+.14);osc.connect(gain).connect(audioCtx.destination);osc.start(now);osc.stop(now+.15)}catch(e){}}
+function modal(title,message,actions){modalActive=true;const body=$('modalBody');body.replaceChildren();const h=document.createElement('h2');h.textContent=title;body.append(h);if(message){const p=document.createElement('p');p.textContent=message;body.append(p)}const line=document.createElement('div');line.className='modal-actions';actions.forEach(x=>{const b=document.createElement('button');b.textContent=x.text;b.className='btn '+(x.css||'soft');b.addEventListener('click',()=>{closeModal();x.fn?.()});line.append(b)});body.append(line);$('modalOverlay').classList.remove('hidden')}
+function closeModal(){modalActive=false;$('modalOverlay').classList.add('hidden')}
+function promoDialog(from,to,choices){modalActive=true;$('modalBody').replaceChildren();const h=document.createElement('h2');h.textContent='Promover peão';const p=document.createElement('p');p.textContent='Escolha a peça que substituirá o peão.';const grid=document.createElement('div');grid.className='promo-options';choices.forEach(promo=>{const b=document.createElement('button');b.className='promo-piece';b.textContent=SYMBOLS[game.turn==='w'?promo.toUpperCase():promo];b.title=pieceName[promo];b.setAttribute('aria-label',pieceName[promo]);b.onclick=()=>{closeModal();submitMove(from,to,promo)};grid.append(b)});const cancel=document.createElement('button');cancel.className='btn outline full';cancel.style.marginTop='14px';cancel.textContent='Cancelar';cancel.onclick=closeModal;$('modalBody').append(h,p,grid,cancel);$('modalOverlay').classList.remove('hidden')}
+const clockEnabled=()=>timeConfig.base>0;
+function clockCommit(){if(clockEnabled()&&clock.running&&!game.status){const dt=Math.max(0,Date.now()-clock.lastAt);clock[game.turn]=Math.max(0,clock[game.turn]-dt);clock.lastAt=Date.now();if(clock[game.turn]<=0){clock.running=false;game.status={kind:'flag',winner:opposite(game.turn),reason:'Tempo esgotado'};playSound('end');remember();broadcast()}}}
+function liveTime(side){let v=clock[side]||0;if(clockEnabled()&&clock.running&&!game.status&&game.turn===side)v-=Math.max(0,Date.now()-clock.lastAt);return Math.max(0,v)}
+function formatTime(ms){const seconds=Math.ceil(ms/1000);if(seconds<60)return '0:'+String(Math.floor(seconds)).padStart(2,'0')+'.'+Math.floor((ms%1000)/100);return Math.floor(seconds/60)+':'+String(seconds%60).padStart(2,'0')}
+function startClock(){if(clockEnabled()&&!clock.running&&!game.status){clock.running=true;clock.lastAt=Date.now();remember()}}
+function initializeClock(){clock={w:timeConfig.base,b:timeConfig.base,running:false,lastAt:Date.now()}}
+
+/* Sinalização PeerServer usando WebSocket e WebRTC nativos; sem bibliotecas/CDN.
+   A nuvem PeerServer envia apenas ofertas/respostas ICE, não os lances. */
+class SignalClient{
+ constructor(id,onReady,onOffer,onMessage,onFailure){this.id=id;this.onReady=onReady;this.onOffer=onOffer;this.onMessage=onMessage;this.onFailure=onFailure;this.ws=null;this.ready=false;this.heartbeat=null;this.closed=false;this.connect()}
+ connect(){if(this.closed)return;try{const token=randomCode(13),url='wss://'+SIGNAL.host+':'+SIGNAL.port+SIGNAL.path+'?key='+encodeURIComponent(SIGNAL.key)+'&id='+encodeURIComponent(this.id)+'&token='+token+'&version=1.5.5';this.ws=new WebSocket(url);clearTimeout(this.guard);this.guard=setTimeout(()=>{if(!this.ready&&!this.closed){try{this.ws.close()}catch(e){}}},60000);this.ws.onmessage=e=>{let data;try{data=JSON.parse(e.data)}catch{return}if(data.type==='OPEN'){this.ready=true;clearTimeout(this.guard);this.onReady();return}if(data.type==='ID-TAKEN'){this.taken=true;this.onFailure('taken');return}if(data.type==='ERROR'||data.type==='INVALID-KEY'){const msg=data.payload?.msg||'Servidor de sinalização indisponível';this.onFailure(/could not connect|not found|unavailable/i.test(msg)?'unavailable':msg);return}if(data.type==='EXPIRE'){this.onFailure('unavailable');return}this.onMessage(data)};this.ws.onopen=()=>{this.heartbeat=setInterval(()=>this.send({type:'HEARTBEAT'}),5000)};this.ws.onclose=()=>{this.ready=false;clearInterval(this.heartbeat);clearTimeout(this.guard);if(!this.closed&&!this.taken)this.onFailure('closed')};this.ws.onerror=()=>{}}catch(e){this.onFailure('closed')}}
+ send(msg){if(this.ws?.readyState===WebSocket.OPEN)try{this.ws.send(JSON.stringify(msg))}catch(e){}}
+ close(){this.closed=true;this.ready=false;clearInterval(this.heartbeat);clearTimeout(this.guard);this.ws?.close()}
+}
+class RtcConnection{
+ constructor(remote,initiator){this.remote=remote;this.pc=new RTCPeerConnection({iceServers:[{urls:'stun:stun.l.google.com:19302'},{urls:'stun:stun1.l.google.com:19302'},{urls:'stun:stun.cloudflare.com:3478'}]});this.dc=null;this.closed=false;this.candidates=[];this.ready=false;this.pc.onicecandidate=e=>{if(e.candidate&&signal?.ready)signal.send({type:'CANDIDATE',dst:remote,payload:{candidate:e.candidate.toJSON(),type:'data',connectionId:'chess'}})};this.pc.onconnectionstatechange=()=>{if(['failed','closed'].includes(this.pc.connectionState))this.terminate()};this.pc.ondatachannel=e=>this.attach(e.channel);if(initiator){this.attach(this.pc.createDataChannel('xadrez',{ordered:true}));this.offer()}}
+ async offer(){try{const offer=await this.pc.createOffer();await this.pc.setLocalDescription(offer);signal?.send({type:'OFFER',dst:this.remote,payload:{type:'data',connectionId:'chess',sdp:this.pc.localDescription,serialization:'json'}})}catch(e){this.terminate()}}
+ attach(dc){this.dc=dc;dc.onopen=()=>{this.ready=true;this.lastSeen=Date.now();onRtcOpen(this)};dc.onmessage=e=>{this.lastSeen=Date.now();try{onPacket(this,JSON.parse(e.data))}catch(err){}};dc.onclose=()=>this.terminate();dc.onerror=()=>this.terminate()}
+ async answer(offer){try{await this.pc.setRemoteDescription(new RTCSessionDescription(offer));await this.flushCandidates();const ans=await this.pc.createAnswer();await this.pc.setLocalDescription(ans);signal?.send({type:'ANSWER',dst:this.remote,payload:{type:'data',connectionId:'chess',sdp:this.pc.localDescription}})}catch(e){this.terminate()}}
+ async applyAnswer(desc){try{await this.pc.setRemoteDescription(new RTCSessionDescription(desc));await this.flushCandidates()}catch(e){this.terminate()}}
+ async addCandidate(c){if(!this.pc.remoteDescription){this.candidates.push(c);return}try{await this.pc.addIceCandidate(new RTCIceCandidate(c))}catch(e){}}
+ async flushCandidates(){for(const c of this.candidates)await this.addCandidate(c);this.candidates=[]}
+ send(packet){if(this.dc?.readyState==='open'){try{this.dc.send(JSON.stringify(packet));return true}catch(e){}}return false}
+ terminate(){if(this.closed)return;this.closed=true;this.ready=false;try{this.dc?.close();this.pc.close()}catch(e){}onRtcClose(this)}
+}
+let connections=new Map(),earlyIce=new Map();
+let retryTimer=null;
+function scheduleSignalRetry(){clearTimeout(retryTimer);if(mode==='menu'||mode==='local')return;retryTimer=setTimeout(()=>{retryTimer=null;if(signal&&!signal.ready&&mode!=='local'){signal.close();signal=null;openSignal()}},Math.min(20000,2800*Math.max(1,retryCount)))}
+function openSignal(){if(signal)signal.close();const id=mode==='host'?'xadrez-'+room:'xadrez-cliente-'+randomCode(12);signal=new SignalClient(id,()=>{retryCount=0;if(mode==='guest'){updateConnection(false,'Procurando sala…');attemptRtc()}else updateConnection(peerConnected,'Sala aberta • esperando adversário')},()=>{},data=>{
+  if(data.type==='OFFER'&&mode==='host'&&data.src&&data.payload?.sdp){if(connections.has(data.src))connections.get(data.src).terminate();const rtc=new RtcConnection(data.src,false);connections.set(data.src,rtc);for(const candidate of earlyIce.get(data.src)||[])rtc.addCandidate(candidate);earlyIce.delete(data.src);rtc.answer(data.payload.sdp)}
+  else if(data.type==='ANSWER'&&mode==='guest'&&connections.has(data.src))connections.get(data.src).applyAnswer(data.payload?.sdp);
+  else if(data.type==='CANDIDATE'){if(connections.has(data.src))connections.get(data.src).addCandidate(data.payload?.candidate);else{const a=earlyIce.get(data.src)||[];if(a.length<12)a.push(data.payload?.candidate);earlyIce.set(data.src,a)}}
+  else if(data.type==='ERROR'&&mode==='guest')updateConnection(false,'Sala não encontrada ou indisponível');
+ },err=>{
+  if(err==='taken'){if(mode==='host'&&retryCount===0)toast('Este código já está em uso. Se a sala estiver aberta em outra aba, feche-a. Tentando novamente…');retryCount++;updateConnection(false,'Código em uso • tentando novamente…');scheduleSignalRetry();return}
+  if(err==='unavailable'){updateConnection(false,'Sala não encontrada • tentando novamente');return}
+  updateConnection(!!activeConn?.ready,activeConn?.ready?'Conectado (sinalização reconectando…)':'Servidor indisponível • reconectando…');retryCount++;scheduleSignalRetry();
+ })}
+function attemptRtc(){if(mode!=='guest'||!signal?.ready||peerConnected||Date.now()<retryAt)return;const remote='xadrez-'+room;const old=connections.get(remote);if(old&&!old.closed){if(Date.now()-(old.startedAt||0)<11000)return;old.terminate()}retryAt=Date.now()+5500;const rtc=new RtcConnection(remote,true);rtc.startedAt=Date.now();connections.set(remote,rtc)}
+function onRtcOpen(rtc){if(mode==='guest'){activeConn=rtc;guestToken ||=storage.getItem('xadrez_guest_'+room)||randomCode(18);storage.setItem('xadrez_guest_'+room,guestToken);rtc.send({type:'hello',token:guestToken})}/* Anfitrião aguarda o token de quem entrou. */}
+function onRtcClose(rtc){if(connections.get(rtc.remote)===rtc)connections.delete(rtc.remote);if(activeConn===rtc){activeConn=null;updateConnection(false,mode==='guest'?(manual?'Conexão encerrada • peça um novo convite':'Adversário desconectado • reconectando…'):'Adversário desconectado');retryAt=Date.now()+1600;if(mode==='host'){remember()}render()}}
+function onPacket(rtc,data){if(!data||typeof data.type!=='string')return;
+ if(mode==='host'){
+  if(data.type==='hello'){
+   if(typeof data.token!=='string'||data.token.length>40)return rtc.terminate();
+   if(assignedToken&&data.token!==assignedToken){rtc.send({type:'reject',reason:'Sala cheia: já existe um segundo jogador.'});setTimeout(()=>rtc.terminate(),180);return}
+   if(activeConn&&activeConn!==rtc)activeConn.terminate();assignedToken=data.token;activeConn=rtc;updateConnection(true,'Adversário conectado');if(!game.moves.length)startClock();remember();broadcast();render();toast('Seu amigo entrou na sala.');return
+  }
+  if(activeConn!==rtc)return;
+  if(data.type==='ping'){rtc.send({type:'pong'});return}if(data.type==='pong')return;
+  if(data.type==='move'){applyOnlineMove(data,opposite(hostColor));return}
+  if(data.type==='action'){applyOnlineAction(data,opposite(hostColor));return}
+  if(data.type==='reply'){handleReply(data,opposite(hostColor));return}
+  if(data.type==='chat'){handleChat(data,opposite(hostColor));return}
+ }else if(mode==='guest'){
+  if(rtc!==activeConn)return;
+  if(data.type==='state'){try{const previousCount=game.moves.length,wasConnected=peerConnected,oldColor=myColor,oldFen=game.fen(),oldStatus=JSON.stringify(game.status),oldPending=JSON.stringify(pending);game.import(data.game);hostColor=data.hostColor;myColor=opposite(hostColor);if(oldColor!==myColor){flipped=false;orientation=myColor}if(previousCount>0&&game.moves.length===0){flipped=false;orientation=myColor}if(!flipped)orientation=myColor;timeConfig=data.timeConfig;clock=data.clock;clock.lastAt=Date.now();pending=data.pending;chats=data.chats||[];updateConnection(true,'Conectado ao amigo');const freshMove=wasConnected&&game.moves.length===previousCount+1;if(freshMove)playSound(game.status?'end':game.inCheck()?'check':data.lastMove?.captured?'capture':'move');else if(wasConnected&&oldStatus==='null'&&game.status)playSound('end');const samePosition=wasConnected&&oldFen===game.fen()&&oldStatus===JSON.stringify(game.status)&&oldPending===JSON.stringify(pending)&&oldColor===myColor;if(samePosition){renderClock();renderChat()}else render(freshMove?data.lastMove:null);lastKnownMove=game.moves.length}catch(e){toast('Não foi possível carregar a posição recebida.')}return}
+  if(data.type==='reject'){toast(data.reason||'Sala cheia.');rtc.terminate();updateConnection(false,'Sala cheia');retryAt=Date.now()+30000;return}
+  if(data.type==='notice'){toast(data.text||'Não foi possível concluir a ação.');return}
+  if(data.type==='ping'){rtc.send({type:'pong'});return}
+ }
+}
+function updateConnection(connected,description){peerConnected=connected;const label=description||(connected?'Conectado':'Aguardando adversário');$('netLabel').textContent=label;$('netDot').className='dot '+(connected?'ok':label.includes('desconectado')||label.includes('indisponível')||label.includes('ocupado')?'off':'');renderButtons()}
+function broadcast(){if(mode!=='host')return;remember();if(activeConn?.ready)activeConn.send({type:'state',game:game.export(),hostColor,timeConfig,clock:{...clock,w:liveTime('w'),b:liveTime('b')},pending,chats,lastMove:game.moves.at(-1)||null})}
+function noticeGuest(s){activeConn?.send({type:'notice',text:s})}
+
+/* Modo sem servidor: anfitrião e convidado trocam, por chat ou e-mail, um código de convite e uma resposta (SDP).
+   Não usa PeerServer; a conexão WebRTC continua usando STUN. */
+let manualOffer=null;
+const encodeCode=d=>{let bin='';for(const b of new TextEncoder().encode(JSON.stringify(d)))bin+=String.fromCharCode(b);return btoa(bin)};
+const decodeCode=s=>{try{const bin=atob(String(s).replace(/\s+/g,''));const d=JSON.parse(new TextDecoder().decode(Uint8Array.from(bin,ch=>ch.charCodeAt(0))));return d&&typeof d.type==='string'&&typeof d.sdp==='string'?d:null}catch(e){return null}};
+function waitIce(pc,ms=10000){return new Promise(resolve=>{if(pc.iceGatheringState==='complete'){resolve();return}const finish=()=>{clearTimeout(timer);pc.removeEventListener('icegatheringstatechange',onState);resolve()};const onState=()=>{if(pc.iceGatheringState==='complete')finish()};const timer=setTimeout(finish,ms);pc.addEventListener('icegatheringstatechange',onState)})}
+function dialog(title,nodes){modalActive=true;const body=$('modalBody');body.replaceChildren();const h=document.createElement('h2');h.textContent=title;body.append(h,...nodes);$('modalOverlay').classList.remove('hidden')}
+function para(text){const p=document.createElement('p');p.textContent=text;p.style.margin='0 0 10px';return p}
+function codeArea(readOnly,value,placeholder){const ta=document.createElement('textarea');ta.className='code-area';ta.readOnly=readOnly;ta.spellcheck=false;ta.placeholder=placeholder||'';ta.value=value||'';return ta}
+function fullBtn(text,css,fn){const b=document.createElement('button');b.className='btn full '+css;b.style.marginTop='8px';b.textContent=text;b.onclick=fn;return b}
+function manualMenu(){dialog('Jogar sem servidor',[para('Sem servidor de sinalização: vocês trocam dois códigos longos por chat ou e-mail. Antes de criar a sala, escolha cor e relógio na tela inicial.'),fullBtn('Sou o anfitrião (criar sala)','primary',()=>{closeModal();openRoom(true)}),fullBtn('Sou o convidado (entrar com convite)','soft',()=>{closeModal();guestDialog()}),fullBtn('Cancelar','outline',closeModal)])}
+async function startManualHost(){
+ closeNet();manualOffer=null;
+ const rtc=new RtcConnection('manual',true);rtc.startedAt=Date.now();connections.set('manual',rtc);
+ await waitIce(rtc.pc);
+ const d=rtc.pc.localDescription;
+ if(!d){rtc.terminate();toast('Não foi possível gerar o convite. Tente de novo.');return}
+ manualOffer=encodeCode({type:d.type,sdp:d.sdp});updateConnection(false,'Sem servidor • envie o convite ao amigo');showHostDialog();
+}
+function showHostDialog(){
+ if(!manualOffer){toast('Gerando o convite…');return}
+ const answer=codeArea(false,'','Cole aqui a resposta do seu amigo');
+ dialog('Convide seu amigo',[para('1. Envie este código de convite ao seu amigo.'),codeArea(true,manualOffer),fullBtn('Copiar código de convite','soft',()=>copyText(manualOffer)),para('2. Quando ele responder, cole a resposta abaixo.'),answer,fullBtn('Conectar','primary',()=>connectManualAnswer(answer.value)),fullBtn('Fechar','outline',closeModal)]);
+}
+async function connectManualAnswer(text){const desc=decodeCode(text);if(!desc||desc.type!=='answer'){toast('Resposta inválida. Confira se colou o código inteiro.');return}const rtc=connections.get('manual');if(!rtc){toast('Esta sala sem servidor foi encerrada. Crie uma nova.');return}await rtc.applyAnswer(desc);closeModal();toast('Resposta recebida. Conectando…')}
+function guestDialog(){
+ const offer=codeArea(false,'','Cole aqui o código de convite');
+ dialog('Entrar com convite',[para('Cole o código de convite que seu amigo enviou.'),offer,fullBtn('Gerar resposta','primary',async()=>{const answer=await joinManual(offer.value);if(answer)dialog('Envie a resposta ao anfitrião',[para('Envie este código ao anfitrião. A partida começa quando ele colar a resposta.'),codeArea(true,answer),fullBtn('Copiar resposta','soft',()=>copyText(answer)),fullBtn('Fechar','outline',closeModal)])}),fullBtn('Cancelar','outline',closeModal)]);
+}
+async function joinManual(text){
+ const offer=decodeCode(text);if(!offer||offer.type!=='offer'){toast('Convite inválido. Confira se copiou o código inteiro.');return null}
+ closeNet();
+ const rtc=new RtcConnection('manual',false);rtc.startedAt=Date.now();connections.set('manual',rtc);
+ try{
+  await rtc.pc.setRemoteDescription(new RTCSessionDescription({type:'offer',sdp:offer.sdp}));
+  const ans=await rtc.pc.createAnswer();await rtc.pc.setLocalDescription(ans);await waitIce(rtc.pc);
+  const d=rtc.pc.localDescription;
+  manual=true;mode='guest';room='MANUAL';hostColor='w';myColor='b';orientation='b';flipped=false;selected=null;chats=[];pending=null;guestToken=randomCode(18);game.reset();
+  showGame();updateConnection(false,'Sem servidor • aguardando o anfitrião colar sua resposta');
+  return encodeCode({type:d.type,sdp:d.sdp});
+ }catch(e){rtc.terminate();toast('Não foi possível gerar a resposta. Peça um novo convite.');return null}
+}
+/* Movimentos: o anfitrião é a fonte oficial; visitantes enviam solicitações. */
+function submitMove(from,to,promotion='q'){
+ selected=null;if(!canMove()){toast('Aguarde sua vez ou a conexão do adversário.');render();return}
+ if(mode==='guest'){if(!activeConn?.send({type:'move',from,to,promotion}))toast('Conexão interrompida.');render();return}
+ performMove(from,to,promotion)
+}
+function performMove(from,to,promotion){const side=game.turn;
+ if(mode==='host'||mode==='local')clockCommit();if(game.status){render();return}
+ const beforeClock=copy(clock);const res=game.play(from,to,promotion);if(res.error){toast(res.error);render();return}
+ if(clockEnabled()&&clock.running){clock[side]+=timeConfig.inc;clock.lastAt=Date.now();if(game.status)clock.running=false}
+ if(mode==='host'&&game.history.length)game.history[game.history.length-1].clockBefore=beforeClock;
+ if(res.end)playSound('end');else playSound(res.check?'check':res.move.captured?'capture':'move');
+ if(mode==='host')broadcast();render(res.move);if(res.end&&mode==='host')broadcast();
+}
+function applyOnlineMove(data,side){if(game.status||pending){noticeGuest('A partida está pausada ou encerrada.');return}if(game.turn!==side){noticeGuest('Não é a sua vez.');broadcast();return}if(!validSquare(data.from)||!validSquare(data.to)||!['q','r','b','n'].includes(data.promotion)){noticeGuest('Lance inválido.');return}performMove(data.from,data.to,data.promotion)}
+function requestAction(kind){if(mode==='local'){
+  if(kind==='undo'){if(game.undo()){playSound('move');render();toast('Último lance desfeito.')}else toast('Nenhum lance para desfazer.');return}
+  if(kind==='draw'){modal('Encerrar em empate?','A partida local será encerrada como empate por acordo.',[{text:'Cancelar'},{text:'Confirmar',css:'primary',fn:()=>{game.status={kind:'draw',reason:'Empate por acordo'};clock.running=false;render();playSound('end')}}]);return}
+  if(kind==='rematch'){resetGame();return}
+ }
+ if(kind==='resign'){modal('Desistir da partida?','Ao desistir, a vitória será atribuída ao seu adversário.',[{text:'Cancelar'},{text:'Desistir',css:'danger',fn:()=>issueAction('resign')}]);return}
+ if(kind==='undo'&&!game.moves.length){toast('Não há lances para desfazer.');return}
+ if(pending){toast('Existe uma proposta aguardando resposta.');return}
+ issueAction(kind)
+}
+function issueAction(kind){if(mode==='guest'){if(!activeConn?.send({type:'action',kind}))toast('Você não está conectado.');return}applyOnlineAction({kind},mode==='local'?game.turn:hostColor)}
+function applyOnlineAction(data,side){const kind=data.kind;if(!['resign','draw','undo','rematch'].includes(kind))return;
+ if(kind==='resign'){if(game.status)return;clockCommit();game.status={kind:'resign',winner:opposite(side),reason:'Desistência'};clock.running=false;pending=null;playSound('end');broadcast();render();return}
+ if(kind==='rematch'&&!game.status)return;if(kind!=='rematch'&&game.status)return;
+ if(kind==='undo'&&!game.moves.length){noticeGuest('Não há lances para desfazer.');return}
+ if(pending)return;pending={kind,from:side};broadcast();render();
+}
+function handleReply(data,side){if(!pending||side===pending.from)return;resolvePending(!!data.accept)}
+function replyPending(accept){if(!pending||pending.from===myColor&&mode!=='local')return;if(mode==='guest')activeConn?.send({type:'reply',accept});else resolvePending(accept)}
+function resolvePending(accept){const kind=pending?.kind;if(!kind)return;pending=null;if(accept){if(kind==='draw'){clockCommit();game.status={kind:'draw',reason:'Empate por acordo'};clock.running=false;playSound('end')}
+ else if(kind==='undo'){const old=game.history.at(-1);if(game.undo()){if(old?.clockBefore)clock=old.clockBefore;clock.lastAt=Date.now();playSound('move')}}
+ else if(kind==='rematch'){hostColor=opposite(hostColor);myColor=hostColor;flipped=false;orientation=myColor;game.reset();initializeClock();if(mode==='host'&&peerConnected)startClock();playSound('move')}}
+ else toast('A proposta foi recusada.');broadcast();render();}
+function resetGame(){game.reset();initializeClock();selected=null;pending=null;chats=[];render()}
+function handleChat(data,from){let s=typeof data.text==='string'?data.text.trim():'';if(!s)return;if(s.length>500)s=s.slice(0,500);chats.push({from,text:s,at:Date.now()});chats=chats.slice(-120);if(mode==='host')broadcast();renderChat()}
+
+/* Renderização e controle da interface. */
+function showGame(){ $('startScreen').classList.add('hidden');$('gameScreen').classList.remove('hidden');window.scrollTo({top:0,behavior:'instant'});$('roomLabel').replaceChildren();const strong=document.createElement('strong');strong.textContent=room||'LOCAL';$('roomLabel').append('SALA  ',strong);$('inviteCard').classList.toggle('hidden',mode==='local'||mode==='guest'||manual);$('manualCard').classList.toggle('hidden',!(mode==='host'&&manual));$('chatText').disabled=mode==='local';$('chatSend').disabled=mode==='local';$('chatText').placeholder=mode==='local'?'Chat disponível no modo online':'Escreva uma mensagem…';$('copyLinkBtn').disabled=location.protocol==='file:';$('inviteTip').textContent=location.protocol==='file:'?'Arquivo local: compartilhe este HTML com seu amigo e informe o código. Para um link utilizável em outro dispositivo, publique o HTML em HTTPS.':'Envie o link ao amigo. Ele abrirá a página com o código preenchido.'; $('inviteCode').textContent=room;render()}
+function openRoom(manualMode=false){manual=manualMode;mode='host';room=randomCode();game.reset();initializeClock();pending=null;chats=[];hostColor=$('colorSelect').value==='random'?(Math.random()<.5?'w':'b'):$('colorSelect').value;myColor=hostColor;orientation=myColor;flipped=false;selected=null;const tc=$('timeSelect').value.split(',').map(Number);timeConfig={base:tc[0]*1000,inc:tc[1]*1000};updateConnection(false,manual?'Sem servidor • gerando convite…':'Criando sala…');showGame();remember();if(manual)startManualHost();else openSignal()}
+function resumeRoom(){manual=false;const code=storage.getItem('xadrez_lastRoom');if(!code||!/^[A-Z0-9]{6}$/.test(code)||!fromStorage(code)){toast('Não foi possível restaurar esta sala.');return}room=code;mode='host';myColor=hostColor;orientation=myColor;flipped=false;selected=null;updateConnection(false,'Restaurando sala…');showGame();openSignal()}
+function joinRoom(){manual=false;const code=$('joinInput').value.toUpperCase().replace(/[^A-Z0-9]/g,'');if(code.length!==6){toast('Digite um código de 6 caracteres.');return}room=code;mode='guest';game.reset();hostColor='w';myColor='b';orientation='b';flipped=false;selected=null;chats=[];pending=null;guestToken=storage.getItem('xadrez_guest_'+room)||randomCode(18);showGame();updateConnection(false,'Buscando sala…');openSignal()}
+function localGame(){manual=false;mode='local';room='';hostColor='w';myColor='w';orientation='w';flipped=false;selected=null;game.reset();const tc=$('timeSelect').value.split(',').map(Number);timeConfig={base:tc[0]*1000,inc:tc[1]*1000};initializeClock();chats=[];pending=null;showGame();updateConnection(true,'Modo local • 2 jogadores');startClock();render()}
+function closeNet(){activeConn?.terminate();activeConn=null;for(const c of [...connections.values()])c.terminate();connections.clear();signal?.close();signal=null;peerConnected=false}
+function playerHtml(side){const bottom=mode==='local'?side===orientation:side===myColor,who=mode==='local'?'Jogador '+(side==='w'?'brancas':'pretas'):bottom?'Você':'Adversário';let oppCaptured=capturedBy(side);const advantage=material(side)-material(opposite(side));const clockHtml=clockEnabled()?`<div class="clock ${clock.running&&game.turn===side&&!game.status?'live':''} ${liveTime(side)<15000?'low':''}" data-clock="${side}">${formatTime(liveTime(side))}</div>`:'<div class="clock">∞</div>';
+ return `<div class="player-identity"><div class="player-icon ${side==='w'?'white':'black'}">${side==='w'?'♔':'♚'}</div><div style="min-width:0"><div class="player-name">${who} <span class="muted">· ${side==='w'?'Brancas':'Pretas'}</span></div><div class="player-meta"><span class="capture" aria-label="Peças capturadas">${oppCaptured.map(p=>SYMBOLS[p]).join('')}</span>${advantage>0?`<span class="material">+${advantage}</span>`:!oppCaptured.length?'Nenhuma captura':''}</div></div></div>${clockHtml}`}
+function capturedBy(side){return game.moves.filter(m=>m.by===side&&m.captured).map(m=>side==='w'?m.captured:m.captured.toUpperCase())}
+function material(side){let value=0;for(const row of game.board)for(const p of row)if(p&&color(p)===side)value+=VAL[p.toLowerCase()];return value}
+function renderBoard(animationMove=null){const board=$('board');let fromRect=null,toRect=null,flyPiece=null;
+ if(animationMove&&board.children.length){const fromEl=board.querySelector(`[data-square="${animationMove.from}"]`),toEl=board.querySelector(`[data-square="${animationMove.to}"]`);if(fromEl&&toEl){fromRect=fromEl.getBoundingClientRect();toRect=toEl.getBoundingClientRect();flyPiece=animationMove.by==='w'?(animationMove.piece.toUpperCase()):animationMove.piece.toLowerCase()}}
+ board.replaceChildren();const selectedMoves=selected?game.legal(selected,game.turn):[],targetSquares=new Set(selectedMoves.map(x=>x.to)),last=game.moves.at(-1),checked=game.inCheck(game.turn);
+ for(let rank=0;rank<8;rank++)for(let file=0;file<8;file++){
+  const r=orientation==='w'?rank:7-rank,c=orientation==='w'?file:7-file,ps=pos(r,c),p=game.board[r][c],sqEl=document.createElement('button');sqEl.type='button';sqEl.className='square '+((r+c)%2?'dark':'light')+(p?' occupied':'')+(selected===ps?' selected':'')+(targetSquares.has(ps)?' target':'')+(last&&(last.from===ps||last.to===ps)?' last':'')+(checked&&p&&(p.toLowerCase()==='k'&&color(p)===game.turn)?' check':'');sqEl.dataset.square=ps;sqEl.setAttribute('role','gridcell');sqEl.setAttribute('aria-label',ps+' '+(p?(color(p)==='w'?'branco ':'preto ')+pieceName[p.toLowerCase()]:'vazia'));
+  if(p){const span=document.createElement('span');span.className='piece '+(color(p)==='w'?'white':'black');span.textContent=SYMBOLS[p];sqEl.append(span)}
+  if(file===0){const sp=document.createElement('span');sp.className='coord rank';sp.textContent=8-r;sqEl.append(sp)}if(rank===7){const sp=document.createElement('span');sp.className='coord file';sp.textContent=FILES[c];sqEl.append(sp)}board.append(sqEl)
+ }
+ // FLIP: peça flutua da casa de origem à casa destino, mesmo em capturas.
+ if(fromRect&&toRect&&flyPiece&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){const frame=$('boardFrame'),fr=frame.getBoundingClientRect(),a=document.createElement('div');a.className='float-piece '+(color(flyPiece)==='w'?'white':'black');a.textContent=SYMBOLS[flyPiece];a.style.left=(fromRect.left-fr.left)+'px';a.style.top=(fromRect.top-fr.top)+'px';a.style.width=fromRect.width+'px';a.style.height=fromRect.height+'px';frame.append(a);const el=board.querySelector(`[data-square="${animationMove.to}"] .piece`);el?.classList.add('arriving');const animator=a.animate([{transform:'translate(0,0)'},{transform:`translate(${toRect.left-fromRect.left}px,${toRect.top-fromRect.top}px)`}],{duration:230,easing:'cubic-bezier(.2,.85,.4,1)'});animator.onfinish=()=>{a.remove();el?.classList.remove('arriving')};animator.oncancel=()=>{a.remove();el?.classList.remove('arriving')}}
+}
+function renderPlayers(){const top=opposite(orientation);$('playerTop').innerHTML=playerHtml(top);$('playerBottom').innerHTML=playerHtml(orientation)}
+function renderClock(){if(!clockEnabled())return;for(const e of document.querySelectorAll('[data-clock]')){const side=e.dataset.clock;const remain=liveTime(side);e.textContent=formatTime(remain);e.classList.toggle('low',remain<15000)}}
+function renderMoves(){const el=$('movesList');el.replaceChildren();$('moveCount').textContent=game.moves.length+' '+(game.moves.length===1?'lance':'lances');if(!game.moves.length){el.innerHTML='<div class="empty-moves"><div><span>♙</span>Os lances aparecerão aqui.<br>Brancas começam.</div></div>';return}for(let i=0;i<game.moves.length;i++){if(i%2===0){const n=document.createElement('div');n.className='move-number';n.textContent=(Math.floor(i/2)+1)+'.';el.append(n)}const m=document.createElement('div');m.className='move-san '+(i===game.moves.length-1?'recent':'');m.textContent=game.moves[i].san;el.append(m);if(i===game.moves.length-1&&i%2===0){/* próximo lance preto ocupa terceira coluna apenas quando existir */}}el.scrollTop=el.scrollHeight}
+function renderChat(){const el=$('chatLog');el.replaceChildren();if(!chats.length){const empty=document.createElement('div');empty.className='muted';empty.style.cssText='margin:auto;text-align:center;font-size:12px';empty.textContent=mode==='local'?'Chat desativado no modo local':'Diga olá ao seu adversário.';el.append(empty);return}for(const m of chats){const mine=mode==='local'?false:m.from===myColor,b=document.createElement('div'),author=document.createElement('div');b.className='chat-bubble '+(mine?'mine':'');author.className='chat-who';author.textContent=mine?'Você':'Adversário';b.append(author,document.createTextNode(m.text));el.append(b)}el.scrollTop=el.scrollHeight}
+function renderPending(){const el=$('requestCard');if(!pending){el.classList.add('hidden');return}el.classList.remove('hidden');const names={draw:'empate',undo:'desfazer o último lance',rematch:'revanche (com troca de cores)'};el.replaceChildren();const text=document.createElement('div');const mine=mode==='local'||pending.from===myColor;text.textContent=mine?'Sua proposta de '+names[pending.kind]+' aguarda o adversário.':'O adversário propôs '+names[pending.kind]+'.';el.append(text);if(!mine){const acts=document.createElement('div');acts.className='request-actions';const accept=document.createElement('button');accept.className='btn primary sm';accept.textContent='Aceitar';accept.onclick=()=>replyPending(true);const deny=document.createElement('button');deny.className='btn outline sm';deny.textContent='Recusar';deny.onclick=()=>replyPending(false);acts.append(accept,deny);el.append(acts)}}
+function renderButtons(){$('undoBtn').disabled=!!pending||(!game.moves.length)||!!game.status||(mode!=='local'&&!peerConnected);$('drawBtn').disabled=!!pending||!!game.status||(mode!=='local'&&!peerConnected);$('resignBtn').disabled=!!game.status||(mode!=='local'&&!peerConnected);$('newBtn').textContent=mode==='local'?'↩ Nova partida':game.status?'↻ Pedir revanche':'↩ Sair da sala'}
+function render(animationMove=null){if(mode==='menu')return;renderBoard(animationMove);renderPlayers();renderMoves();renderChat();renderPending();renderButtons();
+ let msg;if(game.status){const s=game.status;msg=s.kind==='draw'?`½ Empate — ${s.reason}`:`${s.winner==='w'?'Brancas':'Pretas'} vencem — ${s.reason}`}
+ else if(pending)msg='Partida aguardando resposta à proposta.';
+ else if(!peerConnected&&mode!=='local')msg='Aguardando conexão: lances temporariamente bloqueados.';
+ else if(game.inCheck())msg=`Xeque! Vez das ${game.turn==='w'?'brancas':'pretas'}.`;
+ else msg=`Vez das ${game.turn==='w'?'brancas':'pretas'}${mode!=='local'?(game.turn===myColor?' · seu lance':' · aguarde o adversário'):''}.`;
+ $('turnBanner').textContent=msg;}
+function attempt(from,to){if(!canMove())return;if(!from||!to)return;const options=game.legal(from,game.turn).filter(m=>m.to===to);if(!options.length){toast('Lance ilegal.');selected=null;renderBoard();return}const promos=[...new Set(options.map(m=>m.promotion).filter(Boolean))];if(promos.length)promoDialog(from,to,promos);else submitMove(from,to)}
+function clickSquare(target){if(suppressClick){suppressClick=false;return}const cell=target.closest('.square');if(!cell||!canMove())return;const p=cell.dataset.square,coord=sq(p),piece=game.board[coord.r][coord.c];if(selected){if(selected===p){selected=null;renderBoard();return}const choices=game.legal(selected,game.turn);if(choices.some(m=>m.to===p)){attempt(selected,p);return}}selected=piece&&color(piece)===game.turn?p:null;renderBoard()}
+/* Pointer Events dão arrastar/soltar com mouse e toque, sem HTML Drag&Drop. */
+function bindDragging(){const board=$('board');board.addEventListener('click',e=>clickSquare(e.target));board.addEventListener('pointerdown',e=>{if(e.button!==0||!canMove())return;const cell=e.target.closest('.square');if(!cell)return;const at=cell.dataset.square,{r,c}=sq(at),piece=game.board[r][c];if(!piece||color(piece)!==game.turn)return;drag={id:e.pointerId,from:at,piece,x:e.clientX,y:e.clientY,ghost:null,started:false}});window.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;if(!drag.started&&Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>8){drag.started=true;selected=drag.from;renderBoard();drag.ghost=document.createElement('span');drag.ghost.className='piece drag-ghost '+(color(drag.piece)==='w'?'white':'black');drag.ghost.textContent=SYMBOLS[drag.piece];document.body.append(drag.ghost)}if(drag.started&&drag.ghost){drag.ghost.style.left=e.clientX+'px';drag.ghost.style.top=e.clientY+'px'}});const finish=e=>{if(!drag||drag.id!==e.pointerId)return;const d=drag;drag=null;d.ghost?.remove();if(d.started){suppressClick=true;const cell=document.elementFromPoint(e.clientX,e.clientY)?.closest('.square');if(cell)attempt(d.from,cell.dataset.square);else{selected=null;renderBoard()}setTimeout(()=>suppressClick=false,70)}};window.addEventListener('pointerup',finish);window.addEventListener('pointercancel',e=>{if(drag){drag.ghost?.remove();drag=null;selected=null;renderBoard()}})}
+async function copyText(text){try{await navigator.clipboard.writeText(text);toast('Copiado para a área de transferência.')}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;left:-9999px';document.body.append(ta);ta.select();const worked=document.execCommand('copy');ta.remove();toast(worked?'Copiado.':'Não foi possível copiar automaticamente.')}}
+function exitRoom(){modal('Sair da partida?','Você retornará à tela inicial. A partida da sala ficará salva neste navegador (anfitrião).', [{text:'Cancelar'},{text:'Sair',css:'primary',fn:()=>{closeNet();manual=false;mode='menu';$('gameScreen').classList.add('hidden');$('startScreen').classList.remove('hidden')}}])}
+/* Atualização do relógio e recuperação da conexão. */
+setInterval(()=>{if(mode==='host'||mode==='local'){if(clock.running&&!game.status&&liveTime(game.turn)<=0){clockCommit();render();if(mode==='host')broadcast()}}
+ if(mode==='host'&&peerConnected){if(activeConn?.lastSeen&&Date.now()-activeConn.lastSeen>21000){activeConn.terminate()}else if(Date.now()-lastHeartbeat>5000){lastHeartbeat=Date.now();activeConn?.send({type:'ping'})}}
+ if(mode==='guest'){if(signal?.ready&&!peerConnected)attemptRtc();if(peerConnected){if(activeConn?.lastSeen&&Date.now()-activeConn.lastSeen>21000)activeConn.terminate();else if(Date.now()-lastHeartbeat>5000){lastHeartbeat=Date.now();activeConn?.send({type:'ping'})}}}
+ if(mode==='host'&&peerConnected&&Date.now()-lastClockSave>1000){lastClockSave=Date.now();broadcast()}
+ renderClock();},500);
+
+/* Eventos da interface. */
+$('soundToggle').textContent=muted?'♪̸':'♫';$('soundToggle').onclick=()=>{muted=!muted;storage.setItem('xadrez_muted',String(muted));$('soundToggle').textContent=muted?'♪̸':'♫';toast(muted?'Sons desativados.':'Sons ativados.')};
+$('createBtn').onclick=()=>openRoom(false);$('manualBtn').onclick=manualMenu;$('manualOpenBtn').onclick=showHostDialog;$('resumeBtn').onclick=resumeRoom;$('joinBtn').onclick=joinRoom;$('localBtn').onclick=localGame;
+$('joinInput').addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,''));$('joinInput').addEventListener('keydown',e=>{if(e.key==='Enter')joinRoom()});
+$('flipBtn').onclick=()=>{orientation=opposite(orientation);flipped=true;selected=null;render()};$('copyFenBtn').onclick=()=>copyText(game.fen());
+$('newBtn').onclick=()=>{if(mode==='local'){modal('Nova partida?','O tabuleiro atual será reiniciado.',[{text:'Cancelar'},{text:'Reiniciar',css:'primary',fn:resetGame}]);return}if(game.status){requestAction('rematch');return}exitRoom()};
+$('undoBtn').onclick=()=>requestAction('undo');$('drawBtn').onclick=()=>requestAction('draw');$('resignBtn').onclick=()=>requestAction('resign');
+$('copyCodeBtn').onclick=()=>copyText(room);$('copyLinkBtn').onclick=()=>{if(location.protocol==='file:'){toast('Publique o arquivo em HTTPS para usar links de convite.');return}const u=new URL(location.href);u.searchParams.set('sala',room);copyText(u.toString())};
+$('chatForm').addEventListener('submit',e=>{e.preventDefault();const text=$('chatText').value.trim();if(!text)return;if(mode==='local'){toast('Chat disponível apenas no modo online.');return}if(!peerConnected){toast('Aguarde a conexão para enviar mensagens.');return}if(mode==='guest')activeConn?.send({type:'chat',text});else handleChat({text},hostColor);$('chatText').value=''});
+$('modalOverlay').onclick=e=>{if(e.target===$('modalOverlay'))closeModal()};document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modalActive)closeModal()});
+bindDragging();
+const savedCode=storage.getItem('xadrez_lastRoom');if(savedCode&&/^[A-Z0-9]{6}$/.test(savedCode)&&storage.getItem('xadrez_room_'+savedCode)){$('resumeBtn').classList.remove('hidden');$('resumeBtn').textContent='↺ Retomar sala '+savedCode}
+const invite=new URLSearchParams(location.search).get('sala');if(invite&&/^[A-Z0-9]{6}$/i.test(invite)){$('joinInput').value=invite.toUpperCase();$('joinInput').focus()}
+</script>
+</body>
+</html>
